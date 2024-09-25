@@ -3,8 +3,7 @@ import { Calendar, MessageCircle } from "lucide-react";
 
 export function getNotificationLink(notification: Notification) {
   const urls = {
-    event: `/dashboard/groups/${notification.groupId}/events`,
-    reply: `/dashboard/groups/${notification.groupId}/posts/${notification.postId}#replies`,
+
   } as any;
   return urls[notification.type];
 }

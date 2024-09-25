@@ -4,71 +4,104 @@ import {
   index,
   integer,
   pgEnum,
+  PgTable,
   pgTable,
   serial,
   text,
   timestamp,
 } from "drizzle-orm/pg-core";
 
+// Enums para roles e tipos de arquivos/armazenamento
 export const roleEnum = pgEnum("role", ["member", "admin"]);
 export const accountTypeEnum = pgEnum("type", ["email", "google", "github"]);
+export const fileTypeEnum = pgEnum("fileType", ["pdf", "doc", "image", "other"]);
+export const storageClassEnum = pgEnum("storageClass", [
+  "Standard",
+  "InfrequentAccess",
+  "Archive",
+]);
 
+// Tabela de usuários
 export const users = pgTable("gf_user", {
   id: serial("id").primaryKey(),
   email: text("email").unique(),
   emailVerified: timestamp("emailVerified", { mode: "date" }),
 });
 
-export const accounts = pgTable("gf_accounts", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  accountType: accountTypeEnum("accountType").notNull(),
-  githubId: text("githubId").unique(),
-  googleId: text("googleId").unique(),
-  password: text("password"),
-  salt: text("salt"),
-}, (table) => ({
-  userIdAccountTypeIdx: index("user_id_account_type_idx").on(table.userId, table.accountType),
-}));
+// Tabela de contas
+export const accounts = pgTable(
+  "gf_accounts",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    accountType: accountTypeEnum("accountType").notNull(),
+    githubId: text("githubId").unique(),
+    googleId: text("googleId").unique(),
+    password: text("password"),
+    salt: text("salt"),
+  },
+  (table) => ({
+    userIdAccountTypeIdx: index("user_id_account_type_idx").on(
+      table.userId,
+      table.accountType
+    ),
+  })
+);
 
-export const magicLinks = pgTable("gf_magic_links", {
-  id: serial("id").primaryKey(),
-  email: text("email").notNull().unique(),
-  token: text("token"),
-  tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
-}, (table) => ({
-  tokenIdx: index("magic_links_token_idx").on(table.token),
-}));
+// Tabela de magic links
+export const magicLinks = pgTable(
+  "gf_magic_links",
+  {
+    id: serial("id").primaryKey(),
+    email: text("email").notNull().unique(),
+    token: text("token"),
+    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+  },
+  (table) => ({
+    tokenIdx: index("magic_links_token_idx").on(table.token),
+  })
+);
 
-export const resetTokens = pgTable("gf_reset_tokens", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" })
-    .unique(),
-  token: text("token"),
-  tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
-}, (table) => ({
-  tokenIdx: index("reset_tokens_token_idx").on(table.token),
-}));
+// Tabela de reset tokens
+export const resetTokens = pgTable(
+  "gf_reset_tokens",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" })
+      .unique(),
+    token: text("token"),
+    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+  },
+  (table) => ({
+    tokenIdx: index("reset_tokens_token_idx").on(table.token),
+  })
+);
 
-export const verifyEmailTokens = pgTable("gf_verify_email_tokens", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" })
-    .unique(),
-  token: text("token"),
-  tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
-}, (table) => ({
-  tokenIdx: index("verify_email_tokens_token_idx").on(table.token),
-}));
+// Tabela de tokens de verificação de email
+export const verifyEmailTokens = pgTable(
+  "gf_verify_email_tokens",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" })
+      .unique(),
+    token: text("token"),
+    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+  },
+  (table) => ({
+    tokenIdx: index("verify_email_tokens_token_idx").on(table.token),
+  })
+);
 
+// Tabela de perfis
 export const profiles = pgTable("gf_profile", {
   id: serial("id").primaryKey(),
-  userId: serial("userId")
+  userId: integer("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" })
     .unique(),
@@ -78,219 +111,187 @@ export const profiles = pgTable("gf_profile", {
   bio: text("bio").notNull().default(""),
 });
 
-export const sessions = pgTable("gf_session", {
-  id: text("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  expiresAt: timestamp("expires_at", {
-    withTimezone: true,
-    mode: "date",
-  }).notNull(),
-}, (table) => ({
-  userIdIdx: index("sessions_user_id_idx").on(table.userId),
-}));
+// Tabela de sessões
+export const sessions = pgTable(
+  "gf_session",
+  {
+    id: text("id").primaryKey(),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    expiresAt: timestamp("expires_at", {
+      withTimezone: true,
+      mode: "date",
+    }).notNull(),
+  },
+  (table) => ({
+    userIdIdx: index("sessions_user_id_idx").on(table.userId),
+  })
+);
 
-export const subscriptions = pgTable("gf_subscriptions", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" })
-    .unique(),
-  stripeSubscriptionId: text("stripeSubscriptionId").notNull(),
-  stripeCustomerId: text("stripeCustomerId").notNull(),
-  stripePriceId: text("stripePriceId").notNull(),
-  stripeCurrentPeriodEnd: timestamp("expires", { mode: "date" }).notNull(),
-}, (table) => ({
-  stripeSubscriptionIdIdx: index("subscriptions_stripe_subscription_id_idx").on(table.stripeSubscriptionId),
-}));
+// Tabela de assinaturas
+export const subscriptions = pgTable(
+  "gf_subscriptions",
+  {
+    id: serial("id").primaryKey(),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" })
+      .unique(),
+    stripeSubscriptionId: text("stripeSubscriptionId").notNull(),
+    stripeCustomerId: text("stripeCustomerId").notNull(),
+    stripePriceId: text("stripePriceId").notNull(),
+    stripeCurrentPeriodEnd: timestamp("expires", { mode: "date" }).notNull(),
+  },
+  (table) => ({
+    stripeSubscriptionIdIdx: index(
+      "subscriptions_stripe_subscription_id_idx"
+    ).on(table.stripeSubscriptionId),
+  })
+);
 
-export const following = pgTable("gf_following", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  foreignUserId: serial("foreignUserId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-}, (table) => ({
-  userIdForeignUserIdIdx: index("following_user_id_foreign_user_id_idx").on(table.userId, table.foreignUserId),
-}));
-
-/**
- * newsletters - although the emails for the newsletter are tracked in Resend, it's beneficial to also track
- * sign ups in your own database in case you decide to move to another email provider.
- * The last thing you'd want is for your email list to get lost due to a
- * third party provider shutting down or dropping your data.
- */
+// Tabela de newsletters
 export const newsletters = pgTable("gf_newsletter", {
   id: serial("id").primaryKey(),
   email: text("email").notNull().unique(),
 });
 
-export const groups = pgTable("gf_group", {
+// Tipo Container
+export type Container = {
+  id: number;
+  userId: number;
+  name: string;
+  description: string | null;
+  parentId: number | null;
+  createdAt: Date;
+};
+
+// Tabela de containers
+export const containers = pgTable("containers", {
   id: serial("id").primaryKey(),
-  userId: serial("userId")
+  userId: integer("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
-  description: text("description").notNull(),
-  isPublic: boolean("isPublic").notNull().default(false),
-  bannerId: text("bannerId"),
-  info: text("info").default(""),
-  youtubeLink: text("youtubeLink").default(""),
-  discordLink: text("discordLink").default(""),
-  githubLink: text("githubLink").default(""),
-  xLink: text("xLink").default(""),
+  description: text("description"),
+  createdAt: timestamp("createdAt", { mode: "date" })
+    .notNull()
+    .defaultNow(),
 }, (table) => ({
-  userIdIsPublicIdx: index("groups_user_id_is_public_idx").on(table.userId, table.isPublic),
+  userIdNameIdx: index("containers_user_id_name_idx").on(
+    table.userId,
+    table.name
+  ),
 }));
 
-export const memberships = pgTable("gf_membership", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-  role: roleEnum("role").default("member"),
-}, (table) => ({
-  userIdGroupIdIdx: index("memberships_user_id_group_id_idx").on(table.userId, table.groupId),
-}));
+// Tabela de arquivos
+export const files = pgTable(
+  "files",
+  {
+    id: serial("id").primaryKey(),
+    containerId: integer("containerId")
+      .notNull()
+      .references(() => containers.id, { onDelete: "cascade" }),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    key: text("key").notNull().unique(),
+    fileName: text("fileName").notNull(),
+    fileSize: text("fileSize").notNull(),
+    fileType: fileTypeEnum("fileType").notNull(),
+    storageClass: storageClassEnum("storageClass")
+      .notNull()
+      .default("Standard"),
+    createdAt: timestamp("createdAt", { mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => ({
+    containerIdUserIdIdx: index("files_container_id_user_id_idx").on(
+      table.containerId,
+      table.userId
+    ),
+  })
+);
 
-export const invites = pgTable("gf_invites", {
-  id: serial("id").primaryKey(),
-  token: text("token")
-    .notNull()
-    .default(sql`gen_random_uuid()`)
-    .unique(),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-});
+// Tabela de assinaturas
+export const signatures = pgTable(
+  "signatures",
+  {
+    id: serial("id").primaryKey(),
+    fileId: integer("fileId")
+      .notNull()
+      .references(() => files.id, { onDelete: "cascade" }),
+    userId: integer("userId")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    signatureType: text("signatureType").notNull(),
+    signatureValue: text("signatureValue").notNull(),
+    signedAt: timestamp("signedAt", { mode: "date" })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => ({
+    fileIdUserIdIdx: index("signatures_file_id_user_id_idx").on(
+      table.fileId,
+      table.userId
+    ),
+  })
+);
 
-export const events = pgTable("gf_events", {
-  id: serial("id").primaryKey(),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  description: text("description").notNull(),
-  imageId: text("imageId"),
-  startsOn: timestamp("startsOn", { mode: "date" }).notNull(),
-});
-
+// Tabela de notificações
 export const notifications = pgTable("gf_notifications", {
   id: serial("id").primaryKey(),
-  userId: serial("userId")
+  userId: integer("userId")
     .notNull()
     .references(() => users.id, { onDelete: "cascade" }),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-  postId: integer("postId"),
   isRead: boolean("isRead").notNull().default(false),
   type: text("type").notNull(),
   message: text("message").notNull(),
   createdOn: timestamp("createdOn", { mode: "date" }).notNull(),
 });
 
-export const posts = pgTable("gf_posts", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-  title: text("title").notNull(),
-  message: text("message").notNull(),
-  createdOn: timestamp("createdOn", { mode: "date" }).notNull(),
-});
-
-export const reply = pgTable("gf_replies", {
-  id: serial("id").primaryKey(),
-  userId: serial("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  postId: serial("postId")
-    .notNull()
-    .references(() => posts.id, { onDelete: "cascade" }),
-  groupId: serial("groupId")
-    .notNull()
-    .references(() => groups.id, { onDelete: "cascade" }),
-  message: text("message").notNull(),
-  createdOn: timestamp("createdOn", { mode: "date" }).notNull(),
-}, (table) => ({
-  postIdIdx: index("replies_post_id_idx").on(table.postId),
-}));
-
 /**
- * RELATIONSHIPS
- *
- * Here you can define drizzle relationships between table which helps improve the type safety
- * in your code.
+ * RELACIONAMENTOS
  */
 
-export const groupRelations = relations(groups, ({ many }) => ({
-  memberships: many(memberships),
+export const containerRelations = relations(containers, ({ many, one }) => ({
+  children: many(containers),
+  files: many(files),
+  user: one(users, { fields: [containers.userId], references: [users.id] }),
 }));
 
-export const membershipRelations = relations(memberships, ({ one }) => ({
-  user: one(users, { fields: [memberships.userId], references: [users.id] }),
-  profile: one(profiles, {
-    fields: [memberships.userId],
-    references: [profiles.userId],
+export const fileRelations = relations(files, ({ many, one }) => ({
+  signatures: many(signatures),
+  container: one(containers, {
+    fields: [files.containerId],
+    references: [containers.id],
   }),
-  group: one(groups, {
-    fields: [memberships.groupId],
-    references: [groups.id],
+  user: one(users, {
+    fields: [files.userId], references: [users.id]
   }),
 }));
 
-export const postsRelationships = relations(posts, ({ one }) => ({
-  user: one(users, { fields: [posts.userId], references: [users.id] }),
-  group: one(groups, { fields: [posts.groupId], references: [groups.id] }),
-}));
-
-export const followingRelationship = relations(following, ({ one }) => ({
-  foreignProfile: one(profiles, {
-    fields: [following.foreignUserId],
-    references: [profiles.userId],
-  }),
-  userProfile: one(profiles, {
-    fields: [following.userId],
-    references: [profiles.userId],
-  }),
+export const signatureRelations = relations(signatures, ({ one }) => ({
+  file: one(files, { fields: [signatures.fileId], references: [files.id] }),
+  user: one(users, { fields: [signatures.userId], references: [users.id] }),
 }));
 
 /**
  * TYPES
  *
- * You can create and export types from your schema to use in your application.
- * This is useful when you need to know the shape of the data you are working with
- * in a component or function.
+ * Aqui estão as tipagens inferidas que você pode usar em seu sistema.
+ * Essas tipagens são geradas diretamente a partir das tabelas criadas no Drizzle ORM.
  */
 export type Subscription = typeof subscriptions.$inferSelect;
-export type Group = typeof groups.$inferSelect;
-export type NewGroup = typeof groups.$inferInsert;
-export type Membership = typeof memberships.$inferSelect;
-
-export type Event = typeof events.$inferSelect;
-export type NewEvent = typeof events.$inferInsert;
-
 export type User = typeof users.$inferSelect;
 export type Profile = typeof profiles.$inferSelect;
-
 export type Notification = typeof notifications.$inferSelect;
+export type File = typeof files.$inferSelect;
+export type Signature = typeof signatures.$inferSelect;
+export type MagicLink = typeof magicLinks.$inferSelect;
+export type ResetToken = typeof resetTokens.$inferSelect;
+export type VerifyEmailToken = typeof verifyEmailTokens.$inferSelect;
+export type ContainerType = typeof containers.$inferSelect;
+export type Account = typeof accounts.$inferSelect;
 
-export type Post = typeof posts.$inferSelect;
-export type NewPost = typeof posts.$inferInsert;
-
-export type Reply = typeof reply.$inferSelect;
-export type NewReply = typeof reply.$inferInsert;
-
-export type Following = typeof following.$inferSelect;
-
-export type GroupId = Group["id"];

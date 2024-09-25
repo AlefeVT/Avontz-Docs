@@ -2,7 +2,6 @@ import { Button } from "@/components/ui/button";
 import { env } from "@/env";
 import { getCurrentUser } from "@/lib/session";
 import { pageTitleStyles, pageWrapperStyles } from "@/styles/common";
-import { acceptInviteUseCase } from "@/use-cases/invites";
 import { Link } from "@react-email/components";
 import { redirect } from "next/navigation";
 
@@ -20,11 +19,6 @@ export default async function InvitesPage({
   }
 
   const user = await getCurrentUser();
-
-  if (user) {
-    const groupId = await acceptInviteUseCase(user, { token });
-    redirect(`/dashboard/groups/${groupId}`);
-  }
 
   return (
     <div className={pageWrapperStyles}>
