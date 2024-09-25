@@ -1,10 +1,6 @@
 "use client";
 
 import { EditorProvider } from "@tiptap/react";
-import {
-  MenuBar,
-  extensions,
-} from "../../groups/[groupId]/info/edit-group-info-form";
 import { LoaderButton } from "@/components/loader-button";
 import { useServerAction } from "zsa-react";
 import { updateProfileBioAction } from "./actions";
@@ -22,8 +18,6 @@ export function EditBioForm({ bio }: { bio: string }) {
         onUpdate={({ editor }) => {
           htmlRef.current = editor.getHTML();
         }}
-        slotBefore={<MenuBar />}
-        extensions={extensions}
         content={bio}
         editable={true}
       ></EditorProvider>

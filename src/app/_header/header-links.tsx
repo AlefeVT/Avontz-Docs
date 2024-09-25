@@ -32,9 +32,9 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={"/browse"}>
+            {/* <Link href={"/browse"}>
               <SearchIcon className="w-4 h-4" /> Navegar nos grupos
-            </Link>
+            </Link> */}
           </Button>
 
           <Button

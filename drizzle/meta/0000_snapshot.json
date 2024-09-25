@@ -1,5 +1,5 @@
 {
-  "id": "ac938e5f-d37f-48ac-8205-d1c260947555",
+  "id": "0f614ba8-14b6-4baa-8e7d-5153132ece54",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -16,7 +16,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -52,7 +52,16 @@
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "user_id_account_type_idx": {
+          "name": "user_id_account_type_idx",
+          "columns": [
+            "userId",
+            "accountType"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "gf_accounts_userId_gf_user_id_fk": {
           "name": "gf_accounts_userId_gf_user_id_fk",
@@ -86,8 +95,8 @@
         }
       }
     },
-    "public.gf_events": {
-      "name": "gf_events",
+    "public.containers": {
+      "name": "containers",
       "schema": "",
       "columns": {
         "id": {
@@ -96,9 +105,9 @@
           "primaryKey": true,
           "notNull": true
         },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
+        "userId": {
+          "name": "userId",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -112,177 +121,30 @@
           "name": "description",
           "type": "text",
           "primaryKey": false,
-          "notNull": true
-        },
-        "imageId": {
-          "name": "imageId",
-          "type": "text",
-          "primaryKey": false,
           "notNull": false
         },
-        "startsOn": {
-          "name": "startsOn",
+        "createdAt": {
+          "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "gf_events_groupId_gf_group_id_fk": {
-          "name": "gf_events_groupId_gf_group_id_fk",
-          "tableFrom": "gf_events",
-          "tableTo": "gf_group",
-          "columnsFrom": [
-            "groupId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.gf_following": {
-      "name": "gf_following",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "foreignUserId": {
-          "name": "foreignUserId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "gf_following_userId_gf_user_id_fk": {
-          "name": "gf_following_userId_gf_user_id_fk",
-          "tableFrom": "gf_following",
-          "tableTo": "gf_user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "gf_following_foreignUserId_gf_user_id_fk": {
-          "name": "gf_following_foreignUserId_gf_user_id_fk",
-          "tableFrom": "gf_following",
-          "tableTo": "gf_user",
-          "columnsFrom": [
-            "foreignUserId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.gf_group": {
-      "name": "gf_group",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "name": {
-          "name": "name",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "description": {
-          "name": "description",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "isPublic": {
-          "name": "isPublic",
-          "type": "boolean",
-          "primaryKey": false,
           "notNull": true,
-          "default": false
-        },
-        "bannerId": {
-          "name": "bannerId",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false
-        },
-        "info": {
-          "name": "info",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "youtubeLink": {
-          "name": "youtubeLink",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "discordLink": {
-          "name": "discordLink",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "githubLink": {
-          "name": "githubLink",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
-        },
-        "xLink": {
-          "name": "xLink",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "''"
+          "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "containers_user_id_name_idx": {
+          "name": "containers_user_id_name_idx",
+          "columns": [
+            "userId",
+            "name"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
-        "gf_group_userId_gf_user_id_fk": {
-          "name": "gf_group_userId_gf_user_id_fk",
-          "tableFrom": "gf_group",
+        "containers_userId_gf_user_id_fk": {
+          "name": "containers_userId_gf_user_id_fk",
+          "tableFrom": "containers",
           "tableTo": "gf_user",
           "columnsFrom": [
             "userId"
@@ -297,8 +159,8 @@
       "compositePrimaryKeys": {},
       "uniqueConstraints": {}
     },
-    "public.gf_invites": {
-      "name": "gf_invites",
+    "public.files": {
+      "name": "files",
       "schema": "",
       "columns": {
         "id": {
@@ -307,28 +169,89 @@
           "primaryKey": true,
           "notNull": true
         },
-        "token": {
-          "name": "token",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true,
-          "default": "gen_random_uuid()"
-        },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
+        "containerId": {
+          "name": "containerId",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "key": {
+          "name": "key",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fileName": {
+          "name": "fileName",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fileSize": {
+          "name": "fileSize",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "fileType": {
+          "name": "fileType",
+          "type": "fileType",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "storageClass": {
+          "name": "storageClass",
+          "type": "storageClass",
+          "typeSchema": "public",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "'Standard'"
+        },
+        "createdAt": {
+          "name": "createdAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
         }
       },
-      "indexes": {},
+      "indexes": {
+        "files_container_id_user_id_idx": {
+          "name": "files_container_id_user_id_idx",
+          "columns": [
+            "containerId",
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
-        "gf_invites_groupId_gf_group_id_fk": {
-          "name": "gf_invites_groupId_gf_group_id_fk",
-          "tableFrom": "gf_invites",
-          "tableTo": "gf_group",
+        "files_containerId_containers_id_fk": {
+          "name": "files_containerId_containers_id_fk",
+          "tableFrom": "files",
+          "tableTo": "containers",
           "columnsFrom": [
-            "groupId"
+            "containerId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "files_userId_gf_user_id_fk": {
+          "name": "files_userId_gf_user_id_fk",
+          "tableFrom": "files",
+          "tableTo": "gf_user",
+          "columnsFrom": [
+            "userId"
           ],
           "columnsTo": [
             "id"
@@ -339,11 +262,11 @@
       },
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
-        "gf_invites_token_unique": {
-          "name": "gf_invites_token_unique",
+        "files_key_unique": {
+          "name": "files_key_unique",
           "nullsNotDistinct": false,
           "columns": [
-            "token"
+            "key"
           ]
         }
       }
@@ -377,7 +300,15 @@
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "magic_links_token_idx": {
+          "name": "magic_links_token_idx",
+          "columns": [
+            "token"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {},
       "compositePrimaryKeys": {},
       "uniqueConstraints": {
@@ -389,69 +320,6 @@
           ]
         }
       }
-    },
-    "public.gf_membership": {
-      "name": "gf_membership",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "role": {
-          "name": "role",
-          "type": "role",
-          "typeSchema": "public",
-          "primaryKey": false,
-          "notNull": false,
-          "default": "'member'"
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "gf_membership_userId_gf_user_id_fk": {
-          "name": "gf_membership_userId_gf_user_id_fk",
-          "tableFrom": "gf_membership",
-          "tableTo": "gf_user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "gf_membership_groupId_gf_group_id_fk": {
-          "name": "gf_membership_groupId_gf_group_id_fk",
-          "tableFrom": "gf_membership",
-          "tableTo": "gf_group",
-          "columnsFrom": [
-            "groupId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
     },
     "public.gf_newsletter": {
       "name": "gf_newsletter",
@@ -495,21 +363,9 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "postId": {
-          "name": "postId",
           "type": "integer",
           "primaryKey": false,
-          "notNull": false
+          "notNull": true
         },
         "isRead": {
           "name": "isRead",
@@ -551,92 +407,6 @@
           ],
           "onDelete": "cascade",
           "onUpdate": "no action"
-        },
-        "gf_notifications_groupId_gf_group_id_fk": {
-          "name": "gf_notifications_groupId_gf_group_id_fk",
-          "tableFrom": "gf_notifications",
-          "tableTo": "gf_group",
-          "columnsFrom": [
-            "groupId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
-    "public.gf_posts": {
-      "name": "gf_posts",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "title": {
-          "name": "title",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "message": {
-          "name": "message",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdOn": {
-          "name": "createdOn",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "gf_posts_userId_gf_user_id_fk": {
-          "name": "gf_posts_userId_gf_user_id_fk",
-          "tableFrom": "gf_posts",
-          "tableTo": "gf_user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "gf_posts_groupId_gf_group_id_fk": {
-          "name": "gf_posts_groupId_gf_group_id_fk",
-          "tableFrom": "gf_posts",
-          "tableTo": "gf_group",
-          "columnsFrom": [
-            "groupId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
         }
       },
       "compositePrimaryKeys": {},
@@ -654,7 +424,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -711,92 +481,6 @@
         }
       }
     },
-    "public.gf_replies": {
-      "name": "gf_replies",
-      "schema": "",
-      "columns": {
-        "id": {
-          "name": "id",
-          "type": "serial",
-          "primaryKey": true,
-          "notNull": true
-        },
-        "userId": {
-          "name": "userId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "postId": {
-          "name": "postId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "groupId": {
-          "name": "groupId",
-          "type": "serial",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "message": {
-          "name": "message",
-          "type": "text",
-          "primaryKey": false,
-          "notNull": true
-        },
-        "createdOn": {
-          "name": "createdOn",
-          "type": "timestamp",
-          "primaryKey": false,
-          "notNull": true
-        }
-      },
-      "indexes": {},
-      "foreignKeys": {
-        "gf_replies_userId_gf_user_id_fk": {
-          "name": "gf_replies_userId_gf_user_id_fk",
-          "tableFrom": "gf_replies",
-          "tableTo": "gf_user",
-          "columnsFrom": [
-            "userId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "gf_replies_postId_gf_posts_id_fk": {
-          "name": "gf_replies_postId_gf_posts_id_fk",
-          "tableFrom": "gf_replies",
-          "tableTo": "gf_posts",
-          "columnsFrom": [
-            "postId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        },
-        "gf_replies_groupId_gf_group_id_fk": {
-          "name": "gf_replies_groupId_gf_group_id_fk",
-          "tableFrom": "gf_replies",
-          "tableTo": "gf_group",
-          "columnsFrom": [
-            "groupId"
-          ],
-          "columnsTo": [
-            "id"
-          ],
-          "onDelete": "cascade",
-          "onUpdate": "no action"
-        }
-      },
-      "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
-    },
     "public.gf_reset_tokens": {
       "name": "gf_reset_tokens",
       "schema": "",
@@ -809,7 +493,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -826,7 +510,15 @@
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "reset_tokens_token_idx": {
+          "name": "reset_tokens_token_idx",
+          "columns": [
+            "token"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "gf_reset_tokens_userId_gf_user_id_fk": {
           "name": "gf_reset_tokens_userId_gf_user_id_fk",
@@ -865,7 +557,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -876,11 +568,102 @@
           "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "sessions_user_id_idx": {
+          "name": "sessions_user_id_idx",
+          "columns": [
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "gf_session_userId_gf_user_id_fk": {
           "name": "gf_session_userId_gf_user_id_fk",
           "tableFrom": "gf_session",
+          "tableTo": "gf_user",
+          "columnsFrom": [
+            "userId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        }
+      },
+      "compositePrimaryKeys": {},
+      "uniqueConstraints": {}
+    },
+    "public.signatures": {
+      "name": "signatures",
+      "schema": "",
+      "columns": {
+        "id": {
+          "name": "id",
+          "type": "serial",
+          "primaryKey": true,
+          "notNull": true
+        },
+        "fileId": {
+          "name": "fileId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "userId": {
+          "name": "userId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "signatureType": {
+          "name": "signatureType",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "signatureValue": {
+          "name": "signatureValue",
+          "type": "text",
+          "primaryKey": false,
+          "notNull": true
+        },
+        "signedAt": {
+          "name": "signedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": true,
+          "default": "now()"
+        }
+      },
+      "indexes": {
+        "signatures_file_id_user_id_idx": {
+          "name": "signatures_file_id_user_id_idx",
+          "columns": [
+            "fileId",
+            "userId"
+          ],
+          "isUnique": false
+        }
+      },
+      "foreignKeys": {
+        "signatures_fileId_files_id_fk": {
+          "name": "signatures_fileId_files_id_fk",
+          "tableFrom": "signatures",
+          "tableTo": "files",
+          "columnsFrom": [
+            "fileId"
+          ],
+          "columnsTo": [
+            "id"
+          ],
+          "onDelete": "cascade",
+          "onUpdate": "no action"
+        },
+        "signatures_userId_gf_user_id_fk": {
+          "name": "signatures_userId_gf_user_id_fk",
+          "tableFrom": "signatures",
           "tableTo": "gf_user",
           "columnsFrom": [
             "userId"
@@ -907,7 +690,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -936,7 +719,15 @@
           "notNull": true
         }
       },
-      "indexes": {},
+      "indexes": {
+        "subscriptions_stripe_subscription_id_idx": {
+          "name": "subscriptions_stripe_subscription_id_idx",
+          "columns": [
+            "stripeSubscriptionId"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "gf_subscriptions_userId_gf_user_id_fk": {
           "name": "gf_subscriptions_userId_gf_user_id_fk",
@@ -953,7 +744,15 @@
         }
       },
       "compositePrimaryKeys": {},
-      "uniqueConstraints": {}
+      "uniqueConstraints": {
+        "gf_subscriptions_userId_unique": {
+          "name": "gf_subscriptions_userId_unique",
+          "nullsNotDistinct": false,
+          "columns": [
+            "userId"
+          ]
+        }
+      }
     },
     "public.gf_user": {
       "name": "gf_user",
@@ -1003,7 +802,7 @@
         },
         "userId": {
           "name": "userId",
-          "type": "serial",
+          "type": "integer",
           "primaryKey": false,
           "notNull": true
         },
@@ -1020,7 +819,15 @@
           "notNull": false
         }
       },
-      "indexes": {},
+      "indexes": {
+        "verify_email_tokens_token_idx": {
+          "name": "verify_email_tokens_token_idx",
+          "columns": [
+            "token"
+          ],
+          "isUnique": false
+        }
+      },
       "foreignKeys": {
         "gf_verify_email_tokens_userId_gf_user_id_fk": {
           "name": "gf_verify_email_tokens_userId_gf_user_id_fk",
@@ -1058,12 +865,31 @@
         "github"
       ]
     },
+    "public.fileType": {
+      "name": "fileType",
+      "schema": "public",
+      "values": [
+        "pdf",
+        "doc",
+        "image",
+        "other"
+      ]
+    },
     "public.role": {
       "name": "role",
       "schema": "public",
       "values": [
         "member",
         "admin"
+      ]
+    },
+    "public.storageClass": {
+      "name": "storageClass",
+      "schema": "public",
+      "values": [
+        "Standard",
+        "InfrequentAccess",
+        "Archive"
       ]
     }
   },

@@ -20,7 +20,7 @@ import { applicationName } from "@/app-config";
 export const BASE_URL = env.HOST_NAME;
 
 export function MagicLinkEmail({ token }: { token: string }) {
-  const previewText = `You're been invted to a group!`;
+  const previewText = `Você foi convidado para um grupo!`;
   return (
     <Html>
       <Head />
@@ -28,7 +28,7 @@ export function MagicLinkEmail({ token }: { token: string }) {
       <Tailwind>
         <React.Fragment>
           <Body className="bg-white my-auto mx-auto font-sans">
-            <Container className="border border-solid border-[#eaeaea] rounded my-[40px] mx-auto p-[20px] w-[465px]">
+            <Container className="border border-solid border-[#eaeaea] arredondado my-[40px] mx-auto p-[20px] w-[465px]">
               <Section className="mt-[32px]">
                 <Img
                   src={`${BASE_URL}/group.jpeg`}
@@ -41,7 +41,7 @@ export function MagicLinkEmail({ token }: { token: string }) {
 
               <Section className="text-center mt-[32px] mb-[32px]">
                 <Text className="text-black font-medium text-[14px] leading-[24px] mb-8">
-                  You&apos;re magic link login is below, click to login. group.
+                  O link mágico para o seu login está abaixo, clique para fazer login no grupo.
                 </Text>
 
                 <Text className="text-black font-medium text-[14px] leading-[24px]">
@@ -50,7 +50,7 @@ export function MagicLinkEmail({ token }: { token: string }) {
                     target="_blank"
                     className="text-[#2754C5] underline"
                   >
-                    Login using Magic Link
+                    Fazer login usando o Link Mágico
                   </Link>
                 </Text>
               </Section>
@@ -58,7 +58,7 @@ export function MagicLinkEmail({ token }: { token: string }) {
               <Hr className="border border-solid border-[#eaeaea] my-[26px] mx-0 w-full" />
 
               <Text className="text-[#666666] text-[12px] leading-[24px] flex items-center justify-center">
-                © 2024 {applicationName}. All rights reserved.
+                © 2024 {applicationName}. Todos os direitos reservados.
               </Text>
             </Container>
           </Body>
