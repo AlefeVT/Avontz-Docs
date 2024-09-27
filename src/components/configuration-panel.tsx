@@ -1,20 +1,20 @@
-import { cn } from "@/lib/utils";
-import { cardStyles } from "@/styles/common";
-import { ReactNode } from "react";
+import { cn } from '@/lib/utils';
+import { cardStyles } from '@/styles/common';
+import { ReactNode } from 'react';
 
 export function ConfigurationPanel({
   title,
   children,
-  variant = "default",
+  variant = 'default',
 }: {
   title: string;
   children: ReactNode;
-  variant?: "destructive" | "default";
+  variant?: 'destructive' | 'default';
 }) {
   return (
     <div
       className={cn(cardStyles, {
-        "border-red-500": variant === "destructive",
+        'border-red-500': variant === 'destructive',
       })}
     >
       <div className="border-b px-4 py-2 sm:px-6 md:py-3 bg-gray-200 dark:bg-gray-800 rounded-t-md">

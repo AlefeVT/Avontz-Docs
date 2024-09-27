@@ -1,9 +1,9 @@
-import { database } from "@/db";
-import { User, accounts, users } from "@/db/schema";
-import { eq } from "drizzle-orm";
-import crypto from "crypto";
-import { UserId } from "@/use-cases/types";
-import { getAccountByUserId } from "@/data-access/accounts";
+import { database } from '@/db';
+import { User, accounts, users } from '@/db/schema';
+import { eq } from 'drizzle-orm';
+import crypto from 'crypto';
+import { UserId } from '@/use-cases/types';
+import { getAccountByUserId } from '@/data-access/accounts';
 
 const ITERATIONS = 10000;
 
@@ -26,10 +26,10 @@ async function hashPassword(plainTextPassword: string, salt: string) {
       salt,
       ITERATIONS,
       64,
-      "sha512",
+      'sha512',
       (err, derivedKey) => {
         if (err) reject(err);
-        resolve(derivedKey.toString("hex"));
+        resolve(derivedKey.toString('hex'));
       }
     );
   });
@@ -58,7 +58,7 @@ export async function createMagicUser(email: string) {
     .insert(accounts)
     .values({
       userId: user.id,
-      accountType: "email",
+      accountType: 'email',
     })
     .returning();
 

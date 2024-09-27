@@ -3,7 +3,7 @@ export function NewsletterSection() {
     <div>
       <form
         action={async (formData: FormData) => {
-          "use server";
+          'use server';
         }}
       >
         <div>

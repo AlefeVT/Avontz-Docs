@@ -1,7 +1,7 @@
-import { streamImageFromUrl } from "@/app/api/streams";
-import { env } from "@/env";
-import { getProfileImageUrlUseCase } from "@/use-cases/users";
-import { NextResponse } from "next/server";
+import { streamImageFromUrl } from '@/app/api/streams';
+import { env } from '@/env';
+import { getProfileImageUrlUseCase } from '@/use-cases/users';
+import { NextResponse } from 'next/server';
 
 export const GET = async (
   req: Request,
@@ -12,13 +12,13 @@ export const GET = async (
 
     if (!params.imageId) {
       return NextResponse.json(
-        { error: "Image ID is required" },
+        { error: 'Image ID is required' },
         { status: 400 }
       );
     }
 
     const url =
-      params.imageId === "default"
+      params.imageId === 'default'
         ? `${env.HOST_NAME}/group.jpeg`
         : await getProfileImageUrlUseCase({
             userId: parseInt(userId),

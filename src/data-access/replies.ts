@@ -1,6 +1,6 @@
-import { database } from "@/db";
-import { NewReply, Reply, reply } from "@/db/schema";
-import { count, eq } from "drizzle-orm";
+import { database } from '@/db';
+import { NewReply, Reply, reply } from '@/db/schema';
+import { count, eq } from 'drizzle-orm';
 
 export async function getReplyCountOnPost(postId: number) {
   const [{ count: total }] = await database

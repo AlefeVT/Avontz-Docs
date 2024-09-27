@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -13,22 +13,25 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { pageTitleStyles } from "@/styles/common";
-import { cn } from "@/lib/utils";
-import { useServerAction } from "zsa-react";
-import Link from "next/link";
-import { useToast } from "@/components/ui/use-toast";
-import { signInAction } from "./actions";
-import { LoaderButton } from "@/components/loader-button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
+} from '@/components/ui/form';
+import { pageTitleStyles } from '@/styles/common';
+import { cn } from '@/lib/utils';
+import { useServerAction } from 'zsa-react';
+import Link from 'next/link';
+import { useToast } from '@/components/ui/use-toast';
+import { signInAction } from './actions';
+import { LoaderButton } from '@/components/loader-button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Terminal } from 'lucide-react';
 
 const registrationSchema = z.object({
-  email: z.string().email({ message: "Por favor, insira um endereço de e-mail válido." }),
-  password: z.string().min(8, { message: "A senha deve ter no mínimo 8 caracteres." }),
+  email: z
+    .string()
+    .email({ message: 'Por favor, insira um endereço de e-mail válido.' }),
+  password: z
+    .string()
+    .min(8, { message: 'A senha deve ter no mínimo 8 caracteres.' }),
 });
-
 
 export default function SignInPage() {
   const { toast } = useToast();
@@ -36,15 +39,15 @@ export default function SignInPage() {
   const { execute, isPending, error, reset } = useServerAction(signInAction, {
     onError({ err }) {
       toast({
-        title: "Algo deu errado",
+        title: 'Algo deu errado',
         description: err.message,
-        variant: "destructive",
+        variant: 'destructive',
       });
     },
     onSuccess() {
       toast({
-        title: "Vamos!",
-        description: "Aproveite sua sessão",
+        title: 'Vamos!',
+        description: 'Aproveite sua sessão',
       });
     },
   });
@@ -52,8 +55,8 @@ export default function SignInPage() {
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
-      email: "",
-      password: "",
+      email: '',
+      password: '',
     },
   });
 
@@ -63,7 +66,7 @@ export default function SignInPage() {
 
   return (
     <div className="py-24 mx-auto max-w-[400px] space-y-6">
-      <h1 className={cn(pageTitleStyles, "text-center")}>Entrar</h1>
+      <h1 className={cn(pageTitleStyles, 'text-center')}>Entrar</h1>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -114,7 +117,7 @@ export default function SignInPage() {
           )}
 
           <LoaderButton isLoading={isPending} className="w-full" type="submit">
-          Entrar
+            Entrar
           </LoaderButton>
         </form>
       </Form>
@@ -136,7 +139,7 @@ export default function SignInPage() {
         </div>
       </div>
 
-      <Button className="w-full" variant={"secondary"}>
+      <Button className="w-full" variant={'secondary'}>
         <Link href="/sign-up">Crie uma conta</Link>
       </Button>
     </div>

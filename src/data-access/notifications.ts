@@ -1,7 +1,7 @@
-import { database } from "@/db";
-import { Notification, notifications } from "@/db/schema";
-import { UserId } from "@/use-cases/types";
-import { and, eq } from "drizzle-orm";
+import { database } from '@/db';
+import { Notification, notifications } from '@/db/schema';
+import { UserId } from '@/use-cases/types';
+import { and, eq } from 'drizzle-orm';
 
 const MAX_NOTIFICATIONS_TO_RETURN = 30;
 const MAX_NOTIFICATIONS_IN_HEADER = 3;

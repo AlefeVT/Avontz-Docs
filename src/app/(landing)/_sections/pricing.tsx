@@ -1,11 +1,11 @@
-import { SignedIn } from "@/components/auth";
-import { SignedOut } from "@/components/auth";
-import Container from "@/components/container";
-import { CheckoutButton } from "@/components/stripe/upgrade-button/checkout-button";
-import { Button } from "@/components/ui/button";
-import { env } from "@/env";
-import { CheckIcon } from "lucide-react";
-import Link from "next/link";
+import { SignedIn } from '@/components/auth';
+import { SignedOut } from '@/components/auth';
+import Container from '@/components/container';
+import { CheckoutButton } from '@/components/stripe/upgrade-button/checkout-button';
+import { Button } from '@/components/ui/button';
+import { env } from '@/env';
+import { CheckIcon } from 'lucide-react';
+import Link from 'next/link';
 
 function PricingCard({
   title,
@@ -45,8 +45,8 @@ function PricingCard({
       <div className="mt-auto">
         <SignedIn>
           {hasSubscription ? (
-            <Button variant={"default"} asChild>
-              <Link href={"/dashboard"}>Vá para o painel</Link>
+            <Button variant={'default'} asChild>
+              <Link href={'/dashboard'}>Vá para o painel</Link>
             </Button>
           ) : (
             <CheckoutButton priceId={priceId} className="w-full">
@@ -56,8 +56,8 @@ function PricingCard({
         </SignedIn>
 
         <SignedOut>
-          <Button variant={"default"} asChild className="w-full">
-            <Link href={"/sign-in"}>Faça login para atualizar</Link>
+          <Button variant={'default'} asChild className="w-full">
+            <Link href={'/sign-in'}>Faça login para atualizar</Link>
           </Button>
         </SignedOut>
       </div>
@@ -77,10 +77,11 @@ export function PricingSection({
           Preços simples para todos
         </h2>
         <p className="mb-14 max-w-3xl text-center w-full">
-          Escolha o plano que melhor se adapta a você. Desfrute de acesso completo ao conteúdo premium e suporte especializado.
-          <br className="hidden md:block" /> Comece sua jornada hoje e alcance seus objetivos!
+          Escolha o plano que melhor se adapta a você. Desfrute de acesso
+          completo ao conteúdo premium e suporte especializado.
+          <br className="hidden md:block" /> Comece sua jornada hoje e alcance
+          seus objetivos!
         </p>
-
 
         <div className="flex flex-col md:flex-row justify-center w-full gap-12">
           {/* <PricingCard
@@ -101,11 +102,11 @@ export function PricingSection({
             hasSubscription={hasSubscription}
             priceId={env.NEXT_PUBLIC_PRICE_ID_BASIC}
             features={[
-              "Solução Completa Next.js",
-              "Integração com Stripe",
-              "Autenticação de Usuário",
-              "Autorização Baseada em Funções",
-              "Painel de Controle do Usuário",
+              'Solução Completa Next.js',
+              'Integração com Stripe',
+              'Autenticação de Usuário',
+              'Autorização Baseada em Funções',
+              'Painel de Controle do Usuário',
             ]}
           />
 
@@ -115,14 +116,13 @@ export function PricingSection({
             hasSubscription={hasSubscription}
             priceId={env.NEXT_PUBLIC_PRICE_ID_PREMIUM}
             features={[
-              "Solução Completa Next.js",
-              "Integração com Stripe",
-              "Autenticação de Usuário",
-              "Autorização Baseada em Funções",
-              "Painel de Controle do Usuário",
+              'Solução Completa Next.js',
+              'Integração com Stripe',
+              'Autenticação de Usuário',
+              'Autorização Baseada em Funções',
+              'Painel de Controle do Usuário',
             ]}
           />
-
         </div>
       </Container>
     </section>

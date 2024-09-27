@@ -1,15 +1,15 @@
-import { env } from "@/env";
-import { stripe } from "@/lib/stripe";
-import { headers } from "next/headers";
-import type Stripe from "stripe";
+import { env } from '@/env';
+import { stripe } from '@/lib/stripe';
+import { headers } from 'next/headers';
+import type Stripe from 'stripe';
 import {
   createSubscriptionUseCase,
   updateSubscriptionUseCase,
-} from "@/use-cases/subscriptions";
+} from '@/use-cases/subscriptions';
 
 export async function POST(req: Request) {
   const body = await req.text();
-  const signature = headers().get("Stripe-Signature") as string;
+  const signature = headers().get('Stripe-Signature') as string;
 
   let event: Stripe.Event;
 
@@ -22,13 +22,13 @@ export async function POST(req: Request) {
   } catch (error) {
     return new Response(
       `Webhook Error: ${
-        error instanceof Error ? error.message : "Unknown error"
+        error instanceof Error ? error.message : 'Unknown error'
       }`,
       { status: 400 }
     );
   }
 
-  if (event.type === "checkout.session.completed") {
+  if (event.type === 'checkout.session.completed') {
     const session = event.data.object as Stripe.Checkout.Session;
     const subscription = await stripe.subscriptions.retrieve(
       session.subscription as string
@@ -42,7 +42,7 @@ export async function POST(req: Request) {
       stripeCurrentPeriodEnd: new Date(subscription.current_period_end * 1000),
     });
   } else if (
-    ["customer.subscription.created", "customer.subscription.updated"].includes(
+    ['customer.subscription.created', 'customer.subscription.updated'].includes(
       event.type
     )
   ) {

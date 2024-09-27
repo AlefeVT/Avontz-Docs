@@ -3,8 +3,8 @@ import {
   deleteFollow,
   getFollow,
   getFollowersForUser,
-} from "@/data-access/following";
-import { UserId, UserSession } from "./types";
+} from '@/data-access/following';
+import { UserId, UserSession } from './types';
 
 export async function followUserUseCase(
   authenticatedUser: UserSession,

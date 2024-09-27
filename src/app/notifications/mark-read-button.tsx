@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { useServerAction } from "zsa-react";
-import { markAllNotificationsAsReadAction } from "./actions";
-import { LoaderButton } from "@/components/loader-button";
-import { CheckCheckIcon } from "lucide-react";
-import { btnIconStyles, btnStyles } from "@/styles/icons";
-import { useToast } from "@/components/ui/use-toast";
+import { useServerAction } from 'zsa-react';
+import { markAllNotificationsAsReadAction } from './actions';
+import { LoaderButton } from '@/components/loader-button';
+import { CheckCheckIcon } from 'lucide-react';
+import { btnIconStyles, btnStyles } from '@/styles/icons';
+import { useToast } from '@/components/ui/use-toast';
 
 export function MarkReadAllButton() {
   const { toast } = useToast();
@@ -14,9 +14,9 @@ export function MarkReadAllButton() {
     {
       onSuccess: () => {
         toast({
-          title: "Sucesso",
-          description: "Todas as mensagens foram marcadas como lidas.",
-        });        
+          title: 'Sucesso',
+          description: 'Todas as mensagens foram marcadas como lidas.',
+        });
       },
     }
   );

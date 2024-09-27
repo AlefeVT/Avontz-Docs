@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { useParams, useSearchParams } from "next/navigation";
-import { z } from "zod";
+import { useParams, useSearchParams } from 'next/navigation';
+import { z } from 'zod';
 
 export function useSafeParams<T extends z.AnyZodObject>(schema: T) {
   const params = useParams();

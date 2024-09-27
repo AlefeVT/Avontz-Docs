@@ -1,5 +1,5 @@
-import { database } from "@/db";
-import crypto from "crypto";
+import { database } from '@/db';
+import crypto from 'crypto';
 
 export async function generateRandomToken(length: number) {
   const buf = await new Promise<Buffer>((resolve, reject) => {
@@ -12,7 +12,7 @@ export async function generateRandomToken(length: number) {
     });
   });
 
-  return buf.toString("hex").slice(0, length);
+  return buf.toString('hex').slice(0, length);
 }
 
 export async function createTransaction<T extends typeof database>(

@@ -1,14 +1,14 @@
-"use client";
+'use client';
 
-import { subscribeEmailAction } from "@/app/(coming-soon)/actions";
-import { LoaderButton } from "@/components/loader-button";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { useToast } from "@/components/ui/use-toast";
-import { Terminal } from "lucide-react";
-import { useRef } from "react";
-import { useServerAction } from "zsa-react";
+import { subscribeEmailAction } from '@/app/(coming-soon)/actions';
+import { LoaderButton } from '@/components/loader-button';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Input } from '@/components/ui/input';
+import { Label } from '@/components/ui/label';
+import { useToast } from '@/components/ui/use-toast';
+import { Terminal } from 'lucide-react';
+import { useRef } from 'react';
+import { useServerAction } from 'zsa-react';
 
 export function NewsletterForm() {
   const { toast } = useToast();
@@ -20,12 +20,12 @@ export function NewsletterForm() {
       onSuccess() {
         ref.current?.reset();
         toast({
-          title: "Success",
-          description: "You have been subscribed to our newsletter.",
+          title: 'Success',
+          description: 'You have been subscribed to our newsletter.',
         });
       },
       onError({ err }) {
-        console.log("error", err.message);
+        console.log('error', err.message);
       },
     }
   );
@@ -39,7 +39,7 @@ export function NewsletterForm() {
           event.preventDefault();
           const form = event.target as HTMLFormElement;
           const formData = new FormData(form);
-          const email = formData.get("email") as string;
+          const email = formData.get('email') as string;
           await execute({ email });
         }}
       >
@@ -53,11 +53,11 @@ export function NewsletterForm() {
           placeholder="Enter your email address"
         />
 
-        <LoaderButton isLoading={status === "pending"}>Subscribe</LoaderButton>
+        <LoaderButton isLoading={status === 'pending'}>Subscribe</LoaderButton>
       </form>
 
       <div className="mt-4">
-        {status === "success" && (
+        {status === 'success' && (
           <Alert variant="success">
             <Terminal className="h-4 w-4" />
             <AlertTitle>Successfully subscribed</AlertTitle>

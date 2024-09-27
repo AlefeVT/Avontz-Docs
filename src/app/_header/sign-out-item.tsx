@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
-import { LogOut } from "lucide-react";
-import * as NProgress from "nprogress";
-import { signOutAction } from "./actions";
+import { DropdownMenuItem } from '@/components/ui/dropdown-menu';
+import { LogOut } from 'lucide-react';
+import * as NProgress from 'nprogress';
+import { signOutAction } from './actions';
 
 export function SignOutItem() {
   return (

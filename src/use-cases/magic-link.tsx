@@ -1,19 +1,19 @@
-import { applicationName } from "@/app-config";
+import { applicationName } from '@/app-config';
 import {
   deleteMagicToken,
   getMagicLinkByToken,
   upsertMagicLink,
-} from "@/data-access/magic-links";
-import { createProfile } from "@/data-access/profiles";
+} from '@/data-access/magic-links';
+import { createProfile } from '@/data-access/profiles';
 import {
   createMagicUser,
   getUserByEmail,
   setEmailVerified,
-} from "@/data-access/users";
-import { MagicLinkEmail } from "@/emails/magic-link";
-import { sendEmail } from "@/lib/send-email";
-import { animals, colors, uniqueNamesGenerator } from "unique-names-generator";
-import { PublicError } from "./errors";
+} from '@/data-access/users';
+import { MagicLinkEmail } from '@/emails/magic-link';
+import { sendEmail } from '@/lib/send-email';
+import { animals, colors, uniqueNamesGenerator } from 'unique-names-generator';
+import { PublicError } from './errors';
 
 export async function sendMagicLinkUseCase(email: string) {
   const token = await upsertMagicLink(email);
@@ -29,11 +29,11 @@ export async function loginWithMagicLinkUseCase(token: string) {
   const magicLinkInfo = await getMagicLinkByToken(token);
 
   if (!magicLinkInfo) {
-    throw new PublicError("Invalid or expired magic link");
+    throw new PublicError('Invalid or expired magic link');
   }
 
   if (magicLinkInfo.tokenExpiresAt! < new Date()) {
-    throw new PublicError("This magic link has expired");
+    throw new PublicError('This magic link has expired');
   }
 
   const existingUser = await getUserByEmail(magicLinkInfo.email);
@@ -46,8 +46,8 @@ export async function loginWithMagicLinkUseCase(token: string) {
     const newUser = await createMagicUser(magicLinkInfo.email);
     const displayName = uniqueNamesGenerator({
       dictionaries: [colors, animals],
-      separator: " ",
-      style: "capital",
+      separator: ' ',
+      style: 'capital',
     });
     await createProfile(newUser.id, displayName);
     await deleteMagicToken(token);

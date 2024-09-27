@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Button } from "@/components/ui/button";
-import useMediaQuery from "@/hooks/use-media-query";
-import { BookIcon, LayoutDashboard, File, Package } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Button } from '@/components/ui/button';
+import useMediaQuery from '@/hooks/use-media-query';
+import { BookIcon, LayoutDashboard, File, Package } from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
   const path = usePathname();
   const { isMobile } = useMediaQuery();
-  const isLandingPage = path === "/";
+  const isLandingPage = path === '/';
 
   if (isMobile) return null;
 
@@ -18,37 +18,37 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
       {!isLandingPage && isAuthenticated && (
         <div className="hidden md:flex items-center gap-2">
           <Button
-            variant={"link"}
+            variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={"/dashboard"}>
+            <Link href={'/dashboard'}>
               <LayoutDashboard className="w-4 h-4" /> Painel Geral
             </Link>
           </Button>
 
           <Button
-            variant={"link"}
+            variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={"/containers"}>
+            <Link href={'/containers'}>
               <Package className="w-4 h-4" /> Caixas
             </Link>
           </Button>
 
           <Button
-            variant={"link"}
+            variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={"/documents"}>
+            <Link href={'/documents'}>
               <File className="w-4 h-4" /> Documentos
             </Link>
           </Button>
 
           <Button
-            variant={"link"}
+            variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
@@ -58,11 +58,11 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
           </Button>
 
           <Button
-            variant={"link"}
+            variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={"/docs"}>
+            <Link href={'/docs'}>
               <BookIcon className="w-4 h-4" /> API Docs
             </Link>
           </Button>
@@ -71,16 +71,16 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
 
       {(isLandingPage || !isAuthenticated) && (
         <div className="hidden md:flex gap-4">
-          <Button variant={"link"} asChild>
+          <Button variant={'link'} asChild>
             <Link href="/#features">Características</Link>
           </Button>
 
-          <Button variant={"link"} asChild>
+          <Button variant={'link'} asChild>
             <Link href="/#pricing">Preços</Link>
           </Button>
 
-          <Button variant={"link"} asChild>
-            <Link href={"/browse"}>Navegar nos grupos</Link>
+          <Button variant={'link'} asChild>
+            <Link href={'/browse'}>Navegar nos grupos</Link>
           </Button>
         </div>
       )}

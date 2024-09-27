@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { lucia } from "@/auth";
-import { authenticatedAction } from "@/lib/safe-action";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
+import { lucia } from '@/auth';
+import { authenticatedAction } from '@/lib/safe-action';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
 
 export const invalidateUserSessionsAction = authenticatedAction
   .createServerAction()
@@ -15,5 +15,5 @@ export const invalidateUserSessionsAction = authenticatedAction
       sessionCookie.value,
       sessionCookie.attributes
     );
-    redirect("/sign-in");
+    redirect('/sign-in');
   });

@@ -1,25 +1,25 @@
-"use client";
+'use client';
 
-import { BookIcon, RocketIcon } from "lucide-react";
-import { usePathname } from "next/navigation";
+import { BookIcon, RocketIcon } from 'lucide-react';
+import { usePathname } from 'next/navigation';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
+} from '@/components/ui/dropdown-menu';
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
 
-import { LogOut, Settings2Icon } from "lucide-react";
+import { LogOut, Settings2Icon } from 'lucide-react';
 
-import Image from "next/image";
-import { ModeToggle } from "@/components/mode-toggle";
-import Link from "next/link";
-import { applicationName } from "@/app-config";
-import { Button } from "@/components/ui/button";
-import { Session } from "lucia";
+import Image from 'next/image';
+import { ModeToggle } from '@/components/mode-toggle';
+import Link from 'next/link';
+import { applicationName } from '@/app-config';
+import { Button } from '@/components/ui/button';
+import { Session } from 'lucia';
 
 export function ConditionalHeader({
   session,
@@ -29,7 +29,7 @@ export function ConditionalHeader({
 }) {
   const path = usePathname();
   const isDashboard =
-    path.startsWith("/dashboard") || path.startsWith("/purchases");
+    path.startsWith('/dashboard') || path.startsWith('/purchases');
   const isSignedIn = !!session;
 
   return (
@@ -50,21 +50,21 @@ export function ConditionalHeader({
           {isDashboard && (
             <div className="flex items-center gap-2">
               <Button
-                variant={"link"}
+                variant={'link'}
                 asChild
                 className="flex items-center justify-center gap-2"
               >
-                <Link href={"/docs"}>
+                <Link href={'/docs'}>
                   <BookIcon className="w-4 h-4" /> Documentation
                 </Link>
               </Button>
 
               <Button
-                variant={"link"}
+                variant={'link'}
                 asChild
                 className="flex items-center justify-center gap-2"
               >
-                <Link href={"/purchases"}>
+                <Link href={'/purchases'}>
                   <RocketIcon className="w-4 h-4" /> Dashboard
                 </Link>
               </Button>
@@ -73,11 +73,11 @@ export function ConditionalHeader({
 
           {!isDashboard && (
             <div>
-              <Button variant={"link"} asChild>
+              <Button variant={'link'} asChild>
                 <Link href="/#features">Características</Link>
               </Button>
 
-              <Button variant={"link"} asChild>
+              <Button variant={'link'} asChild>
                 <Link href="/#pricing">Preços</Link>
               </Button>
             </div>

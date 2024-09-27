@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { generateStripeSessionAction } from "./actions";
-import { ReactNode } from "react";
-import { useServerAction } from "zsa-react";
-import { LoaderButton } from "@/components/loader-button";
+import { generateStripeSessionAction } from './actions';
+import { ReactNode } from 'react';
+import { useServerAction } from 'zsa-react';
+import { LoaderButton } from '@/components/loader-button';
 
 export function CheckoutButton({
   className,

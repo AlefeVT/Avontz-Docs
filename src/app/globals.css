@@ -117,12 +117,10 @@
     padding: 0 1rem;
     @apply list-decimal;
   }
-    
+
   li {
     padding: 0 1rem;
   }
-
-
 
   h1 {
     @apply text-6xl font-bold;
@@ -148,7 +146,6 @@
     @apply text-xl font-bold;
   }
 
-
   code {
     background-color: rgba(#616161, 0.1);
     color: #616161;
@@ -157,7 +154,7 @@
   pre {
     background: #0d0d0d;
     color: #fff;
-    font-family: "JetBrainsMono", monospace;
+    font-family: 'JetBrainsMono', monospace;
     padding: 0.75rem 1rem;
     border-radius: 0.5rem;
 

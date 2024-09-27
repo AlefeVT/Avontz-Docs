@@ -1,7 +1,7 @@
-"use client";
+'use client';
 
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
 import {
   Form,
   FormControl,
@@ -9,13 +9,13 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { z } from "zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { LoaderButton } from "@/components/loader-button";
-import { useToast } from "@/components/ui/use-toast";
-import { updateProfileNameAction } from "./actions";
-import { useServerAction } from "zsa-react";
+} from '@/components/ui/form';
+import { z } from 'zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { LoaderButton } from '@/components/loader-button';
+import { useToast } from '@/components/ui/use-toast';
+import { updateProfileNameAction } from './actions';
+import { useServerAction } from 'zsa-react';
 
 const updateProfileNameSchema = z.object({
   profileName: z.string().min(1),
@@ -36,16 +36,16 @@ export function ProfileNameForm({ profileName }: { profileName: string }) {
     {
       onSuccess: () => {
         toast({
-          title: "Name Updated",
-          description: "Name updated successfully.",
+          title: 'Name Updated',
+          description: 'Name updated successfully.',
         });
         form.reset();
       },
       onError: ({ err }) => {
         toast({
-          title: "Error",
-          description: err.message || "Failed to update profile name.",
-          variant: "destructive",
+          title: 'Error',
+          description: err.message || 'Failed to update profile name.',
+          variant: 'destructive',
         });
       },
     }

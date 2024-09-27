@@ -1,8 +1,8 @@
-import { getUserProfileUseCase } from "@/use-cases/users";
-import BioView from "./bio-view";
-import Image from "next/image";
-import { cardStyles } from "@/styles/common";
-import { cn } from "@/lib/utils";
+import { getUserProfileUseCase } from '@/use-cases/users';
+import BioView from './bio-view';
+import Image from 'next/image';
+import { cardStyles } from '@/styles/common';
+import { cn } from '@/lib/utils';
 
 export default async function InfoContent({
   params,
@@ -19,7 +19,7 @@ export default async function InfoContent({
         <div
           className={cn(
             cardStyles,
-            "flex flex-col items-center justify-center py-12 gap-8"
+            'flex flex-col items-center justify-center py-12 gap-8'
           )}
         >
           <Image

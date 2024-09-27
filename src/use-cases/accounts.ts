@@ -1,7 +1,7 @@
 import {
   getAccountByGithubId,
   getAccountByGoogleId,
-} from "@/data-access/accounts";
+} from '@/data-access/accounts';
 
 export async function getAccountByGoogleIdUseCase(googleId: string) {
   return await getAccountByGoogleId(googleId);

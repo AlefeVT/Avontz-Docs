@@ -1,15 +1,15 @@
-"use client";
+'use client';
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { cn } from "@/lib/utils";
-import { tabStyles } from "@/styles/common";
-import { UserId } from "lucia";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { cn } from '@/lib/utils';
+import { tabStyles } from '@/styles/common';
+import { UserId } from 'lucia';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function ProfileTabs({ userId }: { userId: UserId }) {
   const path = usePathname();
-  const tabInUrl = path.includes("/posts") ? "posts" : path.split("/").pop();
+  const tabInUrl = path.includes('/posts') ? 'posts' : path.split('/').pop();
 
   return (
     <div className={tabStyles}>

@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { LoaderButton } from "@/components/loader-button";
+import { LoaderButton } from '@/components/loader-button';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,8 +10,8 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
 import {
   Form,
   FormControl,
@@ -19,18 +19,18 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
-import { useForm } from "react-hook-form";
-import { z } from "zod";
-import { deleteAccountAction } from "./actions";
-import { useServerAction } from "zsa-react";
+} from '@/components/ui/form';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useState } from 'react';
+import { useForm } from 'react-hook-form';
+import { z } from 'zod';
+import { deleteAccountAction } from './actions';
+import { useServerAction } from 'zsa-react';
 
 export const deleteSchema = z.object({
-  confirm: z.string().refine((v) => v === "Por favor, delete", {
+  confirm: z.string().refine((v) => v === 'Por favor, delete', {
     message: "Por favor, digite 'Por favor, delete' para confirmar",
   }),
 });
@@ -42,7 +42,7 @@ export function DeleteAccountButton() {
   const form = useForm<z.infer<typeof deleteSchema>>({
     resolver: zodResolver(deleteSchema),
     defaultValues: {
-      confirm: "",
+      confirm: '',
     },
   });
 
@@ -52,15 +52,15 @@ export function DeleteAccountButton() {
       onSuccess: () => {
         setIsOpen(false);
         toast({
-          title: "Conta Excluída",
-          description: "Sua conta foi excluída com sucesso.",
+          title: 'Conta Excluída',
+          description: 'Sua conta foi excluída com sucesso.',
         });
       },
       onError: ({ err }) => {
         toast({
-          title: "Erro",
-          description: err.message || "Falha ao excluir a conta.",
-          variant: "destructive",
+          title: 'Erro',
+          description: err.message || 'Falha ao excluir a conta.',
+          variant: 'destructive',
         });
       },
     }

@@ -1,6 +1,6 @@
-import Confetti from "@/components/confetti";
-import { Button } from "@/components/ui/button";
-import Link from "next/link";
+import Confetti from '@/components/confetti';
+import { Button } from '@/components/ui/button';
+import Link from 'next/link';
 
 export default function SuccessPage() {
   return (
@@ -9,10 +9,13 @@ export default function SuccessPage() {
 
       <Confetti />
 
-      <p>Estamos prontos para começar. Aproveite todos os recursos disponíveis agora mesmo.</p>
+      <p>
+        Estamos prontos para começar. Aproveite todos os recursos disponíveis
+        agora mesmo.
+      </p>
 
       <Button asChild>
-        <Link href={"/dashboard"}>Acessar Painel</Link>
+        <Link href={'/dashboard'}>Acessar Painel</Link>
       </Button>
     </div>
   );

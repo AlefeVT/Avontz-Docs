@@ -1,9 +1,9 @@
-import { ZodTypeAny, z } from "zod";
+import { ZodTypeAny, z } from 'zod';
 
 type ValidatedCallbackOptions<
   CallbackInput,
   OutputValidation extends ZodTypeAny,
-  InputValidation extends ZodTypeAny
+  InputValidation extends ZodTypeAny,
 > = {
   outputs?: OutputValidation;
   inputs?: InputValidation;
@@ -15,7 +15,7 @@ type ValidatedCallbackOptions<
 export function createUseCase<
   CallbackInput,
   OutputValidation extends ZodTypeAny,
-  InputValidation extends ZodTypeAny
+  InputValidation extends ZodTypeAny,
 >(
   options: ValidatedCallbackOptions<
     CallbackInput,

@@ -1,5 +1,5 @@
-import { ConfigurationPanel } from "@/components/configuration-panel";
-import { DeleteAccountButton } from "./delete-account-button";
+import { ConfigurationPanel } from '@/components/configuration-panel';
+import { DeleteAccountButton } from './delete-account-button';
 
 export default async function DangerPage() {
   return (

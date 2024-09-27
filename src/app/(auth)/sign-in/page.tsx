@@ -1,12 +1,12 @@
-"use client";
+'use client';
 
-import * as React from "react";
-import { Button, buttonVariants } from "@/components/ui/button";
-import { cn } from "@/lib/utils";
-import { btnStyles } from "@/styles/icons";
-import { Mail } from "lucide-react";
-import Link from "next/link";
-import { MagicLinkForm } from "./magic-link-form";
+import * as React from 'react';
+import { Button, buttonVariants } from '@/components/ui/button';
+import { cn } from '@/lib/utils';
+import { btnStyles } from '@/styles/icons';
+import { Mail } from 'lucide-react';
+import Link from 'next/link';
+import { MagicLinkForm } from './magic-link-form';
 
 export default function SignInPage() {
   return (
@@ -15,7 +15,7 @@ export default function SignInPage() {
         <div className="space-y-2 text-center">
           <h1 className="text-3xl font-bold">Entrar</h1>
           <p className="text-gray-500 dark:text-gray-400">
-          Faça login em sua conta usando uma das opções abaixo.
+            Faça login em sua conta usando uma das opções abaixo.
           </p>
         </div>
         <div className="space-y-4">
@@ -23,9 +23,9 @@ export default function SignInPage() {
             href="/api/login/google"
             className={cn(
               buttonVariants({
-                variant: "secondary",
+                variant: 'secondary',
               }),
-              "w-full"
+              'w-full'
             )}
           >
             <GoogleIcon className="stroke-white mr-2 h-5 w-5" />
@@ -51,7 +51,7 @@ export default function SignInPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-gray-100 px-2 text-gray-500 dark:bg-gray-950 dark:text-gray-400">
-              Ou faça login com e-mail
+                Ou faça login com e-mail
               </span>
             </div>
           </div>
@@ -64,13 +64,13 @@ export default function SignInPage() {
             </div>
             <div className="relative flex justify-center text-xs uppercase">
               <span className="bg-gray-100 px-2 text-gray-500 dark:bg-gray-950 dark:text-gray-400">
-              Outras opções
+                Outras opções
               </span>
             </div>
           </div>
 
           <div className="flex justify-center">
-            <Button asChild variant="ghost" className={cn(btnStyles, "w-full")}>
+            <Button asChild variant="ghost" className={cn(btnStyles, 'w-full')}>
               <Link href="/sign-in/email">
                 <Mail /> Faça login com e-mail
               </Link>

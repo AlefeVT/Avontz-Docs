@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { LoaderButton } from "@/components/loader-button";
-import { btnIconStyles, btnStyles } from "@/styles/icons";
-import { LogOut } from "lucide-react";
-import { useServerAction } from "zsa-react";
-import { invalidateUserSessionsAction } from "./actions";
+import { LoaderButton } from '@/components/loader-button';
+import { btnIconStyles, btnStyles } from '@/styles/icons';
+import { LogOut } from 'lucide-react';
+import { useServerAction } from 'zsa-react';
+import { invalidateUserSessionsAction } from './actions';
 
 export function LogoutButton() {
   const { execute, isPending } = useServerAction(invalidateUserSessionsAction);

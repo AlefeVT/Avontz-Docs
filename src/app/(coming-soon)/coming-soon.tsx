@@ -1,6 +1,6 @@
-import { ComingSoonHeader } from "@/app/(coming-soon)/header";
-import { NewsletterForm } from "@/app/(coming-soon)/newsletter-form";
-import Image from "next/image";
+import { ComingSoonHeader } from '@/app/(coming-soon)/header';
+import { NewsletterForm } from '@/app/(coming-soon)/newsletter-form';
+import Image from 'next/image';
 
 export function Lines() {
   return (
@@ -42,7 +42,7 @@ export function ComingSoon() {
           <div className="grid max-w-screen-xl px-4 pt-12 pb-8 mx-auto lg:gap-8 xl:gap-0 lg:py-24 lg:grid-cols-12 lg:pt-16">
             <div className="mr-auto place-self-center col-span-7">
               <h1 className="font-semibold max-w-2xl mb-6 text-4xl leading-none tracking-tight md:text-5xl xl:text-6xl dark:text-white">
-                🚀 I&apos;m working on the{" "}
+                🚀 I&apos;m working on the{' '}
                 <span className="italic text-red-400">perfect</span> SaaS
                 starter kit.
               </h1>
@@ -123,7 +123,7 @@ export function ComingSoon() {
           </p>
 
           <p className="text-xl leading-10 text-center mt-24 mb-24">
-            I don&apos;t want to sell you code. I want to{" "}
+            I don&apos;t want to sell you code. I want to{' '}
             <strong>teach you</strong> how to build, launch, and iterate on your
             product. I&apos;m excited to help you build!
           </p>

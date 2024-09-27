@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { z } from "zod";
-import { unauthenticatedAction } from "@/lib/safe-action";
-import { rateLimitByIp } from "@/lib/limiter";
-import { subscribeEmailUseCase } from "@/use-cases/newsletter";
+import { z } from 'zod';
+import { unauthenticatedAction } from '@/lib/safe-action';
+import { rateLimitByIp } from '@/lib/limiter';
+import { subscribeEmailUseCase } from '@/use-cases/newsletter';
 
 export const subscribeEmailAction = unauthenticatedAction
   .createServerAction()
@@ -13,6 +13,6 @@ export const subscribeEmailAction = unauthenticatedAction
     })
   )
   .handler(async ({ input: { email } }) => {
-    await rateLimitByIp({ key: "newsletter" });
+    await rateLimitByIp({ key: 'newsletter' });
     await subscribeEmailUseCase(email);
   });

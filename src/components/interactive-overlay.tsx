@@ -1,22 +1,22 @@
-"use client";
+'use client';
 
-import { ReactNode, createContext, useRef } from "react";
+import { ReactNode, createContext, useRef } from 'react';
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@/components/ui/sheet";
-import { ScrollArea } from "@/components/ui/scroll-area";
+} from '@/components/ui/sheet';
+import { ScrollArea } from '@/components/ui/scroll-area';
 import {
   Drawer,
   DrawerContent,
   DrawerDescription,
   DrawerHeader,
   DrawerTitle,
-} from "@/components/ui/drawer";
-import useMediaQuery from "@/hooks/use-media-query";
+} from '@/components/ui/drawer';
+import useMediaQuery from '@/hooks/use-media-query';
 
 type ToggleContextType = {
   isOpen: boolean;
@@ -62,13 +62,15 @@ export function InteractiveOverlay({
             setIsOpen(value);
           }}
         >
-          <SheetContent>
+          <SheetContent className="h-screen">
             <SheetHeader className="px-2">
               <SheetTitle>{title}</SheetTitle>
               <SheetDescription>{description}</SheetDescription>
             </SheetHeader>
 
-            <ScrollArea className="flex-1 overflow-y-auto pr-4 pt-4 pb-8">{form}</ScrollArea>
+            <ScrollArea className="flex-1 overflow-y-auto h-screen pr-4 pt-4 pb-8">
+              {form}
+            </ScrollArea>
           </SheetContent>
         </Sheet>
       ) : (

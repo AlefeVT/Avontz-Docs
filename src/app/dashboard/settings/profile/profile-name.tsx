@@ -1,9 +1,9 @@
-import { ConfigurationPanel } from "@/components/configuration-panel";
-import { ProfileNameForm } from "./profile-name-form";
-import { getCurrentUser } from "@/lib/session";
-import { Suspense } from "react";
-import { Skeleton } from "@/components/ui/skeleton";
-import { getUserProfileLoader } from "./page";
+import { ConfigurationPanel } from '@/components/configuration-panel';
+import { ProfileNameForm } from './profile-name-form';
+import { getCurrentUser } from '@/lib/session';
+import { Suspense } from 'react';
+import { Skeleton } from '@/components/ui/skeleton';
+import { getUserProfileLoader } from './page';
 
 export async function ProfileName() {
   return (
@@ -24,5 +24,5 @@ async function ProfileNameWrapper() {
 
   const profile = await getUserProfileLoader(user.id);
 
-  return <ProfileNameForm profileName={profile.displayName ?? ""} />;
+  return <ProfileNameForm profileName={profile.displayName ?? ''} />;
 }

@@ -1,8 +1,8 @@
-import { database } from "@/db";
-import { accounts } from "@/db/schema";
-import { UserId } from "@/use-cases/types";
-import { and, eq } from "drizzle-orm";
-import crypto from "crypto";
+import { database } from '@/db';
+import { accounts } from '@/db/schema';
+import { UserId } from '@/use-cases/types';
+import { and, eq } from 'drizzle-orm';
+import crypto from 'crypto';
 
 const ITERATIONS = 10000;
 
@@ -13,10 +13,10 @@ async function hashPassword(plainTextPassword: string, salt: string) {
       salt,
       ITERATIONS,
       64,
-      "sha512",
+      'sha512',
       (err, derivedKey) => {
         if (err) reject(err);
-        resolve(derivedKey.toString("hex"));
+        resolve(derivedKey.toString('hex'));
       }
     );
   });
@@ -33,13 +33,13 @@ async function hashPassword(plainTextPassword: string, salt: string) {
 // }
 
 export async function createAccount(userId: UserId, password: string) {
-  const salt = crypto.randomBytes(128).toString("base64");
+  const salt = crypto.randomBytes(128).toString('base64');
   const hash = await hashPassword(password, salt);
   const [account] = await database
     .insert(accounts)
     .values({
       userId,
-      accountType: "email",
+      accountType: 'email',
       password: hash,
       salt,
     })
@@ -52,7 +52,7 @@ export async function createAccountViaGithub(userId: UserId, githubId: string) {
     .insert(accounts)
     .values({
       userId: userId,
-      accountType: "github",
+      accountType: 'github',
       githubId,
     })
     .onConflictDoNothing()
@@ -64,7 +64,7 @@ export async function createAccountViaGoogle(userId: UserId, googleId: string) {
     .insert(accounts)
     .values({
       userId: userId,
-      accountType: "google",
+      accountType: 'google',
       googleId,
     })
     .onConflictDoNothing()
@@ -84,7 +84,7 @@ export async function updatePassword(
   password: string,
   trx = database
 ) {
-  const salt = crypto.randomBytes(128).toString("base64");
+  const salt = crypto.randomBytes(128).toString('base64');
   const hash = await hashPassword(password, salt);
   await trx
     .update(accounts)
@@ -92,7 +92,7 @@ export async function updatePassword(
       password: hash,
       salt,
     })
-    .where(and(eq(accounts.userId, userId), eq(accounts.accountType, "email")));
+    .where(and(eq(accounts.userId, userId), eq(accounts.accountType, 'email')));
 }
 
 export async function getAccountByGoogleId(googleId: string) {

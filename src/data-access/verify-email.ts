@@ -1,9 +1,9 @@
-import { TOKEN_LENGTH, TOKEN_TTL } from "@/app-config";
-import { generateRandomToken } from "@/data-access/utils";
-import { database } from "@/db";
-import { resetTokens, verifyEmailTokens } from "@/db/schema";
-import { UserId } from "@/use-cases/types";
-import { eq } from "drizzle-orm";
+import { TOKEN_LENGTH, TOKEN_TTL } from '@/app-config';
+import { generateRandomToken } from '@/data-access/utils';
+import { database } from '@/db';
+import { resetTokens, verifyEmailTokens } from '@/db/schema';
+import { UserId } from '@/use-cases/types';
+import { eq } from 'drizzle-orm';
 
 export async function createVerifyEmailToken(userId: UserId) {
   const token = await generateRandomToken(TOKEN_LENGTH);

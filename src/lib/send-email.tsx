@@ -1,7 +1,7 @@
-import { Resend } from "resend";
+import { Resend } from 'resend';
 
-import { env } from "@/env";
-import { ReactNode } from "react";
+import { env } from '@/env';
+import { ReactNode } from 'react';
 
 const resend = new Resend(env.EMAIL_SERVER_PASSWORD);
 

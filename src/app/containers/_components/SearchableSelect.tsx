@@ -52,15 +52,19 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
     return () => {
       document.removeEventListener('mousedown', handleClickOutside);
     };
-  }, [dropdownRef]);
+  }, []);
 
   return (
     <div className="space-y-2 mb-10">
-      <label className="block text-sm font-medium text-foreground">{label}</label>
+      <label className="block text-sm font-medium text-foreground">
+        {label}
+      </label>
       <div ref={dropdownRef} className="relative w-[300px]">
         <Button
           type="button"
-          onClick={() => setOpen(!open)}
+          aria-haspopup="listbox"
+          aria-expanded={open}
+          onClick={() => setOpen((prev) => !prev)}
           variant="outline"
           className="w-[300px] flex justify-between items-center"
         >
@@ -71,7 +75,11 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
         </Button>
 
         {open && (
-          <div className="absolute z-10 bg-card border border-border rounded-md w-full mt-2 p-2">
+          <div
+            className="absolute z-10 bg-card border border-border rounded-md w-full mt-2 p-2"
+            role="listbox"
+            aria-labelledby="select-label"
+          >
             <Input
               type="text"
               value={searchQuery}
@@ -86,10 +94,13 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                   <li
                     key={item.value}
                     className="p-2 cursor-pointer hover:bg-muted"
+                    role="option"
+                    aria-selected={selectedValue === item.value}
                     onClick={() => {
                       onValueChange(
                         item.value === selectedValue ? null : item.value
                       );
+                      setSearchQuery('');
                       setOpen(false);
                     }}
                   >
@@ -118,7 +129,9 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                 ))}
               </ul>
             ) : (
-              <p className="text-sm text-muted-foreground">Nenhum item encontrado.</p>
+              <p className="text-sm text-muted-foreground">
+                Nenhum item encontrado.
+              </p>
             )}
           </div>
         )}

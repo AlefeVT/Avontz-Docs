@@ -1,4 +1,4 @@
-import { cn } from "@/lib/utils";
+import { cn } from '@/lib/utils';
 import {
   BarChartIcon,
   BlocksIcon,
@@ -19,10 +19,10 @@ import {
   SmartphoneNfc,
   SunIcon,
   UserIcon,
-} from "lucide-react";
+} from 'lucide-react';
 
 const techClass =
-  "text-black hover:scale-105 transition hover:rotate-1 shadow-lg shadow-blue-400/50 bg-slate-200 rounded-xl drop-shadow-xl p-4 flex flex-col justify-center items-center";
+  'text-black hover:scale-105 transition hover:rotate-1 shadow-lg shadow-blue-400/50 bg-slate-200 rounded-xl drop-shadow-xl p-4 flex flex-col justify-center items-center';
 
 export function FeaturesSection() {
   return (

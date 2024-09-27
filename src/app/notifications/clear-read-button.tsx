@@ -1,6 +1,6 @@
-"use client";
+'use client';
 
-import { LoaderButton } from "@/components/loader-button";
+import { LoaderButton } from '@/components/loader-button';
 import {
   AlertDialog,
   AlertDialogCancel,
@@ -10,14 +10,14 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import { Button } from "@/components/ui/button";
-import { useState } from "react";
-import { useServerAction } from "zsa-react";
-import { clearReadNotificationsAction } from "./actions";
-import { useToast } from "@/components/ui/use-toast";
-import { TrashIcon } from "lucide-react";
-import { btnIconStyles, btnStyles } from "@/styles/icons";
+} from '@/components/ui/alert-dialog';
+import { Button } from '@/components/ui/button';
+import { useState } from 'react';
+import { useServerAction } from 'zsa-react';
+import { clearReadNotificationsAction } from './actions';
+import { useToast } from '@/components/ui/use-toast';
+import { TrashIcon } from 'lucide-react';
+import { btnIconStyles, btnStyles } from '@/styles/icons';
 
 export function ClearReadButton() {
   const [isOpen, setIsOpen] = useState(false);
@@ -25,8 +25,8 @@ export function ClearReadButton() {
   const { execute, isPending } = useServerAction(clearReadNotificationsAction, {
     onSuccess: () => {
       toast({
-        title: "Sucesso",
-        description: "Mensagens lidas foram apagadas.",
+        title: 'Sucesso',
+        description: 'Mensagens lidas foram apagadas.',
       });
       setIsOpen(false);
     },
@@ -43,8 +43,8 @@ export function ClearReadButton() {
         <AlertDialogHeader>
           <AlertDialogTitle>Tem certeza?</AlertDialogTitle>
           <AlertDialogDescription>
-            Isso limpará permanentemente todas as suas notificações de leitura do
-            sistema.
+            Isso limpará permanentemente todas as suas notificações de leitura
+            do sistema.
           </AlertDialogDescription>
         </AlertDialogHeader>
 

@@ -1,7 +1,7 @@
-import { database } from "@/db";
-import { Profile, profiles } from "@/db/schema";
-import { UserId } from "@/use-cases/types";
-import { eq } from "drizzle-orm";
+import { database } from '@/db';
+import { Profile, profiles } from '@/db/schema';
+import { UserId } from '@/use-cases/types';
+import { eq } from 'drizzle-orm';
 
 export async function createProfile(
   userId: UserId,

@@ -1,6 +1,6 @@
-import { Resend } from "resend";
+import { Resend } from 'resend';
 
-import { env } from "@/env";
+import { env } from '@/env';
 
 const resend = new Resend(env.EMAIL_SERVER_PASSWORD);
 

@@ -1,5 +1,5 @@
-export type Plan = "free" | "basic" | "premium";
-export type Role = "owner" | "admin" | "member";
+export type Plan = 'free' | 'basic' | 'premium';
+export type Role = 'owner' | 'admin' | 'member';
 
 export type UserProfile = {
   id: UserId;

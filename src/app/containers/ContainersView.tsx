@@ -19,26 +19,30 @@ export default async function ContainerView() {
             )}
           >
             Caixas
-            <CreateContainerButton 
-              containerOptions={containersData.containersWithoutChildren || []} 
+            <CreateContainerButton
+              containerOptions={containersData.containersWithoutChildren || []}
             />
           </h1>
 
           <p className="text-sm sm:text-md font-semibold text-muted-foreground">
-            Organize os documentos cadastrando as caixas onde eles serão armazenados.
+            Organize os documentos cadastrando as caixas onde eles serão
+            armazenados.
           </p>
         </PageHeader>
 
         <div className={cn('space-y-8 container mx-auto py-12 min-h-screen')}>
-
           <div className="gap-8">
-            <ContainerTable containers={containersData} isLoading={false} selectedType={'all'} />
+            <ContainerTable
+              containers={containersData}
+              isLoading={false}
+              selectedType={'all'}
+            />
           </div>
         </div>
       </div>
     );
   } catch (error) {
-    console.error("Erro ao buscar containers:", error);
+    console.error('Erro ao buscar containers:', error);
     return (
       <div>
         <p>Erro ao carregar containers. Tente novamente mais tarde.</p>
