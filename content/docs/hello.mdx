@@ -1,14 +1,45 @@
 ---
-title: Hello
+title: Upload de arquivo
 description: Some Test Page
 ---
 
-# Hello World
+### Pré-requisitos
 
-1. This is a test page
-2. This is a test page
-3. This is a test pizza hut
+Antes de começar, certifique-se de ter as seguintes ferramentas e bibliotecas instaladas:
+
+- Node.js (v18.18.0 ou superior)
+- Conta Cloudflare com o serviço R2 habilitado
+- Uma chave de acesso e segredo R2
+
+Aqui está um exemplo de uma função de upload para enviar arquivos ao Cloudflare R2 utilizando a biblioteca aws-sdk compatível com o Cloudflare R2:
 
 ```typescript
-console.log("Hello World");
+import { S3 } from 'aws-sdk';
+import { r2Config } from './config';
+
+const s3 = new S3({
+  accessKeyId: r2Config.accessKey,
+  secretAccessKey: r2Config.secretKey,
+  endpoint: r2Config.endpoint,
+  region: r2Config.region,
+  signatureVersion: 'v4',
+});
+
+export const uploadFile = async (file: Express.Multer.File) => {
+  const params = {
+    Bucket: r2Config.bucket,
+    Key: file.originalname,
+    Body: file.buffer,
+    ContentType: file.mimetype,
+  };
+
+  try {
+    const data = await s3.upload(params).promise();
+    console.log('Arquivo carregado com sucesso:', data.Location);
+    return data.Location;
+  } catch (error) {
+    console.error('Erro no upload do arquivo:', error);
+    throw new Error('Upload falhou');
+  }
+};
 ```

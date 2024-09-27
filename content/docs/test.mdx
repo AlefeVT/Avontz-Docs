@@ -1,13 +1,16 @@
 ---
-title: Testing
+title: Tipagem explicita
 description: Components
 ---
 
+tipagem explicita para schema no drizzle
+
 ## Code Block
 
-```js
-console.log("Hello World");
+```ts
+  parentId: integer("parentId").references((): AnyPgColumn => containers.id, { onDelete: "cascade" }),
 ```
+
 
 ## Cards
 

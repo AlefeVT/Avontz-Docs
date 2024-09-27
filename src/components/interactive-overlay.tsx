@@ -68,7 +68,7 @@ export function InteractiveOverlay({
               <SheetDescription>{description}</SheetDescription>
             </SheetHeader>
 
-            <ScrollArea className="h-[95%] pr-8 pt-4 pb-8">{form}</ScrollArea>
+            <ScrollArea className="flex-1 overflow-y-auto pr-4 pt-4 pb-8">{form}</ScrollArea>
           </SheetContent>
         </Sheet>
       ) : (

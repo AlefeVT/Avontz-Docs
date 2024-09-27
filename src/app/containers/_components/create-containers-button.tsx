@@ -4,20 +4,20 @@ import { Button } from "@/components/ui/button";
 import { PlusCircle } from "lucide-react";
 import { btnIconStyles, btnStyles } from "@/styles/icons";
 import { InteractiveOverlay } from "@/components/interactive-overlay";
+import { CreateContainerForm } from "./create-containers-form";
 import { useState } from "react";
-import { CreateGroupForm } from "./create-group-form";
 
-export function CreateGroupButton() {
+export function CreateContainerButton({ containerOptions }: { containerOptions: any[] }) {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
     <>
       <InteractiveOverlay
-        title={"Criar grupo"}
-        description={"Crie um novo grupo para começar a gerenciar seus eventos."}
+        title={"Criar Caixa"}
+        description={"Crie um nova caixa para começar a gerenciar seus documentos."}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        form={<CreateGroupForm />}
+        form={<CreateContainerForm containersOptions={containerOptions} />}
       />
 
       <Button
@@ -27,7 +27,7 @@ export function CreateGroupButton() {
         className={btnStyles}
       >
         <PlusCircle className={btnIconStyles} />
-        Criar grupo
+        Criar caixa
       </Button>
     </>
   );
