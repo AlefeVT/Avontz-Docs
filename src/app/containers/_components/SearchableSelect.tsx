@@ -97,9 +97,7 @@ const SearchableSelect: React.FC<SearchableSelectProps> = ({
                     role="option"
                     aria-selected={selectedValue === item.value}
                     onClick={() => {
-                      onValueChange(
-                        item.value === selectedValue ? null : item.value
-                      );
+                      onValueChange(item.value);
                       setSearchQuery('');
                       setOpen(false);
                     }}

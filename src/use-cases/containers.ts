@@ -18,6 +18,7 @@ export async function getContainersData(): Promise<{
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
+        parentId: containers.parentId,  // Adicionando parentId
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
@@ -31,6 +32,7 @@ export async function getContainersData(): Promise<{
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
+        parentId: containers.parentId,  // Adicionando parentId
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
@@ -45,6 +47,7 @@ export async function getContainersData(): Promise<{
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
+        parentId: containers.parentId,  // Adicionando parentId
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
@@ -68,6 +71,7 @@ export async function getContainersData(): Promise<{
     };
   }
 }
+
 
 export async function createContainerUseCase({
   name,
