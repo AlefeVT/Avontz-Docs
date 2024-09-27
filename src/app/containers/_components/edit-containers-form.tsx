@@ -15,7 +15,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useForm } from 'react-hook-form';
 import { useToast } from '@/components/ui/use-toast';
 import { CheckIcon } from 'lucide-react';
-import { useContext, useState } from 'react';
+import { useContext, useState, useEffect } from 'react';
 import { ToggleContext } from '@/components/interactive-overlay';
 import { z } from 'zod';
 import { schema } from '../validation';
@@ -41,7 +41,7 @@ export function EditContainerForm({
   const [parentId, setParentId] = useState<string | null>(
     containerData.parentId ? containerData.parentId.toString() : null
   );
-
+  
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
@@ -118,7 +118,7 @@ export function EditContainerForm({
           )}
         />
 
-        <SearchableSelect
+        {/* <SearchableSelect
           items={containersOptions.map((container) => ({
             value: container.id.toString(),
             label: container.name,
@@ -128,7 +128,7 @@ export function EditContainerForm({
           onValueChange={setParentId}
           label="Caixa Pai (Opcional)"
           placeholder="Selecione uma caixa pai..."
-        />
+        /> */}
 
         <LoaderButton isLoading={isSubmitting}>
           <CheckIcon className="h-5" /> Atualizar Caixa
@@ -137,3 +137,4 @@ export function EditContainerForm({
     </Form>
   );
 }
+
