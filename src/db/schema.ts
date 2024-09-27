@@ -1,5 +1,6 @@
 import { relations, sql } from "drizzle-orm";
 import {
+  AnyPgColumn,
   boolean,
   index,
   integer,
@@ -174,15 +175,18 @@ export const containers = pgTable("containers", {
     .references(() => users.id, { onDelete: "cascade" }),
   name: text("name").notNull(),
   description: text("description"),
+  parentId: integer("parentId").references((): AnyPgColumn => containers.id, { onDelete: "cascade" }),
   createdAt: timestamp("createdAt", { mode: "date" })
     .notNull()
     .defaultNow(),
+  deletedAt: timestamp("deletedAt", { mode: "date" }) 
 }, (table) => ({
   userIdNameIdx: index("containers_user_id_name_idx").on(
     table.userId,
     table.name
   ),
 }));
+
 
 // Tabela de arquivos
 export const files = pgTable(

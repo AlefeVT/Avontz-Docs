@@ -6,7 +6,7 @@ import {
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
-import { BookIcon, MenuIcon, SearchIcon, UsersIcon } from "lucide-react";
+import { BookIcon, MenuIcon, SearchIcon, LayoutDashboard, File, Package } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -27,17 +27,27 @@ export function MenuButton() {
                 href="/dashboard"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                <UsersIcon className="w-4 h-4" /> Seus grupos
+                <LayoutDashboard className="w-4 h-4" /> Painel Geral
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
               <Link
-                href="/browse"
+                href="/containers"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                <SearchIcon className="w-4 h-4" /> Navegar nos grupos
+                <Package className="w-4 h-4" /> Caixas
               </Link>
             </DropdownMenuItem>
+
+            <DropdownMenuItem asChild>
+              <Link
+                href="/documents"
+                className="flex gap-2 items-center cursor-pointer"
+              >
+                <File className="w-4 h-4" /> Documentos
+              </Link>
+            </DropdownMenuItem>
+
             <DropdownMenuItem asChild>
               <Link
                 href="/docs"

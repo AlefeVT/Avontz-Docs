@@ -2,7 +2,7 @@
 
 import { Button } from "@/components/ui/button";
 import useMediaQuery from "@/hooks/use-media-query";
-import { BookIcon, SearchIcon, UsersIcon } from "lucide-react";
+import { BookIcon, LayoutDashboard, File, Package } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
@@ -23,7 +23,27 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
             className="flex items-center justify-center gap-2"
           >
             <Link href={"/dashboard"}>
-              <UsersIcon className="w-4 h-4" /> Seus grupos
+              <LayoutDashboard className="w-4 h-4" /> Painel Geral
+            </Link>
+          </Button>
+
+          <Button
+            variant={"link"}
+            asChild
+            className="flex items-center justify-center gap-2"
+          >
+            <Link href={"/containers"}>
+              <Package className="w-4 h-4" /> Caixas
+            </Link>
+          </Button>
+
+          <Button
+            variant={"link"}
+            asChild
+            className="flex items-center justify-center gap-2"
+          >
+            <Link href={"/documents"}>
+              <File className="w-4 h-4" /> Documentos
             </Link>
           </Button>
 
