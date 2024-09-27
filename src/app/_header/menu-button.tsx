@@ -1,18 +1,25 @@
-"use client";
+'use client';
 
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { BookIcon, MenuIcon, SearchIcon, LayoutDashboard, File, Package } from "lucide-react";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+} from '@/components/ui/dropdown-menu';
+import {
+  BookIcon,
+  MenuIcon,
+  SearchIcon,
+  LayoutDashboard,
+  File,
+  Package,
+} from 'lucide-react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function MenuButton() {
   const path = usePathname();
-  const isLandingPage = path === "/";
+  const isLandingPage = path === '/';
 
   return (
     <DropdownMenu>

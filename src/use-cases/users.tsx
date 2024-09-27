@@ -2,64 +2,64 @@ import {
   MAX_UPLOAD_IMAGE_SIZE,
   MAX_UPLOAD_IMAGE_SIZE_IN_MB,
   applicationName,
-} from "@/app-config";
+} from '@/app-config';
 import {
   createUser,
   deleteUser,
   getUserByEmail,
   updateUser,
   verifyPassword,
-} from "@/data-access/users";
-import { UserId, UserSession } from "@/use-cases/types";
-import { createUUID } from "@/util/uuid";
-import { getFileUrl, uploadFileToBucket } from "@/lib/files";
-import { env } from "@/env";
+} from '@/data-access/users';
+import { UserId, UserSession } from '@/use-cases/types';
+import { createUUID } from '@/util/uuid';
+import { getFileUrl, uploadFileToBucket } from '@/lib/files';
+import { env } from '@/env';
 import {
   createAccount,
   createAccountViaGithub,
   createAccountViaGoogle,
   updatePassword,
-} from "@/data-access/accounts";
+} from '@/data-access/accounts';
 import {
   uniqueNamesGenerator,
   Config,
   colors,
   animals,
-} from "unique-names-generator";
+} from 'unique-names-generator';
 import {
   createProfile,
   getProfile,
   updateProfile,
-} from "@/data-access/profiles";
-import { GoogleUser } from "@/app/api/login/google/callback/route";
-import { GitHubUser } from "@/app/api/login/github/callback/route";
-import { sendEmail } from "@/lib/send-email";
+} from '@/data-access/profiles';
+import { GoogleUser } from '@/app/api/login/google/callback/route';
+import { GitHubUser } from '@/app/api/login/github/callback/route';
+import { sendEmail } from '@/lib/send-email';
 import {
   createPasswordResetToken,
   deletePasswordResetToken,
   getPasswordResetToken,
-} from "@/data-access/reset-tokens";
-import { ResetPasswordEmail } from "@/emails/reset-password";
+} from '@/data-access/reset-tokens';
+import { ResetPasswordEmail } from '@/emails/reset-password';
 import {
   createVerifyEmailToken,
   deleteVerifyEmailToken,
   getVerifyEmailToken,
-} from "@/data-access/verify-email";
-import { VerifyEmail } from "@/emails/verify-email";
+} from '@/data-access/verify-email';
+import { VerifyEmail } from '@/emails/verify-email';
 import {
   getNotificationsForUser,
   getTop3UnreadNotificationsForUser,
-} from "@/data-access/notifications";
-import { createTransaction } from "@/data-access/utils";
-import { LoginError, PublicError } from "./errors";
-import { deleteSessionForUser } from "@/data-access/sessions";
+} from '@/data-access/notifications';
+import { createTransaction } from '@/data-access/utils';
+import { LoginError, PublicError } from './errors';
+import { deleteSessionForUser } from '@/data-access/sessions';
 
 export async function deleteUserUseCase(
   authenticatedUser: UserSession,
   userToDeleteId: UserId
 ): Promise<void> {
   if (authenticatedUser.id !== userToDeleteId) {
-    throw new PublicError("You can only delete your own account");
+    throw new PublicError('You can only delete your own account');
   }
 
   await deleteUser(userToDeleteId);
@@ -69,7 +69,7 @@ export async function getUserProfileUseCase(userId: UserId) {
   const profile = await getProfile(userId);
 
   if (!profile) {
-    throw new PublicError("User not found");
+    throw new PublicError('User not found');
   }
 
   return profile;
@@ -78,15 +78,15 @@ export async function getUserProfileUseCase(userId: UserId) {
 export async function registerUserUseCase(email: string, password: string) {
   const existingUser = await getUserByEmail(email);
   if (existingUser) {
-    throw new PublicError("An user with that email already exists.");
+    throw new PublicError('An user with that email already exists.');
   }
   const user = await createUser(email);
   await createAccount(user.id, password);
 
   const displayName = uniqueNamesGenerator({
     dictionaries: [colors, animals],
-    separator: " ",
-    style: "capital",
+    separator: ' ',
+    style: 'capital',
   });
   await createProfile(user.id, displayName);
 
@@ -121,8 +121,8 @@ export function getProfileImageKey(userId: UserId, imageId: string) {
 }
 
 export async function updateProfileImageUseCase(file: File, userId: UserId) {
-  if (!file.type.startsWith("image/")) {
-    throw new PublicError("File should be an image.");
+  if (!file.type.startsWith('image/')) {
+    throw new PublicError('File should be an image.');
   }
 
   if (file.size > MAX_UPLOAD_IMAGE_SIZE) {
@@ -138,7 +138,7 @@ export async function updateProfileImageUseCase(file: File, userId: UserId) {
 }
 
 export function getProfileImageUrl(userId: UserId, imageId: string) {
-  return `${env.HOST_NAME}/api/users/${userId}/images/${imageId ?? "default"}`;
+  return `${env.HOST_NAME}/api/users/${userId}/images/${imageId ?? 'default'}`;
 }
 
 export function getDefaultImage(userId: UserId) {
@@ -218,7 +218,7 @@ export async function changePasswordUseCase(token: string, password: string) {
   const tokenEntry = await getPasswordResetToken(token);
 
   if (!tokenEntry) {
-    throw new PublicError("Invalid token");
+    throw new PublicError('Invalid token');
   }
 
   const userId = tokenEntry.userId;
@@ -234,7 +234,7 @@ export async function verifyEmailUseCase(token: string) {
   const tokenEntry = await getVerifyEmailToken(token);
 
   if (!tokenEntry) {
-    throw new PublicError("Invalid token");
+    throw new PublicError('Invalid token');
   }
 
   const userId = tokenEntry.userId;

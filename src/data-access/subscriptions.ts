@@ -1,7 +1,7 @@
-import { database } from "@/db";
-import { subscriptions } from "@/db/schema";
-import { UserId } from "@/use-cases/types";
-import { eq } from "drizzle-orm";
+import { database } from '@/db';
+import { subscriptions } from '@/db/schema';
+import { UserId } from '@/use-cases/types';
+import { eq } from 'drizzle-orm';
 
 export async function createSubscription(subscription: {
   userId: UserId;

@@ -4,9 +4,9 @@ import {
   getReadNotificationsForUser,
   getUnreadNotificationsForUser,
   updateNotification,
-} from "@/data-access/notifications";
-import { UserSession } from "./types";
-import { AuthenticationError, NotFoundError } from "@/app/util";
+} from '@/data-access/notifications';
+import { UserSession } from './types';
+import { AuthenticationError, NotFoundError } from '@/app/util';
 
 export async function assertOwnsNotification(
   authenticatedUser: UserSession,
@@ -15,7 +15,7 @@ export async function assertOwnsNotification(
   const notification = await getNotificationById(notificationId);
 
   if (!notification) {
-    throw new NotFoundError("notification not found");
+    throw new NotFoundError('notification not found');
   }
 
   if (notification.userId !== authenticatedUser.id) {

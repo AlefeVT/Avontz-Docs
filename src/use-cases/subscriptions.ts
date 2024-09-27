@@ -2,18 +2,18 @@ import {
   createSubscription,
   getSubscription,
   updateSubscription,
-} from "@/data-access/subscriptions";
-import { Subscription } from "@/db/schema";
-import { env } from "@/env";
-import { Plan, UserId } from "@/use-cases/types";
+} from '@/data-access/subscriptions';
+import { Subscription } from '@/db/schema';
+import { env } from '@/env';
+import { Plan, UserId } from '@/use-cases/types';
 
 export function getSubscriptionPlan(subscription?: Subscription) {
   if (!subscription) {
-    return "free";
+    return 'free';
   } else {
     return subscription.stripePriceId === env.NEXT_PUBLIC_PRICE_ID_PREMIUM
-      ? "premium"
-      : "basic";
+      ? 'premium'
+      : 'basic';
   }
 }
 

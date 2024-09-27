@@ -1,9 +1,9 @@
-import { Button } from "@/components/ui/button";
-import { env } from "@/env";
-import { getCurrentUser } from "@/lib/session";
-import { pageTitleStyles, pageWrapperStyles } from "@/styles/common";
-import { Link } from "@react-email/components";
-import { redirect } from "next/navigation";
+import { Button } from '@/components/ui/button';
+import { env } from '@/env';
+import { getCurrentUser } from '@/lib/session';
+import { pageTitleStyles, pageWrapperStyles } from '@/styles/common';
+import { Link } from '@react-email/components';
+import { redirect } from 'next/navigation';
 
 export default async function InvitesPage({
   params,
@@ -15,7 +15,7 @@ export default async function InvitesPage({
   const { token } = params;
 
   if (!token) {
-    throw new Error("Invalid invite link");
+    throw new Error('Invalid invite link');
   }
 
   const user = await getCurrentUser();

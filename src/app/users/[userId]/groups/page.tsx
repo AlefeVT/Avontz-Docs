@@ -1,6 +1,6 @@
-import { GroupCard } from "@/app/dashboard/group-card";
-import { getPublicGroupsByUserIdUseCase } from "@/use-cases/groups";
-import Image from "next/image";
+import { GroupCard } from '@/app/dashboard/group-card';
+import { getPublicGroupsByUserIdUseCase } from '@/use-cases/groups';
+import Image from 'next/image';
 
 export default async function GroupsContent({
   params,
@@ -22,7 +22,7 @@ export default async function GroupsContent({
             className="w-full max-w-[200px] h-auto"
           />
           <h2 className="text-2xl text-center px-4">
-          Este usuário não faz parte de nenhum grupo
+            Este usuário não faz parte de nenhum grupo
           </h2>
         </div>
       )}

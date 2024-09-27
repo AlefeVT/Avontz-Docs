@@ -1,5 +1,6 @@
 import { Input } from '@/components/ui/input';
 import { SearchIcon } from 'lucide-react';
+import { useEffect, useState } from 'react';
 
 export function SearchBar({
   searchTerm,
@@ -8,6 +9,18 @@ export function SearchBar({
   searchTerm: string;
   setSearchTerm: (value: string) => void;
 }) {
+  const [localSearchTerm, setLocalSearchTerm] = useState(searchTerm);
+
+  useEffect(() => {
+    const handler = setTimeout(() => {
+      setSearchTerm(localSearchTerm);
+    }, 500);
+
+    return () => {
+      clearTimeout(handler);
+    };
+  }, [localSearchTerm, setSearchTerm]);
+
   return (
     <div className="relative w-full sm:w-1/2">
       <SearchIcon className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
@@ -15,8 +28,8 @@ export function SearchBar({
         type="text"
         placeholder="Pesquisar caixas..."
         className="pl-8 w-full"
-        value={searchTerm}
-        onChange={(e) => setSearchTerm(e.target.value)}
+        value={localSearchTerm}
+        onChange={(e) => setLocalSearchTerm(e.target.value)}
       />
     </div>
   );

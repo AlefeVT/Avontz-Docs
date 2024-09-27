@@ -1,5 +1,5 @@
-import { format } from "date-fns";
+import { format } from 'date-fns';
 
 export function formatDate(date: Date) {
-  return format(date, "PPP");
+  return format(date, 'PPP');
 }

@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { authenticatedAction } from "@/lib/safe-action";
-import { followUserUseCase, unfollowUserUseCase } from "@/use-cases/following";
-import { revalidatePath } from "next/cache";
-import { z } from "zod";
+import { authenticatedAction } from '@/lib/safe-action';
+import { followUserUseCase, unfollowUserUseCase } from '@/use-cases/following';
+import { revalidatePath } from 'next/cache';
+import { z } from 'zod';
 
 export const followUserAction = authenticatedAction
   .createServerAction()

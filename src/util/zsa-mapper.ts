@@ -1,5 +1,5 @@
-import { ZSAError } from "zsa";
+import { ZSAError } from 'zsa';
 
 export function toZSAError(error: Error) {
-  throw new ZSAError("ERROR", error.message);
+  throw new ZSAError('ERROR', error.message);
 }

@@ -1,14 +1,14 @@
-import { getCurrentUser } from "@/lib/session";
-import { cn } from "@/lib/utils";
-import { cardStyles, pageTitleStyles } from "@/styles/common";
-import Image from "next/image";
-import { getNotificationsForUserUseCase } from "@/use-cases/users";
-import { PageHeader } from "@/components/page-header";
-import { formatDate } from "@/util/date";
-import { MarkReadAllButton } from "./mark-read-button";
-import { ViewButton } from "./view-button";
-import { ClearReadButton } from "./clear-read-button";
-import { getNotificationIcon } from "@/util/notifications";
+import { getCurrentUser } from '@/lib/session';
+import { cn } from '@/lib/utils';
+import { cardStyles, pageTitleStyles } from '@/styles/common';
+import Image from 'next/image';
+import { getNotificationsForUserUseCase } from '@/use-cases/users';
+import { PageHeader } from '@/components/page-header';
+import { formatDate } from '@/util/date';
+import { MarkReadAllButton } from './mark-read-button';
+import { ViewButton } from './view-button';
+import { ClearReadButton } from './clear-read-button';
+import { getNotificationIcon } from '@/util/notifications';
 
 export default async function NotificationsPage() {
   const user = await getCurrentUser();
@@ -24,7 +24,7 @@ export default async function NotificationsPage() {
       <PageHeader>
         <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 sm:gap-0">
           <h1
-            className={cn(pageTitleStyles, "flex justify-between items-center")}
+            className={cn(pageTitleStyles, 'flex justify-between items-center')}
           >
             Suas notificações
           </h1>
@@ -42,7 +42,7 @@ export default async function NotificationsPage() {
             <div
               className={cn(
                 cardStyles,
-                "flex flex-col gap-8 justify-center items-center py-12"
+                'flex flex-col gap-8 justify-center items-center py-12'
               )}
             >
               <Image

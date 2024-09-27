@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { afterLoginUrl } from "@/app-config";
-import { rateLimitByKey } from "@/lib/limiter";
-import { unauthenticatedAction } from "@/lib/safe-action";
-import { setSession } from "@/lib/session";
-import { signInUseCase } from "@/use-cases/users";
-import { redirect } from "next/navigation";
-import { z } from "zod";
+import { afterLoginUrl } from '@/app-config';
+import { rateLimitByKey } from '@/lib/limiter';
+import { unauthenticatedAction } from '@/lib/safe-action';
+import { setSession } from '@/lib/session';
+import { signInUseCase } from '@/use-cases/users';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 export const signInAction = unauthenticatedAction
   .createServerAction()

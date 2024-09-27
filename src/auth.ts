@@ -1,13 +1,13 @@
-import { GitHub, Google } from "arctic";
-import { Lucia } from "lucia";
-import { DrizzlePostgreSQLAdapter } from "@lucia-auth/adapter-drizzle";
-import { database } from "@/db";
-import { sessions, users } from "@/db/schema";
-import { cookies } from "next/headers";
-import { User } from "lucia";
-import { Session } from "lucia";
-import { env } from "@/env";
-import { UserId as CustomUserId } from "@/use-cases/types";
+import { GitHub, Google } from 'arctic';
+import { Lucia } from 'lucia';
+import { DrizzlePostgreSQLAdapter } from '@lucia-auth/adapter-drizzle';
+import { database } from '@/db';
+import { sessions, users } from '@/db/schema';
+import { cookies } from 'next/headers';
+import { User } from 'lucia';
+import { Session } from 'lucia';
+import { env } from '@/env';
+import { UserId as CustomUserId } from '@/use-cases/types';
 
 const adapter = new DrizzlePostgreSQLAdapter(database, sessions as any, users);
 
@@ -15,7 +15,7 @@ export const lucia = new Lucia(adapter, {
   sessionCookie: {
     expires: false,
     attributes: {
-      secure: process.env.NODE_ENV === "production",
+      secure: process.env.NODE_ENV === 'production',
     },
   },
   getUserAttributes: (attributes) => {
@@ -60,7 +60,7 @@ export const validateRequest = async (): Promise<
   return result;
 };
 
-declare module "lucia" {
+declare module 'lucia' {
   interface Register {
     Lucia: typeof lucia;
     DatabaseUserAttributes: {

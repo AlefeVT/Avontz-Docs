@@ -1,6 +1,6 @@
-import { applicationName, companyName } from "@/app-config";
-import Link from "next/link";
-import { ModeToggle } from "@/components/mode-toggle";
+import { applicationName, companyName } from '@/app-config';
+import Link from 'next/link';
+import { ModeToggle } from '@/components/mode-toggle';
 
 export function Footer() {
   return (
@@ -51,8 +51,8 @@ export function Footer() {
       <footer className="py-8 px-5 border-t">
         <div className="text-center">
           <span className="block text-sm text-center text-gray-500 dark:text-gray-400">
-            © 2024 <Link href="/">{applicationName}</Link>. Todos os direitos reservados.
-            Desenvolvido por {companyName}
+            © 2024 <Link href="/">{applicationName}</Link>. Todos os direitos
+            reservados. Desenvolvido por {companyName}
           </span>
         </div>
       </footer>

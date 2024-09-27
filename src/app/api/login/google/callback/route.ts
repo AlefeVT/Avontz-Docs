@@ -1,17 +1,17 @@
-import { cookies } from "next/headers";
-import { OAuth2RequestError } from "arctic";
-import { googleAuth } from "@/auth";
-import { createGoogleUserUseCase } from "@/use-cases/users";
-import { getAccountByGoogleIdUseCase } from "@/use-cases/accounts";
-import { setSession } from "@/lib/session";
-import { afterLoginUrl } from "@/app-config";
+import { cookies } from 'next/headers';
+import { OAuth2RequestError } from 'arctic';
+import { googleAuth } from '@/auth';
+import { createGoogleUserUseCase } from '@/use-cases/users';
+import { getAccountByGoogleIdUseCase } from '@/use-cases/accounts';
+import { setSession } from '@/lib/session';
+import { afterLoginUrl } from '@/app-config';
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
-  const storedState = cookies().get("google_oauth_state")?.value ?? null;
-  const codeVerifier = cookies().get("google_code_verifier")?.value ?? null;
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const storedState = cookies().get('google_oauth_state')?.value ?? null;
+  const codeVerifier = cookies().get('google_code_verifier')?.value ?? null;
 
   if (
     !code ||
@@ -31,7 +31,7 @@ export async function GET(request: Request): Promise<Response> {
       codeVerifier
     );
     const response = await fetch(
-      "https://openidconnect.googleapis.com/v1/userinfo",
+      'https://openidconnect.googleapis.com/v1/userinfo',
       {
         headers: {
           Authorization: `Bearer ${tokens.accessToken}`,

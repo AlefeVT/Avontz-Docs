@@ -1,18 +1,18 @@
-"use server";
+'use server';
 
-import { authenticatedAction } from "@/lib/safe-action";
+import { authenticatedAction } from '@/lib/safe-action';
 import {
   updateProfileBioUseCase,
   updateProfileNameUseCase,
-} from "@/use-cases/users";
-import { z } from "zod";
-import { updateProfileImageUseCase } from "@/use-cases/users";
-import { revalidatePath } from "next/cache";
-import { rateLimitByKey } from "@/lib/limiter";
-import sanitizeHtml from "sanitize-html";
+} from '@/use-cases/users';
+import { z } from 'zod';
+import { updateProfileImageUseCase } from '@/use-cases/users';
+import { revalidatePath } from 'next/cache';
+import { rateLimitByKey } from '@/lib/limiter';
+import sanitizeHtml from 'sanitize-html';
 
 export const updateProfileImageAction = authenticatedAction
-.createServerAction()
+  .createServerAction()
   .input(
     z.object({
       fileWrapper: z.instanceof(FormData),
@@ -24,11 +24,11 @@ export const updateProfileImageAction = authenticatedAction
       limit: 3,
       window: 60000,
     });
-    
-    const file = input.fileWrapper.get("file") as File;
-    
+
+    const file = input.fileWrapper.get('file') as File;
+
     if (!file) {
-      throw new Error("Nenhum arquivo foi enviado.");
+      throw new Error('Nenhum arquivo foi enviado.');
     }
 
     await updateProfileImageUseCase(file, ctx.user.id);

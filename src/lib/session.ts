@@ -1,9 +1,9 @@
-import "server-only";
-import { AuthenticationError } from "@/app/util";
-import { lucia, validateRequest } from "@/auth";
-import { cache } from "react";
-import { cookies } from "next/headers";
-import { UserId } from "lucia";
+import 'server-only';
+import { AuthenticationError } from '@/app/util';
+import { lucia, validateRequest } from '@/auth';
+import { cache } from 'react';
+import { cookies } from 'next/headers';
+import { UserId } from 'lucia';
 
 export const getCurrentUser = cache(async () => {
   const session = await validateRequest();

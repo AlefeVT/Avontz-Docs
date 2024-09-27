@@ -1,12 +1,12 @@
-"use server";
+'use server';
 
-import { lucia, validateRequest } from "@/auth";
-import { authenticatedAction } from "@/lib/safe-action";
-import { markNotificationAsReadUseCase } from "@/use-cases/notifications";
-import { revalidatePath } from "next/cache";
-import { cookies } from "next/headers";
-import { redirect } from "next/navigation";
-import { z } from "zod";
+import { lucia, validateRequest } from '@/auth';
+import { authenticatedAction } from '@/lib/safe-action';
+import { markNotificationAsReadUseCase } from '@/use-cases/notifications';
+import { revalidatePath } from 'next/cache';
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { z } from 'zod';
 
 export const markNotificationAsReadAction = authenticatedAction
   .createServerAction()
@@ -17,14 +17,14 @@ export const markNotificationAsReadAction = authenticatedAction
   )
   .handler(async ({ input: { notificationId }, ctx: { user } }) => {
     await markNotificationAsReadUseCase(user, notificationId);
-    revalidatePath(`/`, "layout");
+    revalidatePath(`/`, 'layout');
   });
 
 export async function signOutAction() {
   const { session } = await validateRequest();
 
   if (!session) {
-    redirect("/sign-in");
+    redirect('/sign-in');
   }
 
   await lucia.invalidateSession(session.id);
@@ -34,5 +34,5 @@ export async function signOutAction() {
     sessionCookie.value,
     sessionCookie.attributes
   );
-  redirect("/signed-out");
+  redirect('/signed-out');
 }

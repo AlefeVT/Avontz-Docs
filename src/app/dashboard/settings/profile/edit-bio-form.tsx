@@ -1,11 +1,11 @@
-"use client";
+'use client';
 
-import { EditorProvider } from "@tiptap/react";
-import { LoaderButton } from "@/components/loader-button";
-import { useServerAction } from "zsa-react";
-import { updateProfileBioAction } from "./actions";
-import { useRef } from "react";
-import { useToast } from "@/components/ui/use-toast";
+import { EditorProvider } from '@tiptap/react';
+import { LoaderButton } from '@/components/loader-button';
+import { useServerAction } from 'zsa-react';
+import { updateProfileBioAction } from './actions';
+import { useRef } from 'react';
+import { useToast } from '@/components/ui/use-toast';
 
 export function EditBioForm({ bio }: { bio: string }) {
   const { execute, isPending } = useServerAction(updateProfileBioAction);
@@ -28,14 +28,15 @@ export function EditBioForm({ bio }: { bio: string }) {
             execute({ bio: htmlRef.current }).then(([, err]) => {
               if (err) {
                 toast({
-                  title: "Uh-oh!",
-                  variant: "destructive",
-                  description: "Não foi possível atualizar a sua biografia do perfil.",
+                  title: 'Uh-oh!',
+                  variant: 'destructive',
+                  description:
+                    'Não foi possível atualizar a sua biografia do perfil.',
                 });
               } else {
                 toast({
-                  title: "Sucesso!",
-                  description: "A biografia do seu perfil foi atualizada.",
+                  title: 'Sucesso!',
+                  description: 'A biografia do seu perfil foi atualizada.',
                 });
               }
             });

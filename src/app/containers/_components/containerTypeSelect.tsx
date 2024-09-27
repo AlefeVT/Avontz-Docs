@@ -34,9 +34,6 @@ export default function ContainerTypeSelect({
             <SelectItem value="all">Todas as caixas cadastradas</SelectItem>
             <SelectItem value="no-children">Caixas sem caixas filha</SelectItem>
             <SelectItem value="no-parent">Caixas sem caixas pai</SelectItem>
-            <SelectItem value="with-parent-children">
-              Caixas com caixas pai e filhas
-            </SelectItem>
           </SelectGroup>
         </SelectContent>
       </Select>

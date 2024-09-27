@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -12,15 +12,15 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { pageTitleStyles } from "@/styles/common";
-import { cn } from "@/lib/utils";
-import { Terminal } from "lucide-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { useServerAction } from "zsa-react";
-import { LoaderButton } from "@/components/loader-button";
-import { resetPasswordAction } from "./actions";
-import { useToast } from "@/components/ui/use-toast";
+} from '@/components/ui/form';
+import { pageTitleStyles } from '@/styles/common';
+import { cn } from '@/lib/utils';
+import { Terminal } from 'lucide-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { useServerAction } from 'zsa-react';
+import { LoaderButton } from '@/components/loader-button';
+import { resetPasswordAction } from './actions';
+import { useToast } from '@/components/ui/use-toast';
 
 const registrationSchema = z.object({
   email: z.string().email(),
@@ -34,9 +34,9 @@ export default function ForgotPasswordPage() {
     {
       onError({ err }) {
         toast({
-          title: "Something went wrong",
+          title: 'Something went wrong',
           description: err.message,
-          variant: "destructive",
+          variant: 'destructive',
         });
       },
     }
@@ -45,7 +45,7 @@ export default function ForgotPasswordPage() {
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
-      email: "",
+      email: '',
     },
   });
 
@@ -55,14 +55,14 @@ export default function ForgotPasswordPage() {
 
   return (
     <div className="py-24 mx-auto max-w-[400px] space-y-6">
-      <h1 className={cn(pageTitleStyles, "text-center")}>Esqueceu sua senha</h1>
+      <h1 className={cn(pageTitleStyles, 'text-center')}>Esqueceu sua senha</h1>
 
       {isSuccess && (
         <Alert variant="success">
           <Terminal className="h-4 w-4" />
           <AlertTitle>Link de redefinição enviado</AlertTitle>
           <AlertDescription>
-          Enviamos um e-mail para você com um link para redefinir sua senha.
+            Enviamos um e-mail para você com um link para redefinir sua senha.
           </AlertDescription>
         </Alert>
       )}
@@ -89,7 +89,7 @@ export default function ForgotPasswordPage() {
           />
 
           <LoaderButton isLoading={isPending} className="w-full" type="submit">
-          Enviar e-mail de redefinição
+            Enviar e-mail de redefinição
           </LoaderButton>
         </form>
       </Form>

@@ -1,10 +1,10 @@
-import { cookies } from "next/headers";
-import { OAuth2RequestError } from "arctic";
-import { github } from "@/auth";
-import { createGithubUserUseCase } from "@/use-cases/users";
-import { getAccountByGithubIdUseCase } from "@/use-cases/accounts";
-import { afterLoginUrl } from "@/app-config";
-import { setSession } from "@/lib/session";
+import { cookies } from 'next/headers';
+import { OAuth2RequestError } from 'arctic';
+import { github } from '@/auth';
+import { createGithubUserUseCase } from '@/use-cases/users';
+import { getAccountByGithubIdUseCase } from '@/use-cases/accounts';
+import { afterLoginUrl } from '@/app-config';
+import { setSession } from '@/lib/session';
 
 export interface GitHubUser {
   id: string;
@@ -22,9 +22,9 @@ interface Email {
 
 export async function GET(request: Request): Promise<Response> {
   const url = new URL(request.url);
-  const code = url.searchParams.get("code");
-  const state = url.searchParams.get("state");
-  const storedState = cookies().get("github_oauth_state")?.value ?? null;
+  const code = url.searchParams.get('code');
+  const state = url.searchParams.get('state');
+  const storedState = cookies().get('github_oauth_state')?.value ?? null;
   if (!code || !state || !storedState || state !== storedState) {
     return new Response(null, {
       status: 400,
@@ -33,7 +33,7 @@ export async function GET(request: Request): Promise<Response> {
 
   try {
     const tokens = await github.validateAuthorizationCode(code);
-    const githubUserResponse = await fetch("https://api.github.com/user", {
+    const githubUserResponse = await fetch('https://api.github.com/user', {
       headers: {
         Authorization: `Bearer ${tokens.accessToken}`,
       },
@@ -54,7 +54,7 @@ export async function GET(request: Request): Promise<Response> {
 
     if (!githubUser.email) {
       const githubUserEmailResponse = await fetch(
-        "https://api.github.com/user/emails",
+        'https://api.github.com/user/emails',
         {
           headers: {
             Authorization: `Bearer ${tokens.accessToken}`,

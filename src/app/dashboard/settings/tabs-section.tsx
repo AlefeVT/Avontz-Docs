@@ -1,13 +1,13 @@
-"use client";
+'use client';
 
-import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { tabStyles } from "@/styles/common";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { Tabs, TabsList, TabsTrigger } from '@/components/ui/tabs';
+import { tabStyles } from '@/styles/common';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 
 export function SettingsTab({ hasSubscription }: { hasSubscription: boolean }) {
   const path = usePathname();
-  const tabInUrl = path.split("/").pop();
+  const tabInUrl = path.split('/').pop();
 
   return (
     <div className={tabStyles}>

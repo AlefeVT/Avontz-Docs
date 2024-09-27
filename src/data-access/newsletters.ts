@@ -1,5 +1,5 @@
-import { database } from "@/db";
-import { newsletters } from "@/db/schema";
+import { database } from '@/db';
+import { newsletters } from '@/db/schema';
 
 /**
  * this inserts an email record into our database using drizzle-orm

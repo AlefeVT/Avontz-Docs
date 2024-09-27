@@ -1,27 +1,27 @@
-import Link from "next/link";
-import Image from "next/image";
-import { HeaderLinks } from "@/app/_header/header-links";
-import { Suspense } from "react";
-import { getCurrentUser } from "@/lib/session";
-import { Button } from "@/components/ui/button";
+import Link from 'next/link';
+import Image from 'next/image';
+import { HeaderLinks } from '@/app/_header/header-links';
+import { Suspense } from 'react';
+import { getCurrentUser } from '@/lib/session';
+import { Button } from '@/components/ui/button';
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Settings2Icon } from "lucide-react";
-import { HeaderActionsFallback } from "@/app/_header/header-actions-fallback";
-import { applicationName } from "@/app-config";
-import { SignOutItem } from "@/app/_header/sign-out-item";
+} from '@/components/ui/dropdown-menu';
+import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
+import { Settings2Icon } from 'lucide-react';
+import { HeaderActionsFallback } from '@/app/_header/header-actions-fallback';
+import { applicationName } from '@/app-config';
+import { SignOutItem } from '@/app/_header/sign-out-item';
 import {
   getUnreadNotificationsForUserUseCase,
   getUserProfileUseCase,
-} from "@/use-cases/users";
-import { getProfileImageFullUrl } from "@/app/dashboard/settings/profile/profile-image";
-import { Notifications } from "./notifications";
-import { MenuButton } from "./menu-button";
+} from '@/use-cases/users';
+import { getProfileImageFullUrl } from '@/app/dashboard/settings/profile/profile-image';
+import { Notifications } from './notifications';
+import { MenuButton } from './menu-button';
 
 export async function Header() {
   const user = await getCurrentUser();
@@ -63,7 +63,7 @@ async function ProfileAvatar({ userId }: { userId: number }) {
     <Avatar>
       <AvatarImage src={getProfileImageFullUrl(profile)} />
       <AvatarFallback>
-        {profile.displayName?.substring(0, 2).toUpperCase() ?? "AA"}
+        {profile.displayName?.substring(0, 2).toUpperCase() ?? 'AA'}
       </AvatarFallback>
     </Avatar>
   );

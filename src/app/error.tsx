@@ -1,9 +1,9 @@
-"use client";
+'use client';
 
-import { AUTHENTICATION_ERROR_MESSAGE } from "@/app/util";
-import { Button } from "@/components/ui/button";
-import { pageTitleStyles } from "@/styles/common";
-import Link from "next/link";
+import { AUTHENTICATION_ERROR_MESSAGE } from '@/app/util';
+import { Button } from '@/components/ui/button';
+import { pageTitleStyles } from '@/styles/common';
+import Link from 'next/link';
 
 export default function PaginaDeErro({
   error,

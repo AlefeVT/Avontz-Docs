@@ -1,9 +1,9 @@
-"use server";
+'use server';
 
-import { resetPasswordUseCase } from "@/use-cases/users";
-import { unauthenticatedAction } from "@/lib/safe-action";
-import { z } from "zod";
-import { rateLimitByKey } from "@/lib/limiter";
+import { resetPasswordUseCase } from '@/use-cases/users';
+import { unauthenticatedAction } from '@/lib/safe-action';
+import { z } from 'zod';
+import { rateLimitByKey } from '@/lib/limiter';
 
 export const resetPasswordAction = unauthenticatedAction
   .createServerAction()

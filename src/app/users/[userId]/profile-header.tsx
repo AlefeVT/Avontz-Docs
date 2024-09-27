@@ -1,16 +1,16 @@
-import { Button } from "@/components/ui/button";
-import { getCurrentUser } from "@/lib/session";
-import { headerStyles, pageTitleStyles } from "@/styles/common";
-import { btnIconStyles, btnStyles } from "@/styles/icons";
-import { getUserProfileUseCase } from "@/use-cases/users";
-import { UserId } from "lucia";
-import { SquareUser } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { FollowButton } from "./follow-button";
-import { isFollowingUserUseCase } from "@/use-cases/following";
-import { UnfollowButton } from "./unfollow-button";
-import { cn } from "@/lib/utils";
+import { Button } from '@/components/ui/button';
+import { getCurrentUser } from '@/lib/session';
+import { headerStyles, pageTitleStyles } from '@/styles/common';
+import { btnIconStyles, btnStyles } from '@/styles/icons';
+import { getUserProfileUseCase } from '@/use-cases/users';
+import { UserId } from 'lucia';
+import { SquareUser } from 'lucide-react';
+import Image from 'next/image';
+import Link from 'next/link';
+import { FollowButton } from './follow-button';
+import { isFollowingUserUseCase } from '@/use-cases/following';
+import { UnfollowButton } from './unfollow-button';
+import { cn } from '@/lib/utils';
 
 export async function ProfileHeader({ userId }: { userId: UserId }) {
   const user = await getCurrentUser();
@@ -24,12 +24,12 @@ export async function ProfileHeader({ userId }: { userId: UserId }) {
   const shouldShowFollowButtons = user && !isOwnProfile;
 
   return (
-    <div className={cn(headerStyles, "py-8")}>
+    <div className={cn(headerStyles, 'py-8')}>
       <div className="container mx-auto">
         <div className="flex justify-between items-center">
           <div className="flex flex-col items-center md:flex-row gap-8">
             <Image
-              src={profile.image ?? "/group.jpeg"}
+              src={profile.image ?? '/group.jpeg'}
               width={60}
               height={60}
               alt="image of the group"

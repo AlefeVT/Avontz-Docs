@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { z } from "zod";
+import { z } from 'zod';
 
-import { Input } from "@/components/ui/input";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useForm } from "react-hook-form";
+import { Input } from '@/components/ui/input';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { useForm } from 'react-hook-form';
 import {
   Form,
   FormControl,
@@ -12,30 +12,29 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { pageTitleStyles } from "@/styles/common";
-import { cn } from "@/lib/utils";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { Terminal } from "lucide-react";
-import Link from "next/link";
-import { Button } from "@/components/ui/button";
-import { changePasswordAction } from "./actions";
-import { LoaderButton } from "@/components/loader-button";
-import { useServerAction } from "zsa-react";
+} from '@/components/ui/form';
+import { pageTitleStyles } from '@/styles/common';
+import { cn } from '@/lib/utils';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { Terminal } from 'lucide-react';
+import Link from 'next/link';
+import { Button } from '@/components/ui/button';
+import { changePasswordAction } from './actions';
+import { LoaderButton } from '@/components/loader-button';
+import { useServerAction } from 'zsa-react';
 
 const registrationSchema = z
   .object({
-    password: z.string().min(8, "A senha deve ter no mínimo 8 caracteres"),
+    password: z.string().min(8, 'A senha deve ter no mínimo 8 caracteres'),
     token: z.string(),
     passwordConfirmation: z
       .string()
-      .min(8, "A confirmação da senha deve ter no mínimo 8 caracteres"),
+      .min(8, 'A confirmação da senha deve ter no mínimo 8 caracteres'),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
-    message: "As senhas não coincidem",
-    path: ["passwordConfirmation"],
+    message: 'As senhas não coincidem',
+    path: ['passwordConfirmation'],
   });
-
 
 export default function ResetPasswordPage({
   searchParams,
@@ -45,9 +44,9 @@ export default function ResetPasswordPage({
   const form = useForm<z.infer<typeof registrationSchema>>({
     resolver: zodResolver(registrationSchema),
     defaultValues: {
-      password: "",
+      password: '',
       token: searchParams.token,
-      passwordConfirmation: "",
+      passwordConfirmation: '',
     },
   });
 
@@ -65,14 +64,14 @@ export default function ResetPasswordPage({
     <div className="py-24 max-w-[400px] space-y-6 mx-auto">
       {isSuccess && (
         <>
-          <h1 className={cn(pageTitleStyles, "text-center")}>
-          Senha atualizada!
+          <h1 className={cn(pageTitleStyles, 'text-center')}>
+            Senha atualizada!
           </h1>
           <Alert variant="success">
             <Terminal className="h-4 w-4" />
             <AlertTitle>Senha atualizada!</AlertTitle>
             <AlertDescription>
-            Sua senha foi atualizada com sucesso.
+              Sua senha foi atualizada com sucesso.
             </AlertDescription>
           </Alert>
 
@@ -84,8 +83,8 @@ export default function ResetPasswordPage({
 
       {!isSuccess && (
         <>
-          <h1 className={cn(pageTitleStyles, "text-center")}>
-          Alterar a senha
+          <h1 className={cn(pageTitleStyles, 'text-center')}>
+            Alterar a senha
           </h1>
 
           {error && (

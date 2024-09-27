@@ -1,19 +1,19 @@
-import { Profile } from "@/db/schema";
-import { ProfileImageForm } from "./profile-image-form";
-import { getCurrentUser } from "@/lib/session";
-import { getProfileImageUrl } from "@/use-cases/users";
-import Image from "next/image";
-import { ConfigurationPanel } from "@/components/configuration-panel";
-import { Skeleton } from "@/components/ui/skeleton";
-import { Suspense } from "react";
-import { getUserProfileLoader } from "./page";
+import { Profile } from '@/db/schema';
+import { ProfileImageForm } from './profile-image-form';
+import { getCurrentUser } from '@/lib/session';
+import { getProfileImageUrl } from '@/use-cases/users';
+import Image from 'next/image';
+import { ConfigurationPanel } from '@/components/configuration-panel';
+import { Skeleton } from '@/components/ui/skeleton';
+import { Suspense } from 'react';
+import { getUserProfileLoader } from './page';
 
 export function getProfileImageFullUrl(profile: Profile) {
   return profile.imageId
     ? getProfileImageUrl(profile.userId, profile.imageId)
     : profile.image
-    ? profile.image
-    : "/profile.png";
+      ? profile.image
+      : '/profile.png';
 }
 
 export async function ProfileImage() {

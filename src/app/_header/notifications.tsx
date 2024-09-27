@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import {
   DropdownMenu,
@@ -7,14 +7,14 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { Notification } from "@/db/schema";
-import { BellIcon } from "lucide-react";
-import Link from "next/link";
-import { markNotificationAsReadAction } from "./actions";
-import { useServerAction } from "zsa-react";
-import { getNotificationIcon, getNotificationLink } from "@/util/notifications";
-import { useState } from "react";
+} from '@/components/ui/dropdown-menu';
+import { Notification } from '@/db/schema';
+import { BellIcon } from 'lucide-react';
+import Link from 'next/link';
+import { markNotificationAsReadAction } from './actions';
+import { useServerAction } from 'zsa-react';
+import { getNotificationIcon, getNotificationLink } from '@/util/notifications';
+import { useState } from 'react';
 
 export function Notifications({
   notifications,

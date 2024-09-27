@@ -1,4 +1,4 @@
-import { relations, sql } from "drizzle-orm";
+import { relations, sql } from 'drizzle-orm';
 import {
   AnyPgColumn,
   boolean,
@@ -10,41 +10,46 @@ import {
   serial,
   text,
   timestamp,
-} from "drizzle-orm/pg-core";
+} from 'drizzle-orm/pg-core';
 
 // Enums para roles e tipos de arquivos/armazenamento
-export const roleEnum = pgEnum("role", ["member", "admin"]);
-export const accountTypeEnum = pgEnum("type", ["email", "google", "github"]);
-export const fileTypeEnum = pgEnum("fileType", ["pdf", "doc", "image", "other"]);
-export const storageClassEnum = pgEnum("storageClass", [
-  "Standard",
-  "InfrequentAccess",
-  "Archive",
+export const roleEnum = pgEnum('role', ['member', 'admin']);
+export const accountTypeEnum = pgEnum('type', ['email', 'google', 'github']);
+export const fileTypeEnum = pgEnum('fileType', [
+  'pdf',
+  'doc',
+  'image',
+  'other',
+]);
+export const storageClassEnum = pgEnum('storageClass', [
+  'Standard',
+  'InfrequentAccess',
+  'Archive',
 ]);
 
 // Tabela de usuários
-export const users = pgTable("gf_user", {
-  id: serial("id").primaryKey(),
-  email: text("email").unique(),
-  emailVerified: timestamp("emailVerified", { mode: "date" }),
+export const users = pgTable('gf_user', {
+  id: serial('id').primaryKey(),
+  email: text('email').unique(),
+  emailVerified: timestamp('emailVerified', { mode: 'date' }),
 });
 
 // Tabela de contas
 export const accounts = pgTable(
-  "gf_accounts",
+  'gf_accounts',
   {
-    id: serial("id").primaryKey(),
-    userId: integer("userId")
+    id: serial('id').primaryKey(),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    accountType: accountTypeEnum("accountType").notNull(),
-    githubId: text("githubId").unique(),
-    googleId: text("googleId").unique(),
-    password: text("password"),
-    salt: text("salt"),
+      .references(() => users.id, { onDelete: 'cascade' }),
+    accountType: accountTypeEnum('accountType').notNull(),
+    githubId: text('githubId').unique(),
+    googleId: text('googleId').unique(),
+    password: text('password'),
+    salt: text('salt'),
   },
   (table) => ({
-    userIdAccountTypeIdx: index("user_id_account_type_idx").on(
+    userIdAccountTypeIdx: index('user_id_account_type_idx').on(
       table.userId,
       table.accountType
     ),
@@ -53,108 +58,108 @@ export const accounts = pgTable(
 
 // Tabela de magic links
 export const magicLinks = pgTable(
-  "gf_magic_links",
+  'gf_magic_links',
   {
-    id: serial("id").primaryKey(),
-    email: text("email").notNull().unique(),
-    token: text("token"),
-    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+    id: serial('id').primaryKey(),
+    email: text('email').notNull().unique(),
+    token: text('token'),
+    tokenExpiresAt: timestamp('tokenExpiresAt', { mode: 'date' }),
   },
   (table) => ({
-    tokenIdx: index("magic_links_token_idx").on(table.token),
+    tokenIdx: index('magic_links_token_idx').on(table.token),
   })
 );
 
 // Tabela de reset tokens
 export const resetTokens = pgTable(
-  "gf_reset_tokens",
+  'gf_reset_tokens',
   {
-    id: serial("id").primaryKey(),
-    userId: integer("userId")
+    id: serial('id').primaryKey(),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" })
+      .references(() => users.id, { onDelete: 'cascade' })
       .unique(),
-    token: text("token"),
-    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+    token: text('token'),
+    tokenExpiresAt: timestamp('tokenExpiresAt', { mode: 'date' }),
   },
   (table) => ({
-    tokenIdx: index("reset_tokens_token_idx").on(table.token),
+    tokenIdx: index('reset_tokens_token_idx').on(table.token),
   })
 );
 
 // Tabela de tokens de verificação de email
 export const verifyEmailTokens = pgTable(
-  "gf_verify_email_tokens",
+  'gf_verify_email_tokens',
   {
-    id: serial("id").primaryKey(),
-    userId: integer("userId")
+    id: serial('id').primaryKey(),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" })
+      .references(() => users.id, { onDelete: 'cascade' })
       .unique(),
-    token: text("token"),
-    tokenExpiresAt: timestamp("tokenExpiresAt", { mode: "date" }),
+    token: text('token'),
+    tokenExpiresAt: timestamp('tokenExpiresAt', { mode: 'date' }),
   },
   (table) => ({
-    tokenIdx: index("verify_email_tokens_token_idx").on(table.token),
+    tokenIdx: index('verify_email_tokens_token_idx').on(table.token),
   })
 );
 
 // Tabela de perfis
-export const profiles = pgTable("gf_profile", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId")
+export const profiles = pgTable('gf_profile', {
+  id: serial('id').primaryKey(),
+  userId: integer('userId')
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" })
+    .references(() => users.id, { onDelete: 'cascade' })
     .unique(),
-  displayName: text("displayName"),
-  imageId: text("imageId"),
-  image: text("image"),
-  bio: text("bio").notNull().default(""),
+  displayName: text('displayName'),
+  imageId: text('imageId'),
+  image: text('image'),
+  bio: text('bio').notNull().default(''),
 });
 
 // Tabela de sessões
 export const sessions = pgTable(
-  "gf_session",
+  'gf_session',
   {
-    id: text("id").primaryKey(),
-    userId: integer("userId")
+    id: text('id').primaryKey(),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    expiresAt: timestamp("expires_at", {
+      .references(() => users.id, { onDelete: 'cascade' }),
+    expiresAt: timestamp('expires_at', {
       withTimezone: true,
-      mode: "date",
+      mode: 'date',
     }).notNull(),
   },
   (table) => ({
-    userIdIdx: index("sessions_user_id_idx").on(table.userId),
+    userIdIdx: index('sessions_user_id_idx').on(table.userId),
   })
 );
 
 // Tabela de assinaturas
 export const subscriptions = pgTable(
-  "gf_subscriptions",
+  'gf_subscriptions',
   {
-    id: serial("id").primaryKey(),
-    userId: integer("userId")
+    id: serial('id').primaryKey(),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" })
+      .references(() => users.id, { onDelete: 'cascade' })
       .unique(),
-    stripeSubscriptionId: text("stripeSubscriptionId").notNull(),
-    stripeCustomerId: text("stripeCustomerId").notNull(),
-    stripePriceId: text("stripePriceId").notNull(),
-    stripeCurrentPeriodEnd: timestamp("expires", { mode: "date" }).notNull(),
+    stripeSubscriptionId: text('stripeSubscriptionId').notNull(),
+    stripeCustomerId: text('stripeCustomerId').notNull(),
+    stripePriceId: text('stripePriceId').notNull(),
+    stripeCurrentPeriodEnd: timestamp('expires', { mode: 'date' }).notNull(),
   },
   (table) => ({
     stripeSubscriptionIdIdx: index(
-      "subscriptions_stripe_subscription_id_idx"
+      'subscriptions_stripe_subscription_id_idx'
     ).on(table.stripeSubscriptionId),
   })
 );
 
 // Tabela de newsletters
-export const newsletters = pgTable("gf_newsletter", {
-  id: serial("id").primaryKey(),
-  email: text("email").notNull().unique(),
+export const newsletters = pgTable('gf_newsletter', {
+  id: serial('id').primaryKey(),
+  email: text('email').notNull().unique(),
 });
 
 // Tipo Container
@@ -168,50 +173,51 @@ export type Container = {
 };
 
 // Tabela de containers
-export const containers = pgTable("containers", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId")
-    .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  name: text("name").notNull(),
-  description: text("description"),
-  parentId: integer("parentId").references((): AnyPgColumn => containers.id, { onDelete: "cascade" }),
-  createdAt: timestamp("createdAt", { mode: "date" })
-    .notNull()
-    .defaultNow(),
-  deletedAt: timestamp("deletedAt", { mode: "date" }) 
-}, (table) => ({
-  userIdNameIdx: index("containers_user_id_name_idx").on(
-    table.userId,
-    table.name
-  ),
-}));
-
+export const containers = pgTable(
+  'containers',
+  {
+    id: serial('id').primaryKey(),
+    userId: integer('userId')
+      .notNull()
+      .references(() => users.id, { onDelete: 'cascade' }),
+    name: text('name').notNull(),
+    description: text('description'),
+    parentId: integer('parentId').references((): AnyPgColumn => containers.id, {
+      onDelete: 'cascade',
+    }),
+    createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+    deletedAt: timestamp('deletedAt', { mode: 'date' }),
+  },
+  (table) => ({
+    userIdNameIdx: index('containers_user_id_name_idx').on(
+      table.userId,
+      table.name
+    ),
+  })
+);
 
 // Tabela de arquivos
 export const files = pgTable(
-  "files",
+  'files',
   {
-    id: serial("id").primaryKey(),
-    containerId: integer("containerId")
+    id: serial('id').primaryKey(),
+    containerId: integer('containerId')
       .notNull()
-      .references(() => containers.id, { onDelete: "cascade" }),
-    userId: integer("userId")
+      .references(() => containers.id, { onDelete: 'cascade' }),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    key: text("key").notNull().unique(),
-    fileName: text("fileName").notNull(),
-    fileSize: text("fileSize").notNull(),
-    fileType: fileTypeEnum("fileType").notNull(),
-    storageClass: storageClassEnum("storageClass")
+      .references(() => users.id, { onDelete: 'cascade' }),
+    key: text('key').notNull().unique(),
+    fileName: text('fileName').notNull(),
+    fileSize: text('fileSize').notNull(),
+    fileType: fileTypeEnum('fileType').notNull(),
+    storageClass: storageClassEnum('storageClass')
       .notNull()
-      .default("Standard"),
-    createdAt: timestamp("createdAt", { mode: "date" })
-      .notNull()
-      .defaultNow(),
+      .default('Standard'),
+    createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
   },
   (table) => ({
-    containerIdUserIdIdx: index("files_container_id_user_id_idx").on(
+    containerIdUserIdIdx: index('files_container_id_user_id_idx').on(
       table.containerId,
       table.userId
     ),
@@ -220,23 +226,21 @@ export const files = pgTable(
 
 // Tabela de assinaturas
 export const signatures = pgTable(
-  "signatures",
+  'signatures',
   {
-    id: serial("id").primaryKey(),
-    fileId: integer("fileId")
+    id: serial('id').primaryKey(),
+    fileId: integer('fileId')
       .notNull()
-      .references(() => files.id, { onDelete: "cascade" }),
-    userId: integer("userId")
+      .references(() => files.id, { onDelete: 'cascade' }),
+    userId: integer('userId')
       .notNull()
-      .references(() => users.id, { onDelete: "cascade" }),
-    signatureType: text("signatureType").notNull(),
-    signatureValue: text("signatureValue").notNull(),
-    signedAt: timestamp("signedAt", { mode: "date" })
-      .notNull()
-      .defaultNow(),
+      .references(() => users.id, { onDelete: 'cascade' }),
+    signatureType: text('signatureType').notNull(),
+    signatureValue: text('signatureValue').notNull(),
+    signedAt: timestamp('signedAt', { mode: 'date' }).notNull().defaultNow(),
   },
   (table) => ({
-    fileIdUserIdIdx: index("signatures_file_id_user_id_idx").on(
+    fileIdUserIdIdx: index('signatures_file_id_user_id_idx').on(
       table.fileId,
       table.userId
     ),
@@ -244,15 +248,15 @@ export const signatures = pgTable(
 );
 
 // Tabela de notificações
-export const notifications = pgTable("gf_notifications", {
-  id: serial("id").primaryKey(),
-  userId: integer("userId")
+export const notifications = pgTable('gf_notifications', {
+  id: serial('id').primaryKey(),
+  userId: integer('userId')
     .notNull()
-    .references(() => users.id, { onDelete: "cascade" }),
-  isRead: boolean("isRead").notNull().default(false),
-  type: text("type").notNull(),
-  message: text("message").notNull(),
-  createdOn: timestamp("createdOn", { mode: "date" }).notNull(),
+    .references(() => users.id, { onDelete: 'cascade' }),
+  isRead: boolean('isRead').notNull().default(false),
+  type: text('type').notNull(),
+  message: text('message').notNull(),
+  createdOn: timestamp('createdOn', { mode: 'date' }).notNull(),
 });
 
 /**
@@ -272,7 +276,8 @@ export const fileRelations = relations(files, ({ many, one }) => ({
     references: [containers.id],
   }),
   user: one(users, {
-    fields: [files.userId], references: [users.id]
+    fields: [files.userId],
+    references: [users.id],
   }),
 }));
 
@@ -298,4 +303,3 @@ export type ResetToken = typeof resetTokens.$inferSelect;
 export type VerifyEmailToken = typeof verifyEmailTokens.$inferSelect;
 export type ContainerType = typeof containers.$inferSelect;
 export type Account = typeof accounts.$inferSelect;
-
