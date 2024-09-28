@@ -1,5 +1,5 @@
 {
-  "id": "0f614ba8-14b6-4baa-8e7d-5153132ece54",
+  "id": "50cea75e-c987-4fc0-9a3a-384a01d5e519",
   "prevId": "00000000-0000-0000-0000-000000000000",
   "version": "6",
   "dialect": "postgresql",
@@ -112,12 +112,24 @@
           "primaryKey": false,
           "notNull": false
         },
+        "parentId": {
+          "name": "parentId",
+          "type": "integer",
+          "primaryKey": false,
+          "notNull": false
+        },
         "createdAt": {
           "name": "createdAt",
           "type": "timestamp",
           "primaryKey": false,
           "notNull": true,
           "default": "now()"
+        },
+        "deletedAt": {
+          "name": "deletedAt",
+          "type": "timestamp",
+          "primaryKey": false,
+          "notNull": false
         }
       },
       "indexes": {

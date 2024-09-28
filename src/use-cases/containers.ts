@@ -1,4 +1,3 @@
-// use-cases/containers.ts
 import { database } from '@/db';
 import { containers, files } from '@/db/schema';
 import { eq, isNull, sql } from 'drizzle-orm';
@@ -11,50 +10,53 @@ export async function getContainersData(): Promise<{
   containersWithoutChildren: ContainerData[] | null;
 }> {
   try {
-    // Todos os containers
+    // Todos os containers que não estão deletados
     const allContainers = await database
       .select({
         id: containers.id,
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
-        parentId: containers.parentId,  // Adicionando parentId
+        parentId: containers.parentId,
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
       .leftJoin(files, eq(files.containerId, containers.id))
+      .where(isNull(containers.deletedAt))
       .groupBy(containers.id);
 
-    // Containers sem pai (parentId é null)
+    // Containers sem pai (parentId é null) e que não estão deletados
     const containersWithoutParent = await database
       .select({
         id: containers.id,
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
-        parentId: containers.parentId,  // Adicionando parentId
+        parentId: containers.parentId,
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
-      .where(isNull(containers.parentId))
       .leftJoin(files, eq(files.containerId, containers.id))
+      .where(
+        sql`${containers.parentId} IS NULL AND ${containers.deletedAt} IS NULL`
+      )
       .groupBy(containers.id);
 
-    // Containers sem filhos
+    // Containers sem filhos e que não estão deletados
     const containersWithoutChildren = await database
       .select({
         id: containers.id,
         name: containers.name,
         description: containers.description,
         createdAt: containers.createdAt,
-        parentId: containers.parentId,  // Adicionando parentId
+        parentId: containers.parentId,
         filesCount: sql`COUNT(${files.id})`.as<number>(),
       })
       .from(containers)
-      .where(
-        sql`${containers.id} NOT IN (SELECT DISTINCT ${containers.parentId} FROM ${containers} WHERE ${containers.parentId} IS NOT NULL)`
-      )
       .leftJoin(files, eq(files.containerId, containers.id))
+      .where(
+        sql`${containers.id} NOT IN (SELECT DISTINCT ${containers.parentId} FROM ${containers} WHERE ${containers.parentId} IS NOT NULL) AND ${containers.deletedAt} IS NULL`
+      )
       .groupBy(containers.id);
 
     return {
@@ -71,7 +73,6 @@ export async function getContainersData(): Promise<{
     };
   }
 }
-
 
 export async function createContainerUseCase({
   name,
@@ -122,7 +123,6 @@ export async function updateContainerUseCase({
   parentId?: number | null;
   userId: number;
 }) {
-  // Verifica se o container existe
   const existingContainer = await database
     .select({ id: containers.id })
     .from(containers)
@@ -133,7 +133,6 @@ export async function updateContainerUseCase({
     throw new Error('Container não encontrado.');
   }
 
-  // Atualiza o container
   const result = await database
     .update(containers)
     .set({
@@ -146,7 +145,6 @@ export async function updateContainerUseCase({
   return result;
 }
 
-// Use case para deletar um container
 export async function deleteContainerUseCase(containerId: number) {
   const container = await database
     .select({ id: containers.id })
@@ -155,12 +153,16 @@ export async function deleteContainerUseCase(containerId: number) {
     .limit(1);
 
   if (!container.length) {
-    throw new PublicError('Container não encontrado.');
+    throw new Error('Container não encontrado.');
   }
 
-  // Deleta os arquivos associados
-  await database.delete(files).where(eq(files.containerId, containerId));
+  await database
+    .update(files)
+    .set({ deletedAt: new Date() })
+    .where(eq(files.containerId, containerId));
 
-  // Deleta o container
-  await database.delete(containers).where(eq(containers.id, containerId));
+  await database
+    .update(containers)
+    .set({ deletedAt: new Date() })
+    .where(eq(containers.id, containerId));
 }

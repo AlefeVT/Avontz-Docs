@@ -16,16 +16,19 @@ import {
   TableHeader,
   TableRow,
 } from '@/components/ui/table';
-import { Button } from '@/components/ui/button';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { Skeleton } from '@/components/ui/skeleton';
 import { SearchBar } from './containerSearchBar';
 import ContainerTypeSelect from './containerTypeSelect';
 import { ContainerData } from '@/interfaces/ContainerData';
 import { InteractiveOverlay } from '@/components/interactive-overlay';
 import { EditContainerForm } from './edit-containers-form';
-import { columns } from './columns';
+import { DeleteModal } from '@/components/delete-modal';
+import { Skeleton } from '@/components/ui/skeleton';
+import { columns } from './table/columns';
+import { PaginationButton } from '@/components/PaginationButton';
+import { useFilteredContainers } from '@/hooks/Container/useFilteredContainers';
+import { useContainerActions } from '@/hooks/Container/useContainerActions';
 
 interface ContainerTableProps {
   containers: {
@@ -50,31 +53,34 @@ export function ContainerTable({
   const [isOpen, setIsOpen] = React.useState(false);
   const [containerData, setContainerData] =
     React.useState<ContainerData | null>(null);
+  const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
+  const [selectedContainersForDelete, setSelectedContainersForDelete] =
+    React.useState<ContainerData[]>([]);
 
   const router = useRouter();
 
-  // Filtragem memoizada para melhorar a performance
-  const filteredData = React.useMemo(() => {
-    let filteredContainers = containers.allContainers;
+  const refreshData = () => {
+    router.refresh();
+    setRowSelection({});
+  };
 
-    if (selectedType === 'no-parent') {
-      filteredContainers = containers.containersWithoutParent;
-    } else if (selectedType === 'no-children') {
-      filteredContainers = containers.containersWithoutChildren || [];
-    }
-
-    if (searchTerm) {
-      filteredContainers = filteredContainers.filter((container) =>
-        container.name.toLowerCase().includes(searchTerm.toLowerCase())
-      );
-    }
-
-    return filteredContainers;
-  }, [containers, selectedType, searchTerm]);
+  const filteredData = useFilteredContainers(
+    containers,
+    selectedType,
+    searchTerm
+  );
+  const { isDeleting, handleDeleteContainers } =
+    useContainerActions(refreshData);
 
   const table = useReactTable({
     data: filteredData || [],
-    columns: columns(router.push, setContainerData, setIsOpen),
+    columns: columns(
+      router.push,
+      setContainerData,
+      setIsOpen,
+      setSelectedContainersForDelete,
+      setIsDeleteModalOpen
+    ),
     getCoreRowModel: getCoreRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     getSortedRowModel: getSortedRowModel(),
@@ -168,7 +174,13 @@ export function ContainerTable({
                 <TableRow>
                   <TableCell
                     colSpan={
-                      columns(router.push, setContainerData, setIsOpen).length
+                      columns(
+                        router.push,
+                        setContainerData,
+                        setIsOpen,
+                        setSelectedContainersForDelete,
+                        setIsDeleteModalOpen
+                      ).length
                     }
                     className="h-24 text-center"
                   >
@@ -188,22 +200,16 @@ export function ContainerTable({
           </Table>
         </div>
         <div className="flex items-center justify-end space-x-2 py-4">
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.previousPage()}
+          <PaginationButton
+            label="Anterior"
+            onClick={table.previousPage}
             disabled={!table.getCanPreviousPage()}
-          >
-            Anterior
-          </Button>
-          <Button
-            variant="outline"
-            size="sm"
-            onClick={() => table.nextPage()}
+          />
+          <PaginationButton
+            label="Próximo"
+            onClick={table.nextPage}
             disabled={!table.getCanNextPage()}
-          >
-            Próximo
-          </Button>
+          />
         </div>
       </div>
 
@@ -230,6 +236,24 @@ export function ContainerTable({
           }
         />
       )}
+
+      <DeleteModal
+        isOpen={isDeleteModalOpen}
+        setIsOpen={setIsDeleteModalOpen}
+        title="Excluir caixa(s)"
+        description={`Tem certeza de que deseja excluir ${
+          selectedContainersForDelete.length === 1
+            ? `a caixa ${selectedContainersForDelete[0]?.name}`
+            : `${selectedContainersForDelete.length} caixas`
+        }? Todos os documentos pertencentes a essas caixas também serão removidos do nosso servidor.`}
+        onConfirm={async () => {
+          await handleDeleteContainers(selectedContainersForDelete, () => {
+            setIsDeleteModalOpen(false);
+            setSelectedContainersForDelete([]);
+          });
+        }}
+        isPending={isDeleting}
+      />
     </>
   );
 }
