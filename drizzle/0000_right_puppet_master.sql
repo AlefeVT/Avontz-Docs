@@ -39,7 +39,9 @@ CREATE TABLE IF NOT EXISTS "containers" (
 	"userId" integer NOT NULL,
 	"name" text NOT NULL,
 	"description" text,
-	"createdAt" timestamp DEFAULT now() NOT NULL
+	"parentId" integer,
+	"createdAt" timestamp DEFAULT now() NOT NULL,
+	"deletedAt" timestamp
 );
 --> statement-breakpoint
 CREATE TABLE IF NOT EXISTS "files" (

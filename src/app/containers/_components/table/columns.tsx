@@ -18,8 +18,16 @@ import { ContainerData } from '@/interfaces/ContainerData';
 export const columns: (
   routerPush: (url: string) => void,
   setContainerData: (container: ContainerData) => void,
-  setIsOpen: (isOpen: boolean) => void
-) => ColumnDef<ContainerData>[] = (routerPush, setContainerData, setIsOpen) => [
+  setIsOpen: (isOpen: boolean) => void,
+  setSelectedContainersForDelete: (containers: ContainerData[]) => void,
+  setIsDeleteModalOpen: (isOpen: boolean) => void
+) => ColumnDef<ContainerData>[] = (
+  routerPush,
+  setContainerData,
+  setIsOpen,
+  setSelectedContainersForDelete,
+  setIsDeleteModalOpen
+) => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -92,6 +100,10 @@ export const columns: (
               <Button
                 className="flex justify-start h-6 w-full"
                 variant={'ghost'}
+                onClick={() => {
+                  setSelectedContainersForDelete([container]);
+                  setIsDeleteModalOpen(true);
+                }}
               >
                 <Trash2 className="h-4 w-4 mr-2" />
                 Excluir
@@ -110,14 +122,12 @@ export const columns: (
                   .filter((key) => table.getState().rowSelection[key])
                   .map((key) => {
                     const index = parseInt(key, 10);
-                    const selectedContainer = selectedContainers[index];
-                    return selectedContainer?.id;
-                  })
-                  .filter((id) => id !== undefined);
+                    return selectedContainers[index];
+                  });
 
                 if (selectedContainerIds.length > 0) {
-                  const idsString = selectedContainerIds.join(',');
-                  routerPush(`/dashboard/container/${idsString}/delete`);
+                  setSelectedContainersForDelete(selectedContainerIds);
+                  setIsDeleteModalOpen(true);
                 }
               }}
               disabled={Object.keys(table.getState().rowSelection).length === 0}

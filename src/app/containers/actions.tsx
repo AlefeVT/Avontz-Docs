@@ -2,6 +2,7 @@
 
 import {
   createContainerUseCase,
+  deleteContainerUseCase,
   updateContainerUseCase,
 } from '@/use-cases/containers';
 import { authenticatedAction } from '../../lib/safe-action';
@@ -45,3 +46,18 @@ export const updateContainerAction = authenticatedAction
       revalidatePath('/dashboard');
     }
   );
+
+export const deleteContainerAction = authenticatedAction
+  .createServerAction()
+  .input(
+    z.object({
+      ids: z.array(z.number()),
+    })
+  )
+  .handler(async ({ input: { ids }, ctx: { user } }) => {
+    for (const id of ids) {
+      await deleteContainerUseCase(id);
+    }
+
+    revalidatePath('/dashboard');
+  });

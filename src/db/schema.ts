@@ -5,11 +5,10 @@ import {
   index,
   integer,
   pgEnum,
-  PgTable,
-  pgTable,
   serial,
   text,
   timestamp,
+  pgTable,
 } from 'drizzle-orm/pg-core';
 
 // Enums para roles e tipos de arquivos/armazenamento
@@ -162,16 +161,6 @@ export const newsletters = pgTable('gf_newsletter', {
   email: text('email').notNull().unique(),
 });
 
-// Tipo Container
-export type Container = {
-  id: number;
-  userId: number;
-  name: string;
-  description: string | null;
-  parentId: number | null;
-  createdAt: Date;
-};
-
 // Tabela de containers
 export const containers = pgTable(
   'containers',
@@ -182,11 +171,9 @@ export const containers = pgTable(
       .references(() => users.id, { onDelete: 'cascade' }),
     name: text('name').notNull(),
     description: text('description'),
-    parentId: integer('parentId').references((): AnyPgColumn => containers.id, {
-      onDelete: 'cascade',
-    }),
+    parentId: integer('parentId'),
     createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
-    deletedAt: timestamp('deletedAt', { mode: 'date' }),
+    deletedAt: timestamp('deletedAt', { mode: 'date' }), // Remover nullable, campo ainda pode ser null sem essa função
   },
   (table) => ({
     userIdNameIdx: index('containers_user_id_name_idx').on(
@@ -215,6 +202,7 @@ export const files = pgTable(
       .notNull()
       .default('Standard'),
     createdAt: timestamp('createdAt', { mode: 'date' }).notNull().defaultNow(),
+    deletedAt: timestamp('deletedAt', { mode: 'date' }), // Não precisa de `.nullable()`, o campo já aceita null
   },
   (table) => ({
     containerIdUserIdIdx: index('files_container_id_user_id_idx').on(
@@ -264,7 +252,6 @@ export const notifications = pgTable('gf_notifications', {
  */
 
 export const containerRelations = relations(containers, ({ many, one }) => ({
-  children: many(containers),
   files: many(files),
   user: one(users, { fields: [containers.userId], references: [users.id] }),
 }));
@@ -288,9 +275,6 @@ export const signatureRelations = relations(signatures, ({ one }) => ({
 
 /**
  * TYPES
- *
- * Aqui estão as tipagens inferidas que você pode usar em seu sistema.
- * Essas tipagens são geradas diretamente a partir das tabelas criadas no Drizzle ORM.
  */
 export type Subscription = typeof subscriptions.$inferSelect;
 export type User = typeof users.$inferSelect;

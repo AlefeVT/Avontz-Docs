@@ -5,15 +5,8 @@
     {
       "idx": 0,
       "version": "6",
-      "when": 1727290526542,
-      "tag": "0000_late_hercules",
-      "breakpoints": true
-    },
-    {
-      "idx": 1,
-      "version": "6",
-      "when": 1727369806139,
-      "tag": "0001_graceful_chat",
+      "when": 1727523063761,
+      "tag": "0000_right_puppet_master",
       "breakpoints": true
     }
   ]
