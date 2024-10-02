@@ -1,15 +1,13 @@
-import { AuthenticationError, NotFoundError } from '@/app/util';
-import { getEvent } from '@/data-access/events';
-import { getMembership } from '@/data-access/membership';
-import { UserSession } from '@/use-cases/types';
-import { PublicError } from './errors';
+import { NotFoundError } from "@/app/util";
+import { getPlant } from "@/data-access/plants";
 
-export async function assertEventExists(eventId: number) {
-  const event = await getEvent(eventId);
 
-  if (!event) {
+export async function assertPlantExists(plantId: number) {
+  const plant = await getPlant(plantId);
+
+  if (!plant) {
     throw new NotFoundError('Event not found');
   }
 
-  return event;
+  return plant;
 }

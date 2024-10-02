@@ -27,25 +27,15 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
             </Link>
           </Button>
 
-          <Button
+          {/* <Button
             variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={'/containers'}>
-              <Package className="w-4 h-4" /> Caixas
+            <Link href={'/plants'}>
+              <Package className="w-4 h-4" /> Plantas
             </Link>
-          </Button>
-
-          <Button
-            variant={'link'}
-            asChild
-            className="flex items-center justify-center gap-2"
-          >
-            <Link href={'/documents'}>
-              <File className="w-4 h-4" /> Documentos
-            </Link>
-          </Button>
+          </Button> */}
 
           <Button
             variant={'link'}
@@ -57,7 +47,7 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
             </Link> */}
           </Button>
 
-          <Button
+          {/* <Button
             variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
@@ -65,23 +55,19 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
             <Link href={'/docs'}>
               <BookIcon className="w-4 h-4" /> API Docs
             </Link>
-          </Button>
+          </Button> */}
         </div>
       )}
 
       {(isLandingPage || !isAuthenticated) && (
         <div className="hidden md:flex gap-4">
           <Button variant={'link'} asChild>
-            <Link href="/#features">Características</Link>
+            <Link href="/#features">Sobre</Link>
           </Button>
 
           <Button variant={'link'} asChild>
             <Link href="/#pricing">Preços</Link>
-          </Button>
-
-          <Button variant={'link'} asChild>
-            <Link href={'/browse'}>Navegar nos grupos</Link>
-          </Button>
+          </Button> 
         </div>
       )}
     </>

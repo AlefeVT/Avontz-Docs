@@ -37,32 +37,23 @@ export function MenuButton() {
                 <LayoutDashboard className="w-4 h-4" /> Painel Geral
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <Link
-                href="/containers"
+                href="/plants"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                <Package className="w-4 h-4" /> Caixas
+                <Package className="w-4 h-4" /> Plantas
               </Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
 
-            <DropdownMenuItem asChild>
-              <Link
-                href="/documents"
-                className="flex gap-2 items-center cursor-pointer"
-              >
-                <File className="w-4 h-4" /> Documentos
-              </Link>
-            </DropdownMenuItem>
-
-            <DropdownMenuItem asChild>
+            {/* <DropdownMenuItem asChild>
               <Link
                 href="/docs"
                 className="flex gap-2 items-center cursor-pointer"
               >
                 <BookIcon className="w-4 h-4" /> API Docs
               </Link>
-            </DropdownMenuItem>
+            </DropdownMenuItem> */}
           </>
         )}
         {isLandingPage && (
@@ -72,7 +63,7 @@ export function MenuButton() {
                 href="/#features"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                Features
+                Sobre
               </Link>
             </DropdownMenuItem>
             <DropdownMenuItem asChild>
@@ -80,17 +71,10 @@ export function MenuButton() {
                 href="/#pricing"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                Pricing
+                Preços
               </Link>
             </DropdownMenuItem>
-            <DropdownMenuItem asChild>
-              <Link
-                href="/browse"
-                className="flex gap-2 items-center cursor-pointer"
-              >
-                <SearchIcon className="w-4 h-4" /> Navegar nos grupos
-              </Link>
-            </DropdownMenuItem>
+            
           </>
         )}
       </DropdownMenuContent>

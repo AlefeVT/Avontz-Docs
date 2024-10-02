@@ -4,14 +4,10 @@ import { Button } from '@/components/ui/button';
 import { PlusCircle } from 'lucide-react';
 import { btnIconStyles, btnStyles } from '@/styles/icons';
 import { InteractiveOverlay } from '@/components/interactive-overlay';
-import { CreateContainerForm } from './create-containers-form';
+import { CreatePlantsForm } from './create-plant-form';
 import { useState } from 'react';
 
-export function CreateContainerButton({
-  containerOptions,
-}: {
-  containerOptions: any[];
-}) {
+export function CreatePlantButton() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
@@ -19,11 +15,11 @@ export function CreateContainerButton({
       <InteractiveOverlay
         title={'Criar Caixa'}
         description={
-          'Crie um nova caixa para começar a gerenciar seus documentos.'
+          'Cadastre uma nova planta.'
         }
         isOpen={isOpen}
         setIsOpen={setIsOpen}
-        form={<CreateContainerForm containersOptions={containerOptions} />}
+        form={<CreatePlantsForm />}
       />
 
       <Button
@@ -33,7 +29,7 @@ export function CreateContainerButton({
         className={btnStyles}
       >
         <PlusCircle className={btnIconStyles} />
-        Criar caixa
+        Cadastrar Planta
       </Button>
     </>
   );

@@ -15,7 +15,7 @@ type SearchableSelectProps = {
   items: SelectItemType[];
   selectedValue: string | null;
   onValueChange: (value: string | null) => void;
-  label: string;
+  label?: string;
   placeholder?: string;
   error?: string;
 };

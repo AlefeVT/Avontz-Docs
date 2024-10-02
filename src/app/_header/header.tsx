@@ -32,11 +32,11 @@ export async function Header() {
         <div className="flex justify-between gap-10 items-center">
           <Link href="/" className="flex items-center gap-2">
             <Image
-              src="/logo/AVONTZ_logo.svg"
-              alt="Group Finder Logo"
-              width={40}
-              height={40}
-              className="rounded-full"
+              src="/logo/logo.svg"
+              alt="Avontz Logo"
+              width={50}
+              height={50}
+              className=""
             />
             <span className="text-sm md:text-base lg:text-2xl font-bold">
               {applicationName}
@@ -78,7 +78,7 @@ async function HeaderActions() {
       {isSignedIn ? (
         <>
           <Suspense>
-            <NotificationsWrapper />
+            {/* <NotificationsWrapper /> */}
           </Suspense>
 
           <DropdownMenu>

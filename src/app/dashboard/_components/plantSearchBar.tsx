@@ -26,7 +26,7 @@ export function SearchBar({
       <SearchIcon className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
       <Input
         type="text"
-        placeholder="Pesquisar caixas..."
+        placeholder="Pesquisar plantas..."
         className="pl-8 w-full"
         value={localSearchTerm}
         onChange={(e) => setLocalSearchTerm(e.target.value)}

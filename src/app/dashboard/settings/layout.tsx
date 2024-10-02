@@ -22,11 +22,11 @@ export default async function SettingsPage({
           <div className="flex justify-between">
             <h1 className="text-4xl">Configurações de Conta</h1>
 
-            <Suspense
+            {/* <Suspense
               fallback={<Skeleton className="w-[160px] h-[40px] rounded" />}
             >
               <SwitchProfileButton />
-            </Suspense>
+            </Suspense> */}
           </div>
         </div>
       </div>

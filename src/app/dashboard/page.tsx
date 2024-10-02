@@ -1,18 +1,15 @@
-import { Button } from '@/components/ui/button';
-import { assertAuthenticated } from '@/lib/session';
-import { cn } from '@/lib/utils';
-import { cardStyles, pageTitleStyles } from '@/styles/common';
-import { btnIconStyles, btnStyles } from '@/styles/icons';
-import { Search } from 'lucide-react';
-import Image from 'next/image';
-import Link from 'next/link';
 import { PageHeader } from '@/components/page-header';
+import { cn } from '@/lib/utils';
+import { pageTitleStyles } from '@/styles/common';
+import { getPlantUseCase } from '@/use-cases/plants';
+import { PlantTable } from './_components/plantTable';
+import { CreatePlantButton } from './_components/create-plant-button';
 
-export default async function DashboardPage() {
-  const user = await assertAuthenticated();
+export default async function PlantsView() {
+  const plantData = await getPlantUseCase();
 
   return (
-    <>
+    <div>
       <PageHeader>
         <h1
           className={cn(
@@ -20,26 +17,28 @@ export default async function DashboardPage() {
             'flex justify-between items-center flex-wrap gap-4'
           )}
         >
-          Painel Geral
+          Plantas
+          <CreatePlantButton />
         </h1>
+
+        <p className="text-sm sm:text-md font-semibold text-muted-foreground">
+          Organize as plantas cadastrando as categorias onde elas serão
+          agrupadas.
+        </p>
+
       </PageHeader>
+
       <div className={cn('space-y-8 container mx-auto py-12 min-h-screen')}>
-        <div className="flex justify-between items-center">
-          <h2 className={'text-2xl'}>Grupos que você gerencia</h2>
-        </div>
-
-        <div className="flex justify-between items-center">
-          <h2 className={'text-2xl'}>Seus outros grupos</h2>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-8">
-          <div className="bg-gray-200 h-40">aaa</div>
-
-          <div className="bg-gray-200">aaa</div>
-
-          <div className="bg-gray-200">aaa</div>
+        <div className="gap-8">
+          <PlantTable
+            isLoading={false}
+            selectedType="all"
+            plants={{
+              allPlants: plantData,
+            }}
+          />
         </div>
       </div>
-    </>
+    </div>
   );
 }

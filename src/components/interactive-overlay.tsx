@@ -62,13 +62,14 @@ export function InteractiveOverlay({
             setIsOpen(value);
           }}
         >
-          <SheetContent className="h-screen">
+          <SheetContent className="max-h-screen overflow-auto">
             <SheetHeader className="px-2">
               <SheetTitle>{title}</SheetTitle>
               <SheetDescription>{description}</SheetDescription>
             </SheetHeader>
 
-            <ScrollArea className="flex-1 overflow-y-auto h-screen pr-4 pt-4 pb-8">
+            {/* Scrollable area */}
+            <ScrollArea className="flex-1 pr-4 pt-4 pb-8">
               {form}
             </ScrollArea>
           </SheetContent>
@@ -81,12 +82,14 @@ export function InteractiveOverlay({
             setIsOpen(value);
           }}
         >
-          <DrawerContent>
+          <DrawerContent className="max-h-screen overflow-auto">
             <DrawerHeader>
               <DrawerTitle>{title}</DrawerTitle>
               <DrawerDescription>{description}</DrawerDescription>
             </DrawerHeader>
-            <ScrollArea className="overflow-y-auto px-8 pb-8">
+
+            {/* Scrollable area */}
+            <ScrollArea className="px-8 pb-8">
               {form}
             </ScrollArea>
           </DrawerContent>

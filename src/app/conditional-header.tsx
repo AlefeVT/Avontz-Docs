@@ -38,10 +38,10 @@ export function ConditionalHeader({
         <div className="flex gap-8 items-center">
           <Link href="/" className="flex gap-2 items-center text-xl">
             <Image
-              className="rounded w-8 h-8"
-              width="50"
-              height="50"
-              src="/logo/AVONTZ_logo.svg"
+              className="w-8 h-8"
+              width="60"
+              height="60"
+              src="/logo/logo.svg"
               alt="hero image"
             />
             {applicationName}

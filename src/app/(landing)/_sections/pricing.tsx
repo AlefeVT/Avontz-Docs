@@ -84,7 +84,7 @@ export function PricingSection({
         </p>
 
         <div className="flex flex-col md:flex-row justify-center w-full gap-12">
-          {/* <PricingCard
+          <PricingCard
             title="Free"
             price="0"
             features={[
@@ -93,8 +93,7 @@ export function PricingSection({
               "User Authentication",
               "Role Based Authorization",
               "User Dashboard",
-            ]}
-          /> */}
+            ]} priceId={''} hasSubscription={false} />
 
           <PricingCard
             title="Básico"

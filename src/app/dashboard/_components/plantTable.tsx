@@ -1,4 +1,4 @@
-'use client';
+"use client"
 
 import * as React from 'react';
 import {
@@ -18,44 +18,39 @@ import {
 } from '@/components/ui/table';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
-import { SearchBar } from './containerSearchBar';
-import ContainerTypeSelect from './containerTypeSelect';
-import { ContainerData } from '@/interfaces/ContainerData';
 import { InteractiveOverlay } from '@/components/interactive-overlay';
-import { EditContainerForm } from './edit-containers-form';
 import { DeleteModal } from '@/components/delete-modal';
 import { Skeleton } from '@/components/ui/skeleton';
 import { columns } from './table/columns';
 import { PaginationButton } from '@/components/PaginationButton';
-import { useFilteredContainers } from '@/hooks/Container/useFilteredContainers';
-import { useContainerActions } from '@/hooks/Container/useContainerActions';
+import { usePlantActions } from '@/hooks/Plant/usePlantActions';
+import { PlantData } from '@/interfaces/PlantData';
+import { SearchBar } from './plantSearchBar';
+import { EditPlantForm } from './edit-plants-form';
 
-interface ContainerTableProps {
-  containers: {
-    allContainers: ContainerData[];
-    containersWithoutParent: ContainerData[];
-    containersWithoutChildren: ContainerData[] | null;
+interface PlantTableProps {
+  plants: {
+    allPlants: PlantData[];
   };
   isLoading: boolean;
   selectedType: string;
 }
 
-export function ContainerTable({
-  containers,
+export function PlantTable({
+  plants,
   isLoading,
   selectedType: initialSelectedType,
-}: ContainerTableProps) {
+}: PlantTableProps) {
   const [rowSelection, setRowSelection] = React.useState<
     Record<string, boolean>
   >({});
   const [searchTerm, setSearchTerm] = React.useState('');
   const [selectedType, setSelectedType] = React.useState(initialSelectedType);
   const [isOpen, setIsOpen] = React.useState(false);
-  const [containerData, setContainerData] =
-    React.useState<ContainerData | null>(null);
+  const [plantData, setPlantData] = React.useState<PlantData | null>(null);
   const [isDeleteModalOpen, setIsDeleteModalOpen] = React.useState(false);
-  const [selectedContainersForDelete, setSelectedContainersForDelete] =
-    React.useState<ContainerData[]>([]);
+  const [selectedPlantsForDelete, setSelectedPlantsForDelete] =
+    React.useState<PlantData[]>([]);
 
   const router = useRouter();
 
@@ -64,21 +59,27 @@ export function ContainerTable({
     setRowSelection({});
   };
 
-  const filteredData = useFilteredContainers(
-    containers,
-    selectedType,
-    searchTerm
-  );
-  const { isDeleting, handleDeleteContainers } =
-    useContainerActions(refreshData);
+  const { isDeleting, handleDeletePlants } = usePlantActions(refreshData);
+
+  const filteredData = React.useMemo(() => {
+    let data = plants.allPlants;
+
+    if (searchTerm) {
+      data = data.filter((plant) =>
+        plant.name.toLowerCase().includes(searchTerm.toLowerCase())
+      );
+    }
+
+    return data;
+  }, [plants, searchTerm, selectedType]);
 
   const table = useReactTable({
-    data: filteredData || [],
+    data: filteredData,
     columns: columns(
       router.push,
-      setContainerData,
+      setPlantData,
       setIsOpen,
-      setSelectedContainersForDelete,
+      setSelectedPlantsForDelete,
       setIsDeleteModalOpen
     ),
     getCoreRowModel: getCoreRowModel(),
@@ -129,9 +130,8 @@ export function ContainerTable({
 
   return (
     <>
-      <div className="flex justify-between">
+      <div className="flex justify-between mb-10">
         <SearchBar searchTerm={searchTerm} setSearchTerm={setSearchTerm} />
-        <ContainerTypeSelect onSelectType={setSelectedType} />
       </div>
 
       <div className="w-full">
@@ -145,9 +145,9 @@ export function ContainerTable({
                       {header.isPlaceholder
                         ? null
                         : flexRender(
-                            header.column.columnDef.header,
-                            header.getContext()
-                          )}
+                          header.column.columnDef.header,
+                          header.getContext()
+                        )}
                     </TableHead>
                   ))}
                 </TableRow>
@@ -176,9 +176,9 @@ export function ContainerTable({
                     colSpan={
                       columns(
                         router.push,
-                        setContainerData,
+                        setPlantData,
                         setIsOpen,
-                        setSelectedContainersForDelete,
+                        setSelectedPlantsForDelete,
                         setIsDeleteModalOpen
                       ).length
                     }
@@ -191,7 +191,7 @@ export function ContainerTable({
                         src="/empty-state/no-data.svg"
                         alt="Imagem de pasta vazia"
                       />
-                      Nenhuma caixa encontrada.
+                      Nenhuma planta encontrada.
                     </div>
                   </TableCell>
                 </TableRow>
@@ -213,26 +213,20 @@ export function ContainerTable({
         </div>
       </div>
 
-      {containerData && (
+      {plantData && (
         <InteractiveOverlay
-          title="Editar Caixa"
+          title="Editar Planta"
           description=""
           isOpen={isOpen}
           setIsOpen={setIsOpen}
           form={
-            <EditContainerForm
-              containerData={{
-                ...containerData,
-                description: containerData.description || undefined,
+            <EditPlantForm
+              plant={{
+                ...plantData,
+                description: plantData?.description || "",
               }}
-              containersOptions={containers.allContainers.map(
-                ({ id, name, description }) => ({
-                  id,
-                  name,
-                  description: description || undefined,
-                })
-              )}
             />
+
           }
         />
       )}
@@ -240,16 +234,15 @@ export function ContainerTable({
       <DeleteModal
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
-        title="Excluir caixa(s)"
-        description={`Tem certeza de que deseja excluir ${
-          selectedContainersForDelete.length === 1
-            ? `a caixa ${selectedContainersForDelete[0]?.name}`
-            : `${selectedContainersForDelete.length} caixas`
-        }? Todos os documentos pertencentes a essas caixas também serão removidos do nosso servidor.`}
+        title="Excluir planta(s)"
+        description={`Tem certeza de que deseja excluir ${selectedPlantsForDelete.length === 1
+            ? `a planta ${selectedPlantsForDelete[0]?.name}`
+            : `${selectedPlantsForDelete.length} plantas`
+          }? Todos os dados relacionados a essas plantas serão removidos.`}
         onConfirm={async () => {
-          await handleDeleteContainers(selectedContainersForDelete, () => {
+          await handleDeletePlants(selectedPlantsForDelete, () => {
             setIsDeleteModalOpen(false);
-            setSelectedContainersForDelete([]);
+            setSelectedPlantsForDelete([]);
           });
         }}
         isPending={isDeleting}
