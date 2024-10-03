@@ -18,7 +18,7 @@ export function HeaderLogo() {
         className="rounded w-8 h-8"
         width="50"
         height="50"
-        src="/logo/AVONTZ_logo.svg"
+        src="/logo/logo.svg"
         alt="hero image"
       />
       {applicationName}

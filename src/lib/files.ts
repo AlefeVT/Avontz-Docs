@@ -1,3 +1,5 @@
+"use server"
+
 import { env } from '@/env';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
 import { getSignedUrl } from '@aws-sdk/s3-request-presigner';
@@ -28,6 +30,8 @@ export async function uploadFileToBucket(file: File, filename: string) {
   const Key = filename;
   const Bucket = env.CLOUDFLARE_BUCKET_NAME;
 
+  console.log(file, filename);
+
   let res;
 
   try {
@@ -36,7 +40,7 @@ export async function uploadFileToBucket(file: File, filename: string) {
       params: {
         Bucket,
         Key,
-        Body: file.stream(),
+        Body: file, // Use o objeto File diretamente
         ACL: 'public-read',
         ContentType: file.type,
       },
@@ -46,11 +50,13 @@ export async function uploadFileToBucket(file: File, filename: string) {
 
     res = await parallelUploads.done();
   } catch (e) {
-    throw e;
+    console.error("Error uploading file:", e);
+    throw e; // Mantenha o erro para ser tratado onde for necessário
   }
 
   return res;
 }
+
 
 export async function getPresignedPostUrl(
   objectName: string,

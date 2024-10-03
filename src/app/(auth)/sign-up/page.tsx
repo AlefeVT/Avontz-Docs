@@ -29,7 +29,7 @@ const registrationSchema = z
     passwordConfirmation: z.string().min(8),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
-    message: "Passwords don't match",
+    message: "As senhas não coincidem",
     path: ['passwordConfirmation'],
   });
 
@@ -39,7 +39,7 @@ export default function RegisterPage() {
   const { execute, isPending, error } = useServerAction(signUpAction, {
     onError({ err }) {
       toast({
-        title: 'Something went wrong',
+        title: 'Algo deu errado!',
         description: err.message,
         variant: 'destructive',
       });
@@ -61,7 +61,7 @@ export default function RegisterPage() {
 
   return (
     <div className="py-24 mx-auto max-w-[400px] space-y-6">
-      <h1 className={cn(pageTitleStyles, 'text-center')}>Sign Up</h1>
+      <h1 className={cn(pageTitleStyles, 'text-center')}>Registrar-se</h1>
 
       <Form {...form}>
         <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -75,7 +75,7 @@ export default function RegisterPage() {
                   <Input
                     {...field}
                     className="w-full"
-                    placeholder="Enter your email"
+                    placeholder="Digite seu Email..."
                     type="email"
                   />
                 </FormControl>
@@ -89,12 +89,12 @@ export default function RegisterPage() {
             name="password"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Password</FormLabel>
+                <FormLabel>Senha</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     className="w-full"
-                    placeholder="Enter your password"
+                    placeholder="Digite sua Senha..."
                     type="password"
                   />
                 </FormControl>
@@ -108,12 +108,12 @@ export default function RegisterPage() {
             name="passwordConfirmation"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Confirm Password</FormLabel>
+                <FormLabel>Confirmar Senha</FormLabel>
                 <FormControl>
                   <Input
                     {...field}
                     className="w-full"
-                    placeholder="Enter Confirm your Password"
+                    placeholder="Digite sua Senha de confirmação..."
                     type="password"
                   />
                 </FormControl>
@@ -131,7 +131,7 @@ export default function RegisterPage() {
           )}
 
           <LoaderButton isLoading={isPending} className="w-full" type="submit">
-            Register
+            Registrar
           </LoaderButton>
         </form>
       </Form>

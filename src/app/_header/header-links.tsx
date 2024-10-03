@@ -20,37 +20,27 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
           <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             <Link href={'/dashboard'}>
               <LayoutDashboard className="w-4 h-4" /> Painel Geral
             </Link>
           </Button>
 
-          <Button
+          {/* <Button
             variant={'link'}
             asChild
             className="flex items-center justify-center gap-2"
           >
-            <Link href={'/containers'}>
-              <Package className="w-4 h-4" /> Caixas
+            <Link href={'/plants'}>
+              <Package className="w-4 h-4" /> Plantas
             </Link>
-          </Button>
+          </Button> */}
 
           <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
-          >
-            <Link href={'/documents'}>
-              <File className="w-4 h-4" /> Documentos
-            </Link>
-          </Button>
-
-          <Button
-            variant={'link'}
-            asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             {/* <Link href={"/browse"}>
               <SearchIcon className="w-4 h-4" /> Navegar nos grupos
@@ -60,7 +50,7 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
           <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             <Link href={'/docs'}>
               <BookIcon className="w-4 h-4" /> API Docs
@@ -72,16 +62,12 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
       {(isLandingPage || !isAuthenticated) && (
         <div className="hidden md:flex gap-4">
           <Button variant={'link'} asChild>
-            <Link href="/#features">Características</Link>
+            <Link href="/#features">Sobre</Link>
           </Button>
 
           <Button variant={'link'} asChild>
             <Link href="/#pricing">Preços</Link>
-          </Button>
-
-          <Button variant={'link'} asChild>
-            <Link href={'/browse'}>Navegar nos grupos</Link>
-          </Button>
+          </Button> 
         </div>
       )}
     </>

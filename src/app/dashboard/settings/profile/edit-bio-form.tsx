@@ -1,6 +1,7 @@
 'use client';
 
-import { EditorProvider } from '@tiptap/react';
+import { useEditor, EditorContent } from '@tiptap/react';
+import StarterKit from '@tiptap/starter-kit'; // Importando o StarterKit
 import { LoaderButton } from '@/components/loader-button';
 import { useServerAction } from 'zsa-react';
 import { updateProfileBioAction } from './actions';
@@ -12,15 +13,20 @@ export function EditBioForm({ bio }: { bio: string }) {
   const htmlRef = useRef<string>(bio);
   const { toast } = useToast();
 
+  // Inicializando o editor com o StarterKit
+  const editor = useEditor({
+    extensions: [StarterKit],
+    content: bio, // Definindo o conteúdo inicial com o bio recebido como prop
+    onUpdate: ({ editor }) => {
+      htmlRef.current = editor.getHTML(); // Atualizando o valor de bio com o conteúdo editado
+    },
+    editable: true, // Habilitando edição
+  });
+
   return (
     <div className="w-full space-y-4">
-      <EditorProvider
-        onUpdate={({ editor }) => {
-          htmlRef.current = editor.getHTML();
-        }}
-        content={bio}
-        editable={true}
-      ></EditorProvider>
+      {/* Editor Content renderiza a área de edição */}
+      <EditorContent editor={editor} />
 
       <div className="flex justify-end">
         <LoaderButton

@@ -13,22 +13,20 @@ export function HeroSection() {
         <div className="flex flex-col md:flex-row gap-y-14 w-full justify-between">
           <div className="">
             <Badge className="text-sm md:text-base">
-              Descubra pessoas que pensam como você
+              Gerencie seus documentos com facilidade
             </Badge>
-            <h1 className="text-5xl md:text-7xl max-w-3xl mt-10 leading-[1.2] font-semibold">
-              Crie e descubra novos grupos de hobby
+            <h1 className="text-4xl md:text-6xl max-w-2xl mt-10 leading-[1.2] font-semibold">
+              Organize, armazene e acesse seus documentos em um só lugar
             </h1>
             <p className="mt-5 text-gray-500 text-lg max-w-[600px]">
-              Nosso serviço on-line facilita a conexão com outras pessoas que
-              compartilham seus interesses, seja caminhar, pintar ou jogar
-              futebol. Crie ou participe de um grupo, agende encontros e
-              divirta-se perseguindo seus objetivos. paixões com novos amigos ao
-              seu lado. Comece a construir o seu comunidade hoje!
+              Nosso sistema permite que você gerencie todos os seus documentos de forma
+              segura e eficiente. Acesse seus arquivos rapidamente e compartilhe com quem precisar.
+              Comece agora a organizar suas informações com facilidade.
             </p>
             <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4 mt-10">
               <SignedIn>
                 <Button asChild>
-                  <Link href={'/dashboard'}>Visualizar Painel Geral</Link>
+                  <Link href={'/dashboard'}>Visualizar Painel</Link>
                 </Button>
               </SignedIn>
 
@@ -39,13 +37,15 @@ export function HeroSection() {
               </SignedOut>
             </div>
           </div>
-          <Image
-            className="rounded-xl w-[400px] h-[400px]"
-            width="200"
-            height="200"
-            src="/group.jpeg"
-            alt="hero image"
-          />
+          <div className="rounded-xl w-[400px] h-[400px] dark:bg-card bg-gray-100 flex items-center justify-center">
+            <Image
+              className="rounded-xl w-[400px] h-[400px]"
+              width="400"
+              height="400"
+              src="/ilustracao.svg"
+              alt="Imagem de documentos sendo gerenciados"
+            />
+          </div>
         </div>
       </Container>
     </>

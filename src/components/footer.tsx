@@ -5,7 +5,7 @@ import { ModeToggle } from '@/components/mode-toggle';
 export function Footer() {
   return (
     <>
-      <footer className="border-t bg-gray-100 dark:bg-background">
+      <footer className="border-t dark:bg-background">
         <div className="max-w-screen-xl p-4 py-6 mx-auto lg:py-16 md:p-8 lg:p-10">
           <div className="grid grid-cols-2 gap-8 md:grid-cols-3 lg:grid-cols-3">
             <div>
@@ -48,7 +48,7 @@ export function Footer() {
           </div>
         </div>
       </footer>
-      <footer className="py-8 px-5 border-t">
+      <footer className="py-8 px-5 border-t ">
         <div className="text-center">
           <span className="block text-sm text-center text-gray-500 dark:text-gray-400">
             © 2024 <Link href="/">{applicationName}</Link>. Todos os direitos

@@ -22,8 +22,8 @@ function PricingCard({
 }) {
   return (
     <div className="flex overflow-hidden relative flex-col w-full md:w-[23rem] p-6 text-gray-900 bg-white border border-gray-100 rounded-lg shadow dark:border-gray-800 xl:p-8 dark:bg-transparent dark:text-white">
-      <div className="glow absolute -z-10 aspect-square w-full max-w-xl rounded-full bg-gradient-to-br from-blue-600/15 to-green-500/15 blur-3xl filter" />
-      <h3 className="text-xl font-semibold">{title}</h3>
+    <div className="glow absolute -z-10 aspect-square w-full max-w-xl rounded-full bg-gradient-to-br from-yellow-900/20 to-yellow-200/20 blur-3xl filter" />
+    <h3 className="text-xl font-semibold">{title}</h3>
 
       <div className="mr-2 text-4xl font-extrabold mb-8 mt-5">
         R${price} / mensal
@@ -84,7 +84,7 @@ export function PricingSection({
         </p>
 
         <div className="flex flex-col md:flex-row justify-center w-full gap-12">
-          {/* <PricingCard
+          <PricingCard
             title="Free"
             price="0"
             features={[
@@ -93,8 +93,7 @@ export function PricingSection({
               "User Authentication",
               "Role Based Authorization",
               "User Dashboard",
-            ]}
-          /> */}
+            ]} priceId={''} hasSubscription={false} />
 
           <PricingCard
             title="Básico"

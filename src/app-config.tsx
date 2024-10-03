@@ -5,7 +5,7 @@ export const appConfig: {
 };
 
 export const protectedRoutes = ['/purchases', '/dashboard'];
-export const applicationName = 'Avontz';
+export const applicationName = 'Avontz - Documentos';
 export const companyName = 'Avontz - Soluções Tecnológicas';
 
 export const MAX_UPLOAD_IMAGE_SIZE_IN_MB = 5;

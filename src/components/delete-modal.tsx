@@ -17,7 +17,7 @@ export function DeleteModal({
   title,
   isOpen,
   setIsOpen,
-  confirmText = 'Delete',
+  confirmText = 'Deletar',
   isPending,
 }: {
   onConfirm: () => void;
@@ -37,7 +37,7 @@ export function DeleteModal({
         </AlertDialogHeader>
 
         <AlertDialogFooter>
-          <AlertDialogCancel>Cancel</AlertDialogCancel>
+          <AlertDialogCancel>Cancelar</AlertDialogCancel>
           <LoaderButton onClick={onConfirm} isLoading={isPending}>
             {confirmText}
           </LoaderButton>
