@@ -29,7 +29,7 @@ export function CreatePlantButton() {
         className={btnStyles}
       >
         <PlusCircle className={btnIconStyles} />
-        Cadastrar Planta
+        Cadastrar Documento
       </Button>
     </>
   );

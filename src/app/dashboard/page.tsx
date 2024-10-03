@@ -17,7 +17,7 @@ export default async function PlantsView() {
             'flex justify-between items-center flex-wrap gap-4'
           )}
         >
-          Plantas
+          Documentos
           <CreatePlantButton />
         </h1>
 

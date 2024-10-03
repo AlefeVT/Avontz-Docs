@@ -7,7 +7,7 @@ import { btnIconStyles, btnStyles } from '@/styles/icons';
 import { getUserPlanUseCase } from '@/use-cases/subscriptions';
 import { Suspense } from 'react';
 import { Skeleton } from '@/components/ui/skeleton';
-import { headerStyles } from '@/styles/common';
+import { headerStyles, pageTitleStyles } from '@/styles/common';
 import { cn } from '@/lib/utils';
 
 export default async function SettingsPage({
@@ -20,7 +20,15 @@ export default async function SettingsPage({
       <div className={cn(headerStyles, 'py-8')}>
         <div className="container mx-auto">
           <div className="flex justify-between">
-            <h1 className="text-4xl">Configurações de Conta</h1>
+
+            <h1
+              className={cn(
+                pageTitleStyles,
+                'flex justify-between items-center flex-wrap gap-4'
+              )}
+            >
+              Configurações de Conta
+            </h1>
 
             {/* <Suspense
               fallback={<Skeleton className="w-[160px] h-[40px] rounded" />}

@@ -42,7 +42,7 @@ export function HeroSection() {
               className="rounded-xl w-[400px] h-[400px]"
               width="400"
               height="400"
-              src="/ilustração.png"
+              src="/ilustracao.svg"
               alt="Imagem de documentos sendo gerenciados"
             />
           </div>

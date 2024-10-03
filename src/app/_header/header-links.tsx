@@ -20,7 +20,7 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
           <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             <Link href={'/dashboard'}>
               <LayoutDashboard className="w-4 h-4" /> Painel Geral
@@ -40,22 +40,22 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
           <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             {/* <Link href={"/browse"}>
               <SearchIcon className="w-4 h-4" /> Navegar nos grupos
             </Link> */}
           </Button>
 
-          {/* <Button
+          <Button
             variant={'link'}
             asChild
-            className="flex items-center justify-center gap-2"
+            className="flex items-center justify-center gap-2 dark:text-white text-gray-800"
           >
             <Link href={'/docs'}>
               <BookIcon className="w-4 h-4" /> API Docs
             </Link>
-          </Button> */}
+          </Button>
         </div>
       )}
 

@@ -15,7 +15,6 @@ import { cn } from "@/lib/utils";
 import { InteractiveOverlay } from "@/components/interactive-overlay";
 import { deletePlantAction } from "../../actions";
 import { EditPlantForm } from "../edit-plants-form";
-import { QRCodeModal } from "./QRCodeModal";
 import Link from "next/link"; 
 
 export function PlantsActions({ plant }: { plant: Plants }) {
@@ -69,7 +68,7 @@ export function PlantsActions({ plant }: { plant: Plants }) {
             Editar Planta
           </DropdownMenuItem>
           <DropdownMenuItem
-            className={cn(btnStyles, "text-red-500 cursor-pointer")}
+            className={cn(btnStyles, "cursor-pointer")}
             onClick={() => {
               setIsDeleteModalOpen(true);
             }}
@@ -94,12 +93,6 @@ export function PlantsActions({ plant }: { plant: Plants }) {
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
-
-      <QRCodeModal
-        isOpen={isQRCodeModalOpen}
-        onClose={() => setIsQRCodeModalOpen(false)}
-        qrValue={`http://localhost:3000/plants/${plant.id}`}
-      />
     </>
   );
 }
