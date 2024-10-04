@@ -1,13 +1,13 @@
 import { NotFoundError } from "@/app/util";
-import { getPlant } from "@/data-access/plants";
+import { getContainerById } from "@/data-access/container";
 
 
-export async function assertPlantExists(plantId: number) {
-  const plant = await getPlant(plantId);
+export async function assertContainerExists(containerId: number) {
+  const container = await getContainerById(containerId);
 
-  if (!plant) {
-    throw new NotFoundError('Event not found');
+  if (!container) {
+    throw new NotFoundError('Caixa não encontrada!');
   }
 
-  return plant;
+  return container;
 }
