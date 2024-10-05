@@ -1,39 +1,56 @@
 "use server"
 
-import {
-  createPlantUseCase,
-  deletePlantUseCase,
-  updatePlantImageUseCase,
-  updatePlantUseCase,
-} from '@/use-cases/plants';
+import { createContainerUseCase, deleteContainerUseCase, updateContainerUseCase } from '@/use-cases/containers';
 import { authenticatedAction } from '../../lib/safe-action';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-export const createPlantAction = authenticatedAction
+export const createContainerAction = authenticatedAction
   .createServerAction()
   .input(
     z.object({
       name: z.string().min(1),
-      scientificName: z.string().min(1),
+      parentId: z.number().optional(),
       description: z.string().min(1),
-      history: z.string().min(1),
-      fileWrapper: z.instanceof(FormData),  
     })
   )
   .handler(
     async ({
-      input: { name, scientificName, description, history, fileWrapper },
+      input: { name, parentId, description },
       ctx: { user },
     }) => {
-      const plantImages = fileWrapper.getAll("files") as File[];
 
-      await createPlantUseCase(user, {
+      await createContainerUseCase(user, {
         name,
-        scientificName,
+        parentId: parentId ?? null,
         description,
-        history,
-        plantImages,  
+      });
+
+      revalidatePath(`/dashboard`);
+    }
+  );
+
+export const updateContainerAction = authenticatedAction
+  .createServerAction()
+  .input(
+    z.object({
+      containerId: z.number().min(1),
+      name: z.string().min(1),
+      parentId: z.number().optional(),
+      description: z.string().min(1),
+    })
+  )
+  .handler(
+    async ({
+      input: { containerId, name, parentId, description },
+      ctx: { user },
+    }) => {
+
+      await updateContainerUseCase(user, {
+        containerId,
+        name,
+        parentId: parentId ?? null,
+        description,
       });
 
       revalidatePath(`/dashboard`);
@@ -42,68 +59,27 @@ export const createPlantAction = authenticatedAction
 
 
 
-// Ação para criar uma nova planta
-export const uploadImagePlantAction = authenticatedAction
-.createServerAction()
-.input(
-  z.object({
-    fileId: z.number(),
-    fileWrapper: z.instanceof(FormData),
-  })
-)
-.handler(async ({ input, ctx: { user } }) => {
-  const file = input.fileWrapper.get("file") as File;
-  await updatePlantImageUseCase(user, { plantId: input.fileId, file });
-  revalidatePath(`/dashboard`);
-});
-
-
-
-export const updatePlantAction = authenticatedAction
+  export const deleteContainerAction = authenticatedAction
   .createServerAction()
   .input(
     z.object({
-      plantId: z.number().min(1), 
-      name: z.string().min(1),
-      scientificName: z.string().min(1),
-      description: z.string().min(1),
-      history: z.string().min(1),
-      fileWrapper: z.instanceof(FormData),  
+      containerId: z.union([z.number(), z.array(z.number())]), 
     })
   )
   .handler(
     async ({
-      input: { plantId, name, scientificName, description, history, fileWrapper },
+      input: { containerId },
       ctx: { user },
     }) => {
-      const plantImages = fileWrapper.getAll("files") as File[];
+      const containerIds = Array.isArray(containerId) ? containerId : [containerId];
 
-      const plant = await updatePlantUseCase(user, {
-        plantId, 
-        name,
-        scientificName,
-        description,
-        history,
-        plantImages, 
-      });
+      for (const id of containerIds) {
+        await deleteContainerUseCase(user, {
+          containerId: id,
+        });
+      }
 
-      revalidatePath(`/dashboard`);
+      revalidatePath('/dashboard');
     }
   );
 
-
-
-export const deletePlantAction = authenticatedAction
-  .createServerAction()
-  .input(
-    z.object({
-      plantId: z.array(z.number()),
-    })
-  )
-  .handler(async ({ input: { plantId }, ctx: { user } }) => {
-    for (const id of plantId) {
-      await deletePlantUseCase(id);
-    }
-
-    revalidatePath('/dashboard/plants');
-  });

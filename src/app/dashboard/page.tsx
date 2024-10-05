@@ -1,12 +1,12 @@
 import { PageHeader } from '@/components/page-header';
 import { cn } from '@/lib/utils';
 import { pageTitleStyles } from '@/styles/common';
-import { getPlantUseCase } from '@/use-cases/plants';
-import { PlantTable } from './_components/plantTable';
-import { CreatePlantButton } from './_components/create-plant-button';
+import { CreatePlantButton } from './_components/create-container-button';
+import { getContainersUseCase } from '@/use-cases/containers';
 
-export default async function PlantsView() {
-  const plantData = await getPlantUseCase();
+
+export default async function ContainersView() {
+  const containerData = await getContainersUseCase();
 
   return (
     <div>
@@ -17,26 +17,25 @@ export default async function PlantsView() {
             'flex justify-between items-center flex-wrap gap-4'
           )}
         >
-          Documentos
-          <CreatePlantButton />
+          Caixas
+          <CreatePlantButton containerOptions={containerData} />
         </h1>
 
         <p className="text-sm sm:text-md font-semibold text-muted-foreground">
-          Organize as plantas cadastrando as categorias onde elas serão
-          agrupadas.
+        Organize seus documentos cadastrando as caixas onde eles serão armazenados e facilmente acessados.
         </p>
 
       </PageHeader>
 
       <div className={cn('space-y-8 container mx-auto py-12 min-h-screen')}>
         <div className="gap-8">
-          <PlantTable
+          {/* <ContainerTable
             isLoading={false}
             selectedType="all"
-            plants={{
-              allPlants: plantData,
+            containers={{
+              containers: containerData,
             }}
-          />
+          /> */}
         </div>
       </div>
     </div>

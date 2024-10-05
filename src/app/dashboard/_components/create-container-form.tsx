@@ -18,33 +18,39 @@ import { CheckIcon } from 'lucide-react';
 import { useContext, useState } from 'react';
 import { ToggleContext } from '@/components/interactive-overlay';
 import { schema } from '../validation';
-import { createPlantAction } from '../actions';
 import { z } from 'zod';
 import { useServerAction } from "zsa-react";
+import { createContainerAction } from '../actions';
+import SearchableSelect from './SearchableSelect';
 
-export function CreatePlantsForm() {
+interface CreateContainerFormProps {
+  containersOptions: { id: number; name: string; description?: string }[];
+}
+
+export function CreateContainerForm({
+  containersOptions,
+}: CreateContainerFormProps) {
   const { setIsOpen } = useContext(ToggleContext);
   const { toast } = useToast();
 
-  const [photos, setPhotos] = useState<File[]>([]);
+  const [parentId, setParentId] = useState<string | null>(null);
 
   const form = useForm<z.infer<typeof schema>>({
     resolver: zodResolver(schema),
     defaultValues: {
       name: '',
-      scientificName: '',
+      parentId: 0,
       description: '',
-      history: '',
     },
   });
 
   const { handleSubmit, control } = form;
 
-  const { execute, error, isPending } = useServerAction(createPlantAction, {
+  const { execute, error, isPending } = useServerAction(createContainerAction, {
     onSuccess() {
       toast({
         title: "Success",
-        description: "Planta criada com sucesso.",
+        description: "Caixa criada com sucesso.",
       });
       setIsOpen(false);
     },
@@ -52,7 +58,7 @@ export function CreatePlantsForm() {
       toast({
         title: "Erro",
         variant: "destructive",
-        description: "Algo deu errado ao criar a planta.",
+        description: "Algo deu errado ao criar a caixa.",
       });
     },
   });
@@ -60,22 +66,16 @@ export function CreatePlantsForm() {
   const onSubmit = async (data: z.infer<typeof schema>) => {
     const formData = new FormData();
     formData.append('name', data.name);
-    formData.append('scientificName', data.scientificName || '');
+    formData.append('parentId', data.parentId ? data.parentId.toString() : '');
     formData.append('description', data.description);
-    formData.append('history', data.history || '');
-
-    photos.forEach((photo) => {
-      formData.append('files', photo);
-    });
 
     execute({
       name: data.name,
-      scientificName: data.scientificName || '',
+      parentId: data.parentId || 0,
       description: data.description,
-      history: data.history || '',
-      fileWrapper: formData,
     });
   };
+
 
   return (
     <Form {...form}>
@@ -85,30 +85,25 @@ export function CreatePlantsForm() {
           name="name"
           render={({ field }) => (
             <FormItem>
-              <FormLabel>Nome da planta</FormLabel>
+              <FormLabel>Nome da caixa</FormLabel>
               <FormControl>
-                <Input {...field} placeholder="Digite o nome da planta" />
+                <Input {...field} placeholder="Digite o nome da caixa" />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
 
-        <FormField
-          control={control}
-          name="scientificName"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>Nome científico (Opcional)</FormLabel>
-              <FormControl>
-                <Input
-                  {...field}
-                  placeholder="Digite o nome científico"
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
+        <SearchableSelect
+          items={containersOptions.map((container) => ({
+            value: container.id.toString(),
+            label: container.name,
+            description: container.description || undefined,
+          }))}
+          selectedValue={parentId}
+          onValueChange={setParentId}
+          label="Caixa Pai (Opcional)"
+          placeholder="Selecione uma caixa pai..."
         />
 
         <FormField
@@ -118,45 +113,15 @@ export function CreatePlantsForm() {
             <FormItem>
               <FormLabel>Descrição</FormLabel>
               <FormControl>
-                <Textarea {...field} placeholder="Descreva a planta" rows={4} />
+                <Textarea {...field} placeholder="Digite a descrição da caixa" rows={4} />
               </FormControl>
               <FormMessage />
             </FormItem>
           )}
         />
-
-        <FormField
-          control={control}
-          name="history"
-          render={({ field }) => (
-            <FormItem>
-              <FormLabel>História (Opcional)</FormLabel>
-              <FormControl>
-                <Textarea
-                  {...field}
-                  placeholder="Adicione a história da planta"
-                  rows={4}
-                />
-              </FormControl>
-              <FormMessage />
-            </FormItem>
-          )}
-        />
-
-        <FormItem>
-          <FormLabel>Fotos da planta</FormLabel>
-          <FormControl>
-            <Input
-              type="file"
-              accept="image/*"
-              multiple
-              onChange={(e) => setPhotos(e.target.files ? Array.from(e.target.files) : [])}
-            />
-          </FormControl>
-        </FormItem>
 
         <LoaderButton isLoading={isPending}>
-          <CheckIcon className="h-5" /> Cadastrar Planta
+          <CheckIcon className="h-5" /> Cadastrar Container
         </LoaderButton>
       </form>
     </Form>

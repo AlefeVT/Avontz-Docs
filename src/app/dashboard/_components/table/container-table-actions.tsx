@@ -8,44 +8,43 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { DeleteModal } from "@/components/delete-modal";
 import { useServerAction } from "zsa-react";
-import { Plants } from "@/db/schema";
 import { btnIconStyles, btnStyles } from "@/styles/icons";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import { InteractiveOverlay } from "@/components/interactive-overlay";
-import { deletePlantAction } from "../../actions";
-import { EditPlantForm } from "../edit-plants-form";
 import Link from "next/link"; 
+import { Container } from "@/db/schema";
+import { deleteContainerAction } from "../../actions";
+import { EditContainerForm } from "../edit-containers-form";
 
-export function PlantsActions({ plant }: { plant: Plants }) {
+export function ContainersActions({ container }: { container: Container }) {
   const [isOpen, setIsOpen] = useState(false);
-  const [isEditPlantOpen, setIsEditPlantOpen] = useState(false);
-  const { execute, isPending } = useServerAction(deletePlantAction, {
+  const [isEditContainerOpen, setIsEditContainerOpen] = useState(false);
+  const { execute, isPending } = useServerAction(deleteContainerAction, {
     onSuccess() {
       setIsOpen(false);
     },
   });
   const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
-  const [isQRCodeModalOpen, setIsQRCodeModalOpen] = useState(false);
 
   return (
     <>
       <InteractiveOverlay
-        isOpen={isEditPlantOpen}
-        setIsOpen={setIsEditPlantOpen}
-        title={"Editar Planta"}
-        description={"Editar detalhes da planta."}
-        form={<EditPlantForm plant={plant} />}
+        isOpen={isEditContainerOpen}
+        setIsOpen={setIsEditContainerOpen}
+        title={"Editar Caixa"}
+        description={"Editar detalhes da caixa."}
+        form={<EditContainerForm container={container} />}
       />
 
       <DeleteModal
         isOpen={isDeleteModalOpen}
         setIsOpen={setIsDeleteModalOpen}
-        title="Excluir Planta"
-        description="Tem certeza de que deseja excluir esta planta?"
+        title="Excluir Caixa"
+        description="Tem certeza de que deseja excluir esta caixa?"
         onConfirm={() => {
           execute({
-            plantId: [plant.id],
+            containerId: [container.id],
           });
         }}
         isPending={isPending}
@@ -60,12 +59,12 @@ export function PlantsActions({ plant }: { plant: Plants }) {
         <DropdownMenuContent>
           <DropdownMenuItem
             onClick={() => {
-              setIsEditPlantOpen(true);
+              setIsEditContainerOpen(true);
             }}
             className={cn(btnStyles, "cursor-pointer")}
           >
             <PencilIcon className={btnIconStyles} />
-            Editar Planta
+            Editar Caixa
           </DropdownMenuItem>
           <DropdownMenuItem
             className={cn(btnStyles, "cursor-pointer")}
@@ -74,23 +73,9 @@ export function PlantsActions({ plant }: { plant: Plants }) {
             }}
           >
             <TrashIcon className={btnIconStyles} />
-            Remover Planta
+            Remover Caixa
           </DropdownMenuItem>
-          <DropdownMenuItem
-            className={cn(btnStyles, "cursor-pointer")}
-            onClick={() => {
-              setIsQRCodeModalOpen(true);
-            }}
-          >
-            <QrCodeIcon className={btnIconStyles} />
-            Gerar QR Code
-          </DropdownMenuItem>
-          <DropdownMenuItem asChild>
-            <Link href={`/plants/${plant.id}`} className={cn(btnStyles, "cursor-pointer")}>
-              <EyeIcon className={btnIconStyles} />
-              Visualizar Página
-            </Link>
-          </DropdownMenuItem>
+        
         </DropdownMenuContent>
       </DropdownMenu>
     </>

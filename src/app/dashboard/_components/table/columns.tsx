@@ -3,16 +3,16 @@
 import * as React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
-import { PlantData } from '@/interfaces/PlantData'; 
-import { PlantsActions } from './plant-table-actions';
+import { ContainerData } from '@/interfaces/Container';
+import { ContainersActions } from './container-table-actions';
 
 export const columns: (
   routerPush: (url: string) => void,
-  setPlantData: (plant: PlantData) => void,
+  setContainerData: (container: ContainerData) => void,
   setIsOpen: (isOpen: boolean) => void,
-  setSelectedPlantsForDelete: (plants: PlantData[]) => void,
+  setSelectedContainersForDelete: (containers: ContainerData[]) => void,
   setIsDeleteModalOpen: (isOpen: boolean) => void
-) => ColumnDef<PlantData>[] = () => [
+) => ColumnDef<ContainerData>[] = () => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -37,15 +37,11 @@ export const columns: (
   },
   {
     accessorKey: 'name',
-    header: 'Nome da Planta',
+    header: 'Nome da Caixa',
     cell: ({ row }) => {
-      const plant = row.original;
-      return <div className="flex items-center">{plant.name}</div>;
+      const container = row.original;
+      return <div className="flex items-center">{container.name}</div>;
     },
-  },
-  {
-    accessorKey: 'scientificName',
-    header: 'Nome Científico',
   },
   {
     accessorKey: 'description',
@@ -55,10 +51,10 @@ export const columns: (
     id: 'actions',
     header: 'Ações',
     cell: ({ row, table }) => {
-      const plant = row.original;
+      const container = row.original;
 
       return (
-        <PlantsActions plant={plant} />
+        <ContainersActions container={container} />
       );
     },
   },
