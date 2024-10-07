@@ -61,13 +61,13 @@ export function HeaderLinks({ isAuthenticated }: { isAuthenticated: boolean }) {
 
       {(isLandingPage || !isAuthenticated) && (
         <div className="hidden md:flex gap-4">
-          <Button variant={'link'} asChild>
+          <Button variant={'link'} className="dark:text-white" asChild>
             <Link href="/#features">Sobre</Link>
           </Button>
 
-          <Button variant={'link'} asChild>
+          <Button variant={'link'} className="dark:text-white" asChild>
             <Link href="/#pricing">Preços</Link>
-          </Button> 
+          </Button>
         </div>
       )}
     </>

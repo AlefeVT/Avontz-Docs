@@ -19,9 +19,10 @@ export function HeroSection() {
               Organize, armazene e acesse seus documentos em um só lugar
             </h1>
             <p className="mt-5 text-gray-500 text-lg max-w-[600px]">
-              Nosso sistema permite que você gerencie todos os seus documentos de forma
-              segura e eficiente. Acesse seus arquivos rapidamente e compartilhe com quem precisar.
-              Comece agora a organizar suas informações com facilidade.
+              Nosso sistema permite que você gerencie todos os seus documentos
+              de forma segura e eficiente. Acesse seus arquivos rapidamente e
+              compartilhe com quem precisar. Comece agora a organizar suas
+              informações com facilidade.
             </p>
             <div className="space-y-4 sm:flex sm:space-y-0 sm:space-x-4 mt-10">
               <SignedIn>

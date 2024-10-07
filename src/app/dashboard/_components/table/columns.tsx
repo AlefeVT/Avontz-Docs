@@ -3,16 +3,16 @@
 import * as React from 'react';
 import { ColumnDef } from '@tanstack/react-table';
 import { Checkbox } from '@/components/ui/checkbox';
-import { ContainerData } from '@/interfaces/Container';
 import { ContainersActions } from './container-table-actions';
+import { Container } from '@/db/schema';
 
 export const columns: (
   routerPush: (url: string) => void,
-  setContainerData: (container: ContainerData) => void,
+  setContainerData: (container: Container) => void,
   setIsOpen: (isOpen: boolean) => void,
-  setSelectedContainersForDelete: (containers: ContainerData[]) => void,
+  setSelectedContainersForDelete: (containers: Container[]) => void,
   setIsDeleteModalOpen: (isOpen: boolean) => void
-) => ColumnDef<ContainerData>[] = () => [
+) => ColumnDef<Container>[] = () => [
   {
     id: 'select',
     header: ({ table }) => (
@@ -53,9 +53,7 @@ export const columns: (
     cell: ({ row, table }) => {
       const container = row.original;
 
-      return (
-        <ContainersActions container={container} />
-      );
+      return <ContainersActions container={container} />;
     },
   },
 ];

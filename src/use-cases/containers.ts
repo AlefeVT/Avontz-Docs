@@ -3,7 +3,11 @@ import { Container } from '@/db/schema';
 import { desc, isNull } from 'drizzle-orm';
 import { UserSession } from './types';
 import { assertContainerExists } from './authorization';
-import { createContainer, deleteContainer, updateContainer } from '@/data-access/container';
+import {
+  createContainer,
+  deleteContainer,
+  updateContainer,
+} from '@/data-access/container';
 
 export async function getContainersUseCase(): Promise<Container[]> {
   try {
@@ -19,7 +23,6 @@ export async function getContainersUseCase(): Promise<Container[]> {
   }
 }
 
-
 export async function createContainerUseCase(
   authenticatedUser: UserSession,
   {
@@ -32,7 +35,6 @@ export async function createContainerUseCase(
     description: string;
   }
 ) {
-
   await createContainer({
     userId: authenticatedUser.id,
     name,
@@ -78,6 +80,5 @@ export async function deleteContainerUseCase(
     containerId: number;
   }
 ) {
-
   await deleteContainer(containerId, authenticatedUser.id);
 }

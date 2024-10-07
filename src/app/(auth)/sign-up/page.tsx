@@ -29,7 +29,7 @@ const registrationSchema = z
     passwordConfirmation: z.string().min(8),
   })
   .refine((data) => data.password === data.passwordConfirmation, {
-    message: "As senhas não coincidem",
+    message: 'As senhas não coincidem',
     path: ['passwordConfirmation'],
   });
 

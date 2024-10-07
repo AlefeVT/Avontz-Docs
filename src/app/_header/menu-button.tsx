@@ -61,7 +61,7 @@ export function MenuButton() {
             <DropdownMenuItem asChild>
               <Link
                 href="/#features"
-                className="flex gap-2 items-center cursor-pointer"
+                className="flex gap-2 items-center dark:text-white cursor-pointer"
               >
                 Sobre
               </Link>
@@ -69,12 +69,11 @@ export function MenuButton() {
             <DropdownMenuItem asChild>
               <Link
                 href="/#pricing"
-                className="flex gap-2 items-center cursor-pointer"
+                className="flex gap-2 items-center dark:text-white cursor-pointer"
               >
                 Preços
               </Link>
             </DropdownMenuItem>
-            
           </>
         )}
       </DropdownMenuContent>

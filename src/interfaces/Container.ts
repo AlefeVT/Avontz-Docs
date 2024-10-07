@@ -1,8 +1,13 @@
-export type ContainerData = {
-  userId: number;
+export interface ContainerData {
+  id: string;
+  userId: number | null;
   name: string;
-  parentId: number | null;
   description: string | null;
-  createdAt: Date | null;
-  deletedAt?: Date | null;
-};
+  createdAt: Date;
+  deletedAt: Date | null;
+  parentId: number | null;
+  filesCount: number;
+  files: {
+    id: string;
+  }[];
+}

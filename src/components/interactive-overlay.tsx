@@ -69,9 +69,7 @@ export function InteractiveOverlay({
             </SheetHeader>
 
             {/* Scrollable area */}
-            <ScrollArea className="flex-1 pr-4 pt-4 pb-8">
-              {form}
-            </ScrollArea>
+            <ScrollArea className="flex-1 pr-4 pt-4 pb-8">{form}</ScrollArea>
           </SheetContent>
         </Sheet>
       ) : (
@@ -89,9 +87,7 @@ export function InteractiveOverlay({
             </DrawerHeader>
 
             {/* Scrollable area */}
-            <ScrollArea className="px-8 pb-8">
-              {form}
-            </ScrollArea>
+            <ScrollArea className="px-8 pb-8">{form}</ScrollArea>
           </DrawerContent>
         </Drawer>
       )}
