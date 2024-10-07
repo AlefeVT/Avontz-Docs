@@ -1,6 +1,10 @@
-"use server"
+'use server';
 
-import { createContainerUseCase, deleteContainerUseCase, updateContainerUseCase } from '@/use-cases/containers';
+import {
+  createContainerUseCase,
+  deleteContainerUseCase,
+  updateContainerUseCase,
+} from '@/use-cases/containers';
 import { authenticatedAction } from '../../lib/safe-action';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
@@ -15,11 +19,7 @@ export const createContainerAction = authenticatedAction
     })
   )
   .handler(
-    async ({
-      input: { name, parentId, description },
-      ctx: { user },
-    }) => {
-
+    async ({ input: { name, parentId, description }, ctx: { user } }) => {
       await createContainerUseCase(user, {
         name,
         parentId: parentId ?? null,
@@ -45,7 +45,6 @@ export const updateContainerAction = authenticatedAction
       input: { containerId, name, parentId, description },
       ctx: { user },
     }) => {
-
       await updateContainerUseCase(user, {
         containerId,
         name,
@@ -57,29 +56,23 @@ export const updateContainerAction = authenticatedAction
     }
   );
 
-
-
-  export const deleteContainerAction = authenticatedAction
+export const deleteContainerAction = authenticatedAction
   .createServerAction()
   .input(
     z.object({
-      containerId: z.union([z.number(), z.array(z.number())]), 
+      containerId: z.union([z.number(), z.array(z.number())]),
     })
   )
-  .handler(
-    async ({
-      input: { containerId },
-      ctx: { user },
-    }) => {
-      const containerIds = Array.isArray(containerId) ? containerId : [containerId];
+  .handler(async ({ input: { containerId }, ctx: { user } }) => {
+    const containerIds = Array.isArray(containerId)
+      ? containerId
+      : [containerId];
 
-      for (const id of containerIds) {
-        await deleteContainerUseCase(user, {
-          containerId: id,
-        });
-      }
-
-      revalidatePath('/dashboard');
+    for (const id of containerIds) {
+      await deleteContainerUseCase(user, {
+        containerId: id,
+      });
     }
-  );
 
+    revalidatePath('/dashboard');
+  });

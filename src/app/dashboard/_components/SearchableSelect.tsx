@@ -13,12 +13,13 @@ type SelectItemType = {
 
 type SearchableSelectProps = {
   items: SelectItemType[];
-  selectedValue: string | null;
-  onValueChange: (value: string | null) => void;
+  selectedValue: string | undefined;
+  onValueChange: (value: string | undefined) => void;
   label?: string;
   placeholder?: string;
   error?: string;
 };
+
 
 const SearchableSelect: React.FC<SearchableSelectProps> = ({
   items,

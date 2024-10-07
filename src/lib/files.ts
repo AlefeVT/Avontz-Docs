@@ -1,4 +1,4 @@
-"use server"
+'use server';
 
 import { env } from '@/env';
 import { S3Client, GetObjectCommand } from '@aws-sdk/client-s3';
@@ -50,13 +50,12 @@ export async function uploadFileToBucket(file: File, filename: string) {
 
     res = await parallelUploads.done();
   } catch (e) {
-    console.error("Error uploading file:", e);
+    console.error('Error uploading file:', e);
     throw e; // Mantenha o erro para ser tratado onde for necessário
   }
 
   return res;
 }
-
 
 export async function getPresignedPostUrl(
   objectName: string,

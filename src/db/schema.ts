@@ -16,9 +16,16 @@ import {
 export const roleEnum = pgEnum('role', ['member', 'admin']);
 export const accountTypeEnum = pgEnum('type', ['email', 'google', 'github']);
 
-export const documentStatusEnum = pgEnum('document_status', ['draft', 'signed', 'pending_signature']);
-export const versionStatusEnum = pgEnum('version_status', ['current', 'archived', 'pending_review']);
-
+export const documentStatusEnum = pgEnum('document_status', [
+  'draft',
+  'signed',
+  'pending_signature',
+]);
+export const versionStatusEnum = pgEnum('version_status', [
+  'current',
+  'archived',
+  'pending_review',
+]);
 
 export const users = pgTable('gf_user', {
   id: serial('id').primaryKey(),
@@ -163,40 +170,58 @@ export const notifications = pgTable('gf_notifications', {
 });
 
 // Tabela de containers (pastas)
-export const containers = pgTable('containers', {
-  id: serial('id').primaryKey(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }),
-  parentId: integer('parentId'), // Auto-referência para subpastas
-  name: text('name').notNull(),
-  description: text('description'),
-  createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
-  deletedAt: timestamp('deletedAt', { mode: 'date' }),
-}, (table) => ({
-  userIdIdx: index('containers_user_id_idx').on(table.userId),
-}));
+export const containers = pgTable(
+  'containers',
+  {
+    id: serial('id').primaryKey(),
+    userId: integer('userId').references(() => users.id, {
+      onDelete: 'cascade',
+    }),
+    parentId: integer('parentId'), // Auto-referência para subpastas
+    name: text('name').notNull(),
+    description: text('description'),
+    createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
+    deletedAt: timestamp('deletedAt', { mode: 'date' }),
+  },
+  (table) => ({
+    userIdIdx: index('containers_user_id_idx').on(table.userId),
+  })
+);
 
 // Tabela de arquivos com controle de versão
-export const files = pgTable('files', {
-  id: serial('id').primaryKey(),
-  containerId: integer('containerId').references(() => containers.id, { onDelete: 'cascade' }).notNull(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  fileName: text('fileName').notNull(),
-  fileKey: text('fileKey').notNull().unique(), // Armazena o caminho do arquivo na Cloudflare R2
-  fileSize: integer('fileSize').notNull(), // Tamanho em bytes
-  fileType: text('fileType').notNull(),
-  currentVersion: integer('currentVersion').default(1), // Versão atual
-  createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
-  deletedAt: timestamp('deletedAt', { mode: 'date' }),
-}, (table) => ({
-  fileKeyIdx: uniqueIndex('files_file_key_idx').on(table.fileKey),
-}));
+export const files = pgTable(
+  'files',
+  {
+    id: serial('id').primaryKey(),
+    containerId: integer('containerId')
+      .references(() => containers.id, { onDelete: 'cascade' })
+      .notNull(),
+    userId: integer('userId')
+      .references(() => users.id, { onDelete: 'cascade' })
+      .notNull(),
+    fileName: text('fileName').notNull(),
+    fileKey: text('fileKey').notNull().unique(), // Armazena o caminho do arquivo na Cloudflare R2
+    fileSize: integer('fileSize').notNull(), // Tamanho em bytes
+    fileType: text('fileType').notNull(),
+    currentVersion: integer('currentVersion').default(1), // Versão atual
+    createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
+    deletedAt: timestamp('deletedAt', { mode: 'date' }),
+  },
+  (table) => ({
+    fileKeyIdx: uniqueIndex('files_file_key_idx').on(table.fileKey),
+  })
+);
 
 // Controle de versões de arquivos
 export const fileVersions = pgTable('file_versions', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
   versionNumber: integer('versionNumber').notNull(),
-  versionStatus: versionStatusEnum('versionStatus').default('current').notNull(),
+  versionStatus: versionStatusEnum('versionStatus')
+    .default('current')
+    .notNull(),
   fileKey: text('fileKey').notNull(), // Caminho para a versão específica
   changeLog: text('changeLog'), // Registro de mudanças
   createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
@@ -206,9 +231,15 @@ export const fileVersions = pgTable('file_versions', {
 // Assinaturas de documentos com geolocalização
 export const signatures = pgTable('signatures', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
-  signatureDate: timestamp('signatureDate', { mode: 'date' }).notNull().default(sql`now()`),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
+  userId: integer('userId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
+  signatureDate: timestamp('signatureDate', { mode: 'date' })
+    .notNull()
+    .default(sql`now()`),
   geoLocation: jsonb('geoLocation').notNull(), // Geolocalização da assinatura
   isValid: boolean('isValid').default(true), // Validade da assinatura
   deletedAt: timestamp('deletedAt', { mode: 'date' }),
@@ -217,8 +248,12 @@ export const signatures = pgTable('signatures', {
 // Comentários em documentos
 export const comments = pgTable('comments', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
+  userId: integer('userId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
   comment: text('comment').notNull(),
   createdAt: timestamp('createdAt', { mode: 'date' }).default(sql`now()`),
   parentCommentId: integer('parentCommentId'), // Comentário pai, para suporte a threads
@@ -228,8 +263,12 @@ export const comments = pgTable('comments', {
 // Tabela de workflows de aprovação de documentos
 export const approvalWorkflows = pgTable('approval_workflows', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
-  reviewerId: integer('reviewerId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
+  reviewerId: integer('reviewerId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
   approvalStatus: text('approvalStatus').default('pending').notNull(), // Exemplo: 'pending', 'approved', 'rejected'
   reviewDate: timestamp('reviewDate'),
   comments: text('comments'), // Comentários do revisor
@@ -239,8 +278,12 @@ export const approvalWorkflows = pgTable('approval_workflows', {
 // Permissões detalhadas de acesso a arquivos
 export const filePermissions = pgTable('file_permissions', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
+  userId: integer('userId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
   canView: boolean('canView').default(true),
   canEdit: boolean('canEdit').default(false),
   canComment: boolean('canComment').default(true),
@@ -259,7 +302,9 @@ export const automations = pgTable('automations', {
 // Tabela de atividades
 export const activityLogs = pgTable('activity_logs', {
   id: serial('id').primaryKey(),
-  userId: integer('userId').references(() => users.id, { onDelete: 'cascade' }).notNull(),
+  userId: integer('userId')
+    .references(() => users.id, { onDelete: 'cascade' })
+    .notNull(),
   action: text('action').notNull(), // Exemplo: 'document_signed', 'file_uploaded', 'comment_added'
   targetId: integer('targetId'), // ID do alvo da ação (arquivo, documento)
   targetType: text('targetType'), // Tipo de alvo: 'file', 'container'
@@ -270,12 +315,13 @@ export const activityLogs = pgTable('activity_logs', {
 // Tabela de resumos gerados por IA
 export const aiSummaries = pgTable('ai_summaries', {
   id: serial('id').primaryKey(),
-  fileId: integer('fileId').references(() => files.id, { onDelete: 'cascade' }).notNull(),
+  fileId: integer('fileId')
+    .references(() => files.id, { onDelete: 'cascade' })
+    .notNull(),
   summary: text('summary').notNull(), // Resumo gerado
   generatedAt: timestamp('generatedAt', { mode: 'date' }).default(sql`now()`),
   deletedAt: timestamp('deletedAt', { mode: 'date' }),
 });
-
 
 /**
  * RELACIONAMENTOS
@@ -304,5 +350,6 @@ export type Automation = typeof automations.$inferSelect;
 export type ActivityLog = typeof activityLogs.$inferSelect;
 export type AISummary = typeof aiSummaries.$inferSelect;
 
-export type ContainerId = Container["id"];
+export type ContainerId = Container['id'];
 
+export type NewContainer = Omit<typeof containers.$inferInsert, 'id'>;

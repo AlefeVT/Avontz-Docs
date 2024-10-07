@@ -10,5 +10,3 @@ export interface PlantData {
   deletedAt: Date | null; // Remover o "undefined"
   photoName: string;
 }
-
-  

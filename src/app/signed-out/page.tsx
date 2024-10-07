@@ -20,8 +20,7 @@ export default function SignedOutPage() {
         conta.
       </p>
 
-      <div className='flex gap-10'>
-
+      <div className="flex gap-10">
         <Button asChild>
           <Link href="/sign-in">Entrar</Link>
         </Button>
@@ -32,7 +31,6 @@ export default function SignedOutPage() {
           </Button>
         </Link>
       </div>
-
     </div>
   );
 }

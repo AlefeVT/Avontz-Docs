@@ -18,9 +18,7 @@ export function CreatePlantButton({
     <>
       <InteractiveOverlay
         title={'Criar Caixa'}
-        description={
-          'Cadastre uma nova caixa.'
-        }
+        description={'Cadastre uma nova caixa.'}
         isOpen={isOpen}
         setIsOpen={setIsOpen}
         form={<CreateContainerForm containersOptions={containerOptions} />}

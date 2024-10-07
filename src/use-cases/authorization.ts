@@ -1,6 +1,5 @@
-import { NotFoundError } from "@/app/util";
-import { getContainerById } from "@/data-access/container";
-
+import { NotFoundError } from '@/app/util';
+import { getContainerById } from '@/data-access/container';
 
 export async function assertContainerExists(containerId: number) {
   const container = await getContainerById(containerId);

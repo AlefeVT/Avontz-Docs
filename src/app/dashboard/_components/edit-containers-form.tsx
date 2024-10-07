@@ -1,10 +1,10 @@
-"use client";
+'use client';
 
-import { LoaderButton } from "@/components/loader-button";
-import { Input } from "@/components/ui/input";
-import { useToast } from "@/components/ui/use-toast";
-import { useContext, useState } from "react";
-import { z } from "zod";
+import { LoaderButton } from '@/components/loader-button';
+import { Input } from '@/components/ui/input';
+import { useToast } from '@/components/ui/use-toast';
+import { useContext, useState } from 'react';
+import { z } from 'zod';
 import {
   Form,
   FormControl,
@@ -12,24 +12,23 @@ import {
   FormItem,
   FormLabel,
   FormMessage,
-} from "@/components/ui/form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { SubmitHandler, useForm } from "react-hook-form";
-import { Check, Terminal } from "lucide-react";
-import { btnIconStyles } from "@/styles/icons";
-import { Textarea } from "@/components/ui/textarea";
-import { useServerAction } from "zsa-react";
-import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
-import { ToggleContext } from "@/components/interactive-overlay";
-import { Container } from "@/db/schema";
-import { updateContainerAction } from "../actions";
+} from '@/components/ui/form';
+import { zodResolver } from '@hookform/resolvers/zod';
+import { SubmitHandler, useForm } from 'react-hook-form';
+import { Check, Terminal } from 'lucide-react';
+import { btnIconStyles } from '@/styles/icons';
+import { Textarea } from '@/components/ui/textarea';
+import { useServerAction } from 'zsa-react';
+import { Alert, AlertDescription, AlertTitle } from '@/components/ui/alert';
+import { ToggleContext } from '@/components/interactive-overlay';
+import { Container } from '@/db/schema';
+import { updateContainerAction } from '../actions';
 
 const editContainerSchema = z.object({
-  name: z.string().min(1, "O nome é obrigatório"),
+  name: z.string().min(1, 'O nome é obrigatório'),
   parentId: z.number().optional(),
-  description: z.string().min(1, "A descrição é obrigatória"),
+  description: z.string().min(1, 'A descrição é obrigatória'),
 });
-
 
 export function EditContainerForm({ container }: { container: Container }) {
   const { setIsOpen: setIsOverlayOpen } = useContext(ToggleContext);
@@ -38,16 +37,16 @@ export function EditContainerForm({ container }: { container: Container }) {
   const { execute, error, isPending } = useServerAction(updateContainerAction, {
     onSuccess() {
       toast({
-        title: "Sucesso",
-        description: "Caixa atualizada com sucesso.",
+        title: 'Sucesso',
+        description: 'Caixa atualizada com sucesso.',
       });
       setIsOverlayOpen(false);
     },
     onError() {
       toast({
-        title: "Erro",
-        variant: "destructive",
-        description: "Algo deu errado ao atualizar a caixa.",
+        title: 'Erro',
+        variant: 'destructive',
+        description: 'Algo deu errado ao atualizar a caixa.',
       });
     },
   });
@@ -60,15 +59,17 @@ export function EditContainerForm({ container }: { container: Container }) {
     },
   });
 
-  const onSubmit: SubmitHandler<z.infer<typeof editContainerSchema>> = (values) => {
+  const onSubmit: SubmitHandler<z.infer<typeof editContainerSchema>> = (
+    values
+  ) => {
     const formData = new FormData();
-    formData.append("containerId", container.id.toString()); 
-    formData.append("name", values.name);
-    formData.append("parentId", values.parentId);
-    formData.append("description", values.description);
+    formData.append('containerId', container.id.toString());
+    formData.append('name', values.name);
+    formData.append('parentId', values.parentId);
+    formData.append('description', values.description);
 
     execute({
-      containerId: container.id, 
+      containerId: container.id,
       name: values.name,
       parentId: values.parentId,
       description: values.description,
@@ -129,4 +130,3 @@ export function EditContainerForm({ container }: { container: Container }) {
     </Form>
   );
 }
-

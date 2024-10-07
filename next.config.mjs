@@ -31,7 +31,8 @@ const nextConfig = {
       },
       {
         protocol: 'https',
-        hostname: 'avt-project.2ccc969fa9dd471135a9f865ca01aa47.r2.cloudflarestorage.com',
+        hostname:
+          'avt-project.2ccc969fa9dd471135a9f865ca01aa47.r2.cloudflarestorage.com',
         port: '',
         pathname: '/plants/**',
       },
