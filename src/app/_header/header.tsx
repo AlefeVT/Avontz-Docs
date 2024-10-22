@@ -19,9 +19,10 @@ import {
   getUnreadNotificationsForUserUseCase,
   getUserProfileUseCase,
 } from '@/use-cases/users';
-import { getProfileImageFullUrl } from '@/app/dashboard/settings/profile/profile-image';
+
 import { Notifications } from './notifications';
 import { MenuButton } from './menu-button';
+import { getProfileImageFullUrl } from '../dashboard/settings/profile/profile-image';
 
 export async function Header() {
   const user = await getCurrentUser();
