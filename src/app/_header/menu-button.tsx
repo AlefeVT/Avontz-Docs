@@ -37,23 +37,23 @@ export function MenuButton() {
                 <LayoutDashboard className="w-4 h-4" /> Painel Geral
               </Link>
             </DropdownMenuItem>
-            {/* <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild>
               <Link
-                href="/plants"
+                href="/container"
                 className="flex gap-2 items-center cursor-pointer"
               >
-                <Package className="w-4 h-4" /> Plantas
+                <Package className="w-4 h-4" /> Caixas
               </Link>
-            </DropdownMenuItem> */}
+            </DropdownMenuItem>
 
-            {/* <DropdownMenuItem asChild>
+            <DropdownMenuItem asChild>
               <Link
                 href="/docs"
                 className="flex gap-2 items-center cursor-pointer"
               >
                 <BookIcon className="w-4 h-4" /> API Docs
               </Link>
-            </DropdownMenuItem> */}
+            </DropdownMenuItem>
           </>
         )}
         {isLandingPage && (

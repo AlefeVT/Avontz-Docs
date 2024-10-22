@@ -38,7 +38,7 @@ export function TheProblemSection() {
             autorizado a ver aquele botão? 🫠
           </p>
 
-          <p className={cn(cellClass, 'bg-yellow-800')}>
+          <p className={cn(cellClass, 'bg-blue-800')}>
             4. Oh não, onde devo armazenar meus dados? Qual ORM usar? Com
             certeza não DynamoDB. Onde armazeno meus arquivos? R2, S3? 😟
           </p>

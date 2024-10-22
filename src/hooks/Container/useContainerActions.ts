@@ -1,4 +1,5 @@
-import { deleteContainerAction } from '@/app/dashboard/actions';
+
+import { deleteContainerAction } from '@/app/container/actions';
 import { toast } from '@/components/ui/use-toast';
 import { Container } from '@/db/schema';
 import { useState } from 'react';
